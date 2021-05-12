@@ -13,19 +13,12 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>sakila</name>
-	<description>sakila 샘플 데이터베이스를 사용한 springboot 프로젝트</description>
+	<description>sakila db springboot project</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
+
 	<dependencies>
-		<!-- tomcat -->
-		<!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-jasper -->
-		<dependency>
-		    <groupId>org.apache.tomcat.embed</groupId>
-		    <artifactId>tomcat-embed-jasper</artifactId>
-		    <version>9.0.45</version>
-		</dependency>
-		
 		<!-- jstl -->
 		<!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
 		<dependency>
@@ -34,6 +27,13 @@
 		    <version>1.2</version>
 		</dependency>
 		
+		<!-- tomcat -->
+		<!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-jasper -->
+		<dependency>
+		    <groupId>org.apache.tomcat.embed</groupId>
+		    <artifactId>tomcat-embed-jasper</artifactId>
+		    <version>9.0.45</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
