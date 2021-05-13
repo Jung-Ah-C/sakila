@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.gd.sakila.service.BoardService;
 import com.gd.sakila.vo.Board;
 
-@Controller // 서비스 호출을 위한 controller
+@Controller // controller의 객체가 만들었는지 찾음
 public class BoardController {
-	@Autowired
+	@Autowired // 생성된 객체가 있다면 자동으로 주입함
 	BoardService boardService;
 	
-	@GetMapping("/addBoard")
+	@GetMapping("/addBoard") // addBoard로 요청이 들어오면 뷰로 보냄
 	public String addBoard() {
 		return "addBoard";
 	}
 	
-	@PostMapping("/addBoard")
+	@PostMapping("/addBoard") // 뷰에서 입력한 값을 처리함
 	public String addBoard(Board board) { // board와 관련된 값을 한꺼번에 묶어서 받아옴, 커맨드 객체
 		boardService.addBoard(board);
 		return "redirect:/getBoardList"; // 입력 후에 getBoardList로 리다이렉트
