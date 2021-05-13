@@ -5,7 +5,7 @@
 		SELECT
 			board_id boardId,
 			board_title boardTitle,
-			insert_date insertDate,
+			insert_date insertDate
 		FROM 
 			board
 		<where> <!-- 쿼리에서의 where 태그를 대신함 -->
@@ -17,7 +17,7 @@
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
-	<select id="selectTotal" resultType="Integer" parameterType="String">
+	<select id="selectBoardTotal" resultType="Integer" parameterType="String">
 		SELECT COUNT(*) FROM board
 		<where>
 			<if test="searchWord != null">
@@ -26,15 +26,16 @@
 		</where>
 	</select>
 	
-	<select id="selectBoardOne" parameterType="Integer" resultType="com.gd.sakila.vo.Board"> <!-- 제너릭타입 = vo.Board -->
+	<select id="selectBoardOne" parameterType="Integer" resultType="java.util.Map">
 		SELECT
-			board_id boardId,
-			board_title boardTitle,
-			board_content boardContent,
-			staff_id staffId,
-			insert_date insertDate,
+			b.board_id boardId,
+			b.board_title boardTitle,
+			b.board_content boardContent,
+			b.insert_date insertDate,
+			s.username username
 		FROM 
-			board
+			board b INNER JOIN staff s
+		ON b.staff_id = s.staff_id
 		WHERE board_id = #{boardId}
 	</select>
 	
@@ -43,11 +44,13 @@
 			board_pw,
 			board_title,
 			board_content,
+			staff_id,
 			insert_date
 		) VALUES (
 			PASSWORD(#{boardPw}), <!-- board.getBoardPw() -->
 			#{boardTitle},
 			#{boardContent},
+			#{staffId},
 			NOW()
 		)
 	</insert>
