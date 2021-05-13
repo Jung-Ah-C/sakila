@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gd.sakila.mapper.CountryMapper;
 import com.gd.sakila.vo.Country;
-import com.gd.sakila.vo.PageParam;
+import com.gd.sakila.vo.Page;
 
 @Service // CountryService 객체를 만들 때, countryMapper 객체가 있는지 먼저 확인해줌
 @Transactional // 트랜잭션을 처리함, rollback 기능을 처리해줌
@@ -21,7 +21,7 @@ public class CountryService {
 	public Map<String, Object> getCountryList(int currentPage, int rowPerPage) {
 		// 1. 컨트롤러에서 보내준 매개값(파라미터)을 가공함
 		int beginRow = (currentPage-1) * rowPerPage;
-		PageParam pageParam = new PageParam();
+		Page pageParam = new Page();
 		pageParam.setBeginRow(beginRow);
 		pageParam.setRowPerPage(rowPerPage);
 		
