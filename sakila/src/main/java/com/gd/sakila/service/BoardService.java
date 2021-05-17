@@ -6,24 +6,56 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gd.sakila.mapper.BoardMapper;
+import com.gd.sakila.mapper.CommentMapper;
 import com.gd.sakila.vo.Board;
 import com.gd.sakila.vo.Page;
+import com.gd.sakila.vo.Comment;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service // spring이 생성한 객체가 있는지 확인해줌
+@Transactional
 public class BoardService {
-	@Autowired // 생성된 객체가 자동으로 주입됨
-	BoardMapper boardMapper;
+	// 생성된 객체가 자동으로 주입됨
+	@Autowired BoardMapper boardMapper;
+	@Autowired CommentMapper commentMapper;
+	
+	// modifyBoard 메소드
+	public int modifyBoard(Board board) {
+		log.debug("modifyBoard() param : " + board.getBoardId());
+		return boardMapper.updateBoard(board);
+	}
+	
+	// removeBoard 메소드
+	public int removeBoard(Board board) {
+		log.debug("removeBoard() param : "+board.toString()); // 디버깅 (해쉬코드 출력)
+		return boardMapper.deleteBoard(board);
+	}
 	
 	// addBoard 메소드
 	public int addBoard(Board board) {
 		return boardMapper.insertBoard(board);
 	}
 	
-	// getBoardOne 메소드
+	// getBoardOne, 1) 상세보기 + 2) 댓글목록, 수정 폼
 	public Map<String, Object> getBoardOne (int boardId) {
-		return boardMapper.selectBoardOne(boardId);
+		// 1) 상세보기
+		Map<String, Object> boardMap = boardMapper.selectBoardOne(boardId);
+		log.debug("boardMap : " + boardMap);
+		
+		// 2) 댓글목록
+		List<Comment> commentList = commentMapper.selectCommentListByBoard(boardId);
+		log.debug("commentlist size() : " + commentList.size());
+		
+		// 상세보기와 댓글목록을 map에 저장
+		Map<String, Object> map = new HashMap<>();
+		map.put("boardMap", boardMap);
+		map.put("commentList", commentList);
+		return map;
 	}
 	
 	// getBoardList 메소드
