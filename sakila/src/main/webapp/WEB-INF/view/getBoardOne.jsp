@@ -12,7 +12,15 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
- 
+<script>
+	$(document).ready(function(){
+		$('#commentBtn').click(function(){
+			console.log("btn click!");
+			// 폼 유효성 검사
+			$('#commentForm').submit();
+		});
+	});
+</script>
 </head>
 <body>
 <div class="container">
@@ -41,19 +49,26 @@
             </tr>
         </tbody>
     </table>
-    <a class="btn btn-default" href="${pageContext.request.contextPath}/modifyBoard?boardId=${map.boardId}">수정</a>
-    <a class="btn btn-default" href="${pageContext.request.contextPath}/removeBoard?boardId=${map.boardId}">삭제</a>
-    <a class="btn btn-default" href="${pageContext.request.contextPath}/getBoardList">글목록</a>
+	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/modifyBoard?boardId=${boardMap.boardId}">수정</a>
+	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/removeBoard?boardId=${boardMap.boardId}">삭제</a>
+	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getBoardList">글목록</a>
     <!-- 댓글 목록 -->
     <div>
-    	<div><a href=""><button type="button">댓글추가</button></a></div>
+    	<!-- 댓글 추가 -->
+    	<form id="commentForm" action="${pageContext.request.contextPath}/admin/addComment" method="post">
+	    	<input type="hidden" name="boardId" value="boardMap.boardId">
+	    	<div><textarea id="addComment" name="addComment" rows="3" cols="150"></textarea></div>
+	    	<div><a href=""><button id="commentBtn" type="button">댓글추가</button></a></div>
+    	</form>
+    	
+    	<!-- 댓글 목록 출력 -->
     	<table class="table">
 			<c:forEach var="c" items="${commentList}">
 				<tr>
 					<td>${c.commentContent}</td>
 					<td>${c.username}</td>
 					<td>${c.insertDate}</td>
-					<td><a href=""><button type="button">삭제</button></a></td>
+					<td><a href="${pageContext.request.contextPath}/admin/deleteCommentByCommentId"><button type="button">삭제</button></a></td>
 	    		</tr>
 			</c:forEach>
     		

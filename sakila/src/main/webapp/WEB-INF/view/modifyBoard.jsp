@@ -25,44 +25,46 @@
 </head>
 <body>
 <div class="container">
-    <h1>modifyBoard</h1>
-    	<form id="modifyForm" action="${pageContext.request.contextPath}/modifyBoard" method="post">
+    <h1>Modify Board</h1>
+    	<form id="modifyForm" action="${pageContext.request.contextPath}/admin/modifyBoard" method="post">
 			<table class="table">
 			    <tbody>
 					<tr>
-					   <td>boardID :</td>
+					   <td>boardID : </td>
 					   <td><input type="text" id="boardId" name="boardId" value="${map.boardId}" readonly="readonly"></td>
 					   </tr>
 					<tr>
-						<td>boardTitle :</td>
+						<td>boardTitle : </td>
 						<td>
 							<input type="text" id="boardTitle" name="boardTitle" value="${map.boardTitle}">
 						</td>
 					</tr>
 					<tr>
-						<td>boardPw :</td>
+						<td>boardPw : </td>
 						<td>
 							<input type="password" id="boardPw" name="boardPw">
 						</td>
 					</tr>
 					<tr>
-						<td>boardContent :</td>
+						<td>boardContent : </td>
 						<td>
 							<textarea id="boardContent" name="boardContent" rows="5" cols="80">${map.boardContent}</textarea>
 						</td>
 					</tr>
 					<tr>
-						<td>username :</td>
+						<td>username : </td>
 						<td>${map.username}</td>
 					</tr>
 					<tr>
-						<td>insert_date :</td>
+						<td>insert_date : </td>
 						<td>${map.insertDate}</td>
 					</tr>
 			    </tbody>
 			</table>
-			<button id="btn" type="button">수정</button>
-			<!-- 취소, 뒤로가기 등 버튼 한 개 추가하기 -->
+			<div>
+				<input class="btn btn-default" id="btn" type="button" value="수정" /> 
+	            <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getBoardList">글목록</a>
+            </div>
 	    </form>
 
 </div>

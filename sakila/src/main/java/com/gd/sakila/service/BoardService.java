@@ -16,24 +16,36 @@ import com.gd.sakila.vo.Comment;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
-@Service // spring이 생성한 객체가 있는지 확인해줌
-@Transactional
+@Slf4j // logger 객체를 만들어줌
+@Service // spring이 생성한 BoardService 객체가 있는지 스캔해줌 -> 자동으로 객체 생성
+@Transactional // 예외처리 해줌
 public class BoardService {
-	// 생성된 객체가 자동으로 주입됨
+	// spring에 의해 생성된 객체가 자동으로 대입됨
 	@Autowired BoardMapper boardMapper;
 	@Autowired CommentMapper commentMapper;
 	
 	// modifyBoard 메소드
 	public int modifyBoard(Board board) {
-		log.debug("modifyBoard() param : " + board.getBoardId());
+		log.debug("▶▶▶▶▶▶ modifyBoard() param : " + board.getBoardId());
 		return boardMapper.updateBoard(board);
 	}
 	
 	// removeBoard 메소드
 	public int removeBoard(Board board) {
-		log.debug("removeBoard() param : "+board.toString()); // 디버깅 (해쉬코드 출력)
-		return boardMapper.deleteBoard(board);
+		log.debug("▶▶▶▶▶▶ removeBoard() param : " + board.toString()); // 디버깅 (배열을 출력하기 위해서 toString 메소드 사용)
+		
+		// 2) 게시글 삭제 (FK board_id 설정하지 않거나, FK delete no action으로 설정)
+		int boardRow = boardMapper.deleteBoard(board);
+		if(boardRow == 0) { // 삭제가 완료가 안되면 0을 리턴
+			return 0;
+		}
+		
+		// 1) 댓글 삭제
+		int commentRow = commentMapper.deleteCommentByBoardId(board.getBoardId());
+		log.debug("▶▶▶▶▶▶ removeBoard() commentRow : " + commentRow);
+		
+		log.debug("▶▶▶▶▶▶ removeBoard() boardRow : " + boardRow);
+		return boardRow; // 댓글삭제 완료 된 후에 게시글삭제가 실행되기 때문에 리턴값은 boardRow만 확인해도 됨
 	}
 	
 	// addBoard 메소드
@@ -45,11 +57,11 @@ public class BoardService {
 	public Map<String, Object> getBoardOne (int boardId) {
 		// 1) 상세보기
 		Map<String, Object> boardMap = boardMapper.selectBoardOne(boardId);
-		log.debug("boardMap : " + boardMap);
+		log.debug("▶▶▶▶▶▶ boardMap : " + boardMap);
 		
 		// 2) 댓글목록
 		List<Comment> commentList = commentMapper.selectCommentListByBoard(boardId);
-		log.debug("commentlist size() : " + commentList.size());
+		log.debug("▶▶▶▶▶▶ commentlist size() : " + commentList.size());
 		
 		// 상세보기와 댓글목록을 map에 저장
 		Map<String, Object> map = new HashMap<>();
@@ -70,7 +82,7 @@ public class BoardService {
 		page.setRowPerPage(rowPerPage);
 		page.setSearchWord(searchWord);
 		
-		System.out.println("BoardService.getBoardList의 page : " + page);
+		System.out.println("▶▶▶▶▶▶ BoardService.getBoardList의 page : " + page);
 		
 		// 3. dao 호출
 		List<Board> boardList = boardMapper.selectBoardList(page); // Page 필요
@@ -79,7 +91,7 @@ public class BoardService {
 		map.put("lastPage", lastPage);
 		map.put("boardList", boardList);
 		
-		System.out.println("BoardService.getBoardList의 map : " + map.toString());
+		System.out.println("▶▶▶▶▶▶ BoardService.getBoardList의 map : " + map.toString());
 		
 		return map;
 	}
