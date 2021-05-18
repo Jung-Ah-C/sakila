@@ -21,17 +21,20 @@ public class CommentController {
 	CommentService commentService;
 	
 	// 댓글 추가
-	@GetMapping("/addComment")
+	@PostMapping("/addComment")
 	public String addComment(Comment comment, @RequestParam(value="boardId", required = true) int boardId) {
+		// 디버깅
 		log.debug("@@@@@@@ addComment()의 boardId : " + boardId);
-		log.debug("@@@@@@@ addComment()의 comment : " + comment.toString()); // 디버깅
+		log.debug("@@@@@@@ addComment()의 comment : " + comment.toString());
 		
+		// boardId를 comment 클래스 해당 값에 넣어줌
 		comment.setBoardId(boardId);
 		
 		int commentRow = commentService.addComment(comment);
+		// 디버깅
 		log.debug("@@@@@@@ addComment()의 commentRow : " + commentRow); // 디버깅
 		
-		return "redirect:/getBoardOne?boardId=" + boardId; // 재요청
+		return "redirect:/admin/getBoardOne?boardId=" + boardId; // 재요청
 	}
 	
 	// 댓글 삭제
@@ -43,8 +46,9 @@ public class CommentController {
 		log.debug("@@@@@@@ deleteCommentByCommentId()의 commentId" + commentId);
 		
 		int commentRow = commentService.deleteCommentByCommentId(commentId);
+		// 디버깅
 		log.debug("@@@@@@@ deleteCommentByCommentId()의 commentRow : " + commentRow);
 		
-		return "redirect:/getBoardOne?boardId=" + boardId; // 재요청
+		return "redirect:/admin/getBoardOne?boardId=" + boardId; // 재요청
 	}
 }

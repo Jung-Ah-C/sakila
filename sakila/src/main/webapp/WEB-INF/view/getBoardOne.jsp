@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 	$(document).ready(function(){
 		$('#commentBtn').click(function(){
@@ -56,9 +57,10 @@
     <div>
     	<!-- ´ñ±Û Ãß°¡ -->
     	<form id="commentForm" action="${pageContext.request.contextPath}/admin/addComment" method="post">
-	    	<input type="hidden" name="boardId" value="boardMap.boardId">
-	    	<div><textarea id="addComment" name="addComment" rows="3" cols="150"></textarea></div>
-	    	<div><a href=""><button id="commentBtn" type="button">´ñ±ÛÃß°¡</button></a></div>
+	    	<input type="hidden" name="boardId" value="${boardMap.boardId}">
+	    	<div>Username : <input type="text" name="username"></div>
+	    	<div>Comment : <textarea id="commentContent" name="commentContent" rows="3" cols="150"></textarea></div>
+	    	<div><input class="btn btn-default" id="commentBtn" type="button" value="´ñ±ÛÃß°¡" /></div>
     	</form>
     	
     	<!-- ´ñ±Û ¸ñ·Ï Ãâ·Â -->
@@ -68,7 +70,7 @@
 					<td>${c.commentContent}</td>
 					<td>${c.username}</td>
 					<td>${c.insertDate}</td>
-					<td><a href="${pageContext.request.contextPath}/admin/deleteCommentByCommentId"><button type="button">»èÁ¦</button></a></td>
+					<td><a href="${pageContext.request.contextPath}/admin/deleteCommentByCommentId?boardId=${boardMap.boardId}&commentId=${c.commentId}"><button type="button">»èÁ¦</button></a></td>
 	    		</tr>
 			</c:forEach>
     		
