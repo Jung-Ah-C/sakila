@@ -50,7 +50,7 @@ public class BoardService {
 	
 	// addBoard 메소드
 	public int addBoard(Board board) {
-		return boardMapper.insertBoard(board);
+		return boardMapper.addBoard(board);
 	}
 	
 	// getBoardOne, 1) 상세보기 + 2) 댓글목록, 수정 폼

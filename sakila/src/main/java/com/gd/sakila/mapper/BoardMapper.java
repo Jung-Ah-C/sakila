@@ -13,7 +13,7 @@ public interface BoardMapper {
 	List<Board> selectBoardList(Page page);
 	int selectBoardTotal(String searchWord);
 	Map<String, Object> selectBoardOne(int boardId);
-	int insertBoard(Board board);
+	int addBoard(Board board);
 	int deleteBoard(Board board);
 	int updateBoard(Board board);
 }

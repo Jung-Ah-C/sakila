@@ -59,7 +59,7 @@
                     name="boardPw" id="boardPw" type="password" />
             </div>
             <div class="form-group">
-                <label for="boardPw">boardTitle :</label> <input
+                <label for="boardTitle">boardTitle :</label> <input
                     class="form-control" name="boardTitle" id="boardTitle" type="text" />
             </div>
             <div class="form-group">
