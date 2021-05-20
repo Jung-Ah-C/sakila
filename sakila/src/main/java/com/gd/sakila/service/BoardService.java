@@ -1,18 +1,24 @@
 package com.gd.sakila.service;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.gd.sakila.mapper.BoardMapper;
+import com.gd.sakila.mapper.BoardfileMapper;
 import com.gd.sakila.mapper.CommentMapper;
 import com.gd.sakila.vo.Board;
-import com.gd.sakila.vo.Page;
+import com.gd.sakila.vo.BoardForm;
+import com.gd.sakila.vo.Boardfile;
 import com.gd.sakila.vo.Comment;
+import com.gd.sakila.vo.Page;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardService {
 	// spring에 의해 생성된 객체가 자동으로 대입됨
 	@Autowired BoardMapper boardMapper;
+	@Autowired BoardfileMapper boardfileMapper;
 	@Autowired CommentMapper commentMapper;
 	
 	// modifyBoard 메소드
@@ -49,7 +56,47 @@ public class BoardService {
 	}
 	
 	// addBoard 메소드
-	public int addBoard(Board board) {
+	public int addBoard(BoardForm boardForm) {
+		// 넘겨 받은 BoardForm 타입을 Board로 변환
+		// 1)
+		Board board = boardForm.getBoard(); // boardId값이 null인 상태
+		log.debug("addBoard()의 board : " + board);
+		boardMapper.addBoard(board); // 입력 시 만들어진 key값을 리턴받아야 한다. -> mybatis에 리턴값을 설정할 수 없기 때문에 리턴값을 받을 수 없다.
+		// 매개 변수 board의 boardId 값을 변경해준다.
+		log.debug("addBoard()의 board : " + board.getBoardId()); // auto increment로 입력된 값
+		
+		// 2)
+		List<MultipartFile> list = boardForm.getBoardfile();
+		if(list != null) {
+			for(MultipartFile f : list) {
+				Boardfile boardfile = new Boardfile();
+				boardfile.setBoardId(board.getBoardId()); // auto increment로 입력된 값
+				// test.txt -> newname.txt
+				String originalFilename = f.getOriginalFilename();
+				int p = originalFilename.lastIndexOf("."); // 마지막에 있는 파일 확장자 명을 찾기 위해서 
+				String ext = originalFilename.substring(p).toLowerCase(); // .txt
+				String prename = UUID.randomUUID().toString().replace("-", ""); // 무작위의 문자열을 만드는 라이브러리
+				
+				String filename = prename+ext;
+				boardfile.setBoardfileName(filename); // 중복으로 인한 덮어쓰기 이슈가 발생함
+				boardfile.setBoardfileSize(f.getSize());
+				boardfile.setBoardfiletype(f.getContentType());
+				log.debug("addBoard()의 boardfile : " + boardfile);
+				// 2-1)
+				// DB에 입력
+				boardfileMapper.insertBoardfile(boardfile);
+				
+				// 2-2)
+				// 파일을 저장
+				try {
+					f.transferTo(new File("D:\\upload\\"+filename)); // 빈 파일에 f안에 들어있는 파일을 복사함
+				} catch (Exception e) {
+					throw new RuntimeException(); // 복사하다가 예외가 발생하면 예외처리
+				}
+			}
+		}
+		
+		
 		return boardMapper.addBoard(board);
 	}
 	

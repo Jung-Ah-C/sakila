@@ -40,6 +40,9 @@
 	</select>
 	
 	<insert id="addBoard" parameterType="com.gd.sakila.vo.Board">
+		<selectKey resultType="int" keyProperty="boardId" order="AFTER"> <!-- order의 after는 아래에 있는 쿼리가 실행되고 나서 selectkey가 발동하도록 함 -->
+			SELECT LAST_INSERT_ID() <!-- 여기서 ID는 primary key를 의미하고, 제일 마지막에 있는 값을 가져옴, 그 값을 boardId에 채워줌 -->
+		</selectKey>
 		INSERT INTO board(
 			board_pw,
 			board_title,

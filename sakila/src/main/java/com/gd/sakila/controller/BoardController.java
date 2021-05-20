@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.sakila.service.BoardService;
 import com.gd.sakila.vo.Board;
+import com.gd.sakila.vo.BoardForm;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j // logger (디버깅) 객체를 자동 생성
@@ -69,8 +69,9 @@ public class BoardController {
 	}
 	
 	@PostMapping("/addBoard") // 뷰에서 입력한 값을 처리함
-	public String addBoard(Board board) { // board와 관련된 값을 한꺼번에 묶어서 받아옴, 커맨드 객체
-		boardService.addBoard(board);
+	public String addBoard(BoardForm boardForm) { // board와 관련된 값을 한꺼번에 묶어서 받아옴, 커맨드 객체, 배포 쪽에서 Board클래스 대신 BoardForm을 사용하기 때문에 매개변수 변경
+		log.debug("@@@@@@@@@@@@@ addBoard()의 boardForm : " + boardForm); // view에서 입력한 값이 넘어오는지 디버깅
+		// boardService.addBoard(board);
 		return "redirect:/admin/getBoardList"; // 입력 후에 getBoardList로 리다이렉트
 	}
 	

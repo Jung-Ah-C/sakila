@@ -29,7 +29,21 @@
 <script>
     $(document).ready(function() {
         $('#addButton').click(function() {
-            if ($('#boardPw').val().length < 4) {
+           // 파일들 중 하나라도 첨부되지 않으면 ck = true;
+           let ck = false;
+           let boardfile = $('.boardfile'); // 배열
+           // break 키워드를 사용하기 위해 for 반복문 사용 <-- boardfile.each() 메서드 사용x
+           for(let item of boardfile){ // of: foreach문
+              if($(item).val() == ''){
+                 ck = true;
+                 console.log('첨부되지 않은 파일이 있습니다.');
+                 break;
+              }
+           }
+           
+           if(ck){ // if(ck == true)
+              alert('첨부되지 않은 파일이 있습니다.');
+           } else if ($('#boardPw').val().length < 4) {
                 alert('boardPw는 4자이상 이어야 합니다');
                 $('#boardPw').focus();
             } else if ($('#boardTitle').val() == '') {
@@ -38,43 +52,65 @@
             } else if ($('#boardContent').val() == '') {
                 alert('boardContent을 입력하세요');
                 $('#boardContent').focus();
-            } else if ($('#boardUser').val() == '') {
+            } else if ($('#staffId').val() == '') {
                 alert('boardUser을 입력하세요');
                 $('#boardUser').focus();
-            } else { // 폼 유효성 검사
+            } else {
                 $('#addForm').submit();
             }
         });
+        
+        // #inputFile input type="file" 추가
+        $('#addFileBtn').click(function(){
+           console.log('#addFileBtn click!');
+           $('#inputFile').append('<input type="file" name="boardfile" class="boardfile">');
+        })
+        
+        // #inputFile input type="file" 삭제
+        $('#delFileBtn').click(function(){
+           console.log('#delFileBtn click!');
+           $('#inputFile').children().last().remove();
+        })
     });
 </script>
-<title>addBoard</title>
+<title>ADD BOARD(spring mvc 방식)</title>
 </head>
 <body>
     <div class="container">
         <h1>Add Board</h1>
-        <form id="addForm"
-            action="${pageContext.request.contextPath}/admin/addBoard" method="post">
+        <!-- enctype이 있어야 파일을 넘길 수 있음, 메소드 방식은 post로 해야 함 -->
+        <form id="addForm" action="${pageContext.request.contextPath}/admin/addBoard" method="post" enctype="multipart/form-data">
+           <div>
+              <div>
+                 <button id="addFileBtn" type="button">파일추가</button>
+                 <button id="delFileBtn" type="button">파일삭제</button>
+              </div>
+              <div id="inputFile">
+              </div>
+           </div>
+           
             <div class="form-group">
                 <label for="boardPw">boardPw :</label> <input class="form-control"
-                    name="boardPw" id="boardPw" type="password" />
+                    name="board.boardPw" id="boardPw" type="password" />
             </div>
             <div class="form-group">
-                <label for="boardTitle">boardTitle :</label> <input
-                    class="form-control" name="boardTitle" id="boardTitle" type="text" />
+                <label for="boardPw">boardTitle :</label> <input
+                    class="form-control" name="board.boardTitle" id="boardTitle" type="text" />
             </div>
             <div class="form-group">
                 <label for="boardContent">boardContent :</label>
-                <textarea class="form-control" name="boardContent" id="boardContent"
+                <textarea class="form-control" name="board.boardContent" id="boardContent"
                     rows="5" cols="50"></textarea>
             </div>
             <div class="form-group">
                 <label for="staffId">staffId :</label> <input
-                    class="form-control" name="staffId" id="staffId" type="text" />
+                    class="form-control" name="board.staffId" id="staffId" type="text" />
             </div>
             <div>
-                <input class="btn btn-default" id="addButton" type="button" value="글입력" /> 
-                <input class="btn btn-default" type="reset" value="초기화" /> 
-                <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getBoardList">글목록</a>
+                <input class="btn btn-default" id="addButton" type="button"
+                    value="글입력" /> <input class="btn btn-default" type="reset"
+                    value="초기화" /> <a class="btn btn-default"
+                    href="${pageContext.request.contextPath}/admin/getBoardList">글목록</a>
             </div>
         </form>
     </div>
