@@ -89,7 +89,7 @@ public class BoardService {
 				// 2-2)
 				// 파일을 저장
 				try {
-					File temp = new File("");
+					File temp = new File(""); // 프로젝트 폴더에 빈 파일이 만들어진다
 					String path = temp.getAbsolutePath();
 					f.transferTo(new File(path+"\\srcmain\\webapp\\upload\\"+filename)); // 빈 파일에 f안에 들어있는 파일을 복사함
 				} catch (Exception e) {
