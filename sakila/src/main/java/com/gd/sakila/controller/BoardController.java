@@ -29,16 +29,16 @@ public class BoardController {
 		log.debug("modifyBoard()의 boardId : " + boardId);
 		// select
 		Map<String, Object> map = boardService.getBoardOne(boardId);
-		System.out.println("@@@@@@@@@@@@@ modifyBoard()의 map : "+map);
+		System.out.println("▶▶▶▶▶▶▶ modifyBoard()의 map : "+map);
 		model.addAttribute("map", map.get("boardMap")); // map에 boardMap과 commentList 같이 들어있어서 boardMap만 꺼내줌
 		return "modifyBoard";
 	}
 	
 	@PostMapping("/modifyBoard")
 	public String modifyBoard(Board board) {
-		log.debug("@@@@@@@@@@@@@ modifyBoard()의 board : " + board.toString());
+		log.debug("▶▶▶▶▶▶▶ modifyBoard()의 board : " + board.toString());
 		int row = boardService.modifyBoard(board);
-		log.debug("@@@@@@@@@@@@@ modifyBoard()의 row : " + row);
+		log.debug("▶▶▶▶▶▶▶ modifyBoard()의 row : " + row);
 		return "redirect:/admin/getBoardOne?boardId="+board.getBoardId();
 	}
 	
@@ -46,7 +46,7 @@ public class BoardController {
 	// 리턴타입 뷰이름 문자열 C -> V
 	@GetMapping("/removeBoard") // 컨트롤러 메소드의 리턴타입은 뷰 이름 (문자열)
 	public String removeBoard(Model model, @RequestParam(value = "boardId", required = true) int boardId) {
-		log.debug("@@@@@@@@@@@@@ removeBoard()의 boardId : " + boardId); // 디버깅 코드 int값만 출력 불가능, String 추가해서 출력함
+		log.debug("▶▶▶▶▶▶▶ removeBoard()의 boardId : " + boardId); // 디버깅 코드 int값만 출력 불가능, String 추가해서 출력함
 		model.addAttribute("boardId", boardId);
 		return "removeBoard";
 	}
@@ -55,7 +55,7 @@ public class BoardController {
 	@PostMapping("/removeBoard")
 	public String removeBoard(Board board) {
 		int row = boardService.removeBoard(board);
-		log.debug("@@@@@@@@@@@@@ removeBoard의 row : "+row);
+		log.debug("▶▶▶▶▶▶▶ removeBoard의 row : "+row);
 		if(row == 0) { // 삭제 실패 시
 			return "redirect:/admin/getBoardOne?boardId="+board.getBoardId();
 		}
@@ -70,7 +70,7 @@ public class BoardController {
 	
 	@PostMapping("/addBoard") // 뷰에서 입력한 값을 처리함
 	public String addBoard(BoardForm boardForm) { // board와 관련된 값을 한꺼번에 묶어서 받아옴, 커맨드 객체, 배포 쪽에서 Board클래스 대신 BoardForm을 사용하기 때문에 매개변수 변경
-		log.debug("@@@@@@@@@@@@@ addBoard()의 boardForm : " + boardForm); // view에서 입력한 값이 넘어오는지 디버깅
+		log.debug("▶▶▶▶▶▶▶ addBoard()의 boardForm : " + boardForm); // view에서 입력한 값이 넘어오는지 디버깅
 		// boardService.addBoard(board);
 		return "redirect:/admin/getBoardList"; // 입력 후에 getBoardList로 리다이렉트
 	}
@@ -79,9 +79,10 @@ public class BoardController {
 	@GetMapping("/getBoardOne")
 	public String getBoardOne(Model model, @RequestParam(value="boardId", required = true) int boardId) {
 		Map<String, Object> map = boardService.getBoardOne(boardId);
-		log.debug("@@@@@@@@@@@@@ map : " + map); // log.debug(맵) 맵 풀어서 출력해줌 
-		log.debug("@@@@@@@@@@@@@ getBoardOne()의 boardMap : " + map.get("boardMap").toString());
+		log.debug("▶▶▶▶▶▶▶ map : " + map); // log.debug(맵) 맵 풀어서 출력해줌 
+		log.debug("▶▶▶▶▶▶▶ getBoardOne()의 boardMap : " + map.get("boardMap").toString());
 		model.addAttribute("boardMap", map.get("boardMap"));
+		model.addAttribute("boardfileList", map.get("boarfileList"));
 		model.addAttribute("commentList", map.get("commentList"));
 		return "getBoardOne";
 	}

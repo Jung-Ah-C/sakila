@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.BoardfileMapper"> <!-- package -->
+	<!-- 하나의 게시글에 참조되는 boardfile select -->
+	<!-- 테이블컬럼명과 제너릭타입의 필드명의 불일치 해결하는 방법 3가지 -->
+	<!-- 1) mybatis 설정 파일 세팅을 통해서 스네이크 표현식을 카멜 표현식으로..
+		 2) resultMap을 사용하는 방법
+		 3) 쿼리 별명을 사용하는 방법 -->
+	<select id="selectBoardfileByBoardId" parameterType="int" resultType="com.gd.sakila.vo.Boardfile"> <!-- resultType : return type X, 리스트의 제너릭 타입임 -->
+		SELECT
+			boardfile_name boardfileName,
+			boardfile_size boardfileSize
+		FROM boardfile
+		WHERE board_id = #{boardId}
+	</select>
+	
 	<insert id="insertBoardfile" parameterType="com.gd.sakila.vo.Boardfile">
 		INSERT INTO boardfile(
 			board_id,

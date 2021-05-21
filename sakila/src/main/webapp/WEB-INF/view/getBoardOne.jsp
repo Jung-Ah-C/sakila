@@ -48,6 +48,22 @@
                    <td>insert_date :</td>
                    <td>${boardMap.insertDate}</td>
             </tr>
+            <tr>
+                   <td>boardfile :</td>
+                   <td>
+                  		<div>
+                  			<a href=""></a>
+                  		</div>
+                  		<!-- 보드파일을 출력하는 반복문 코드 구현 -->
+                  		<c:forEach var="f" items="${boardfileList}">
+                  			<div>
+                  				<a href="${pageContext.request.contextPath}/resource/${f.boardfileName}">${f.boardfileName}</a>
+                  				<a href=""><button type="button">파일삭제</button></a>
+                  			</div>
+                  		</c:forEach>
+                  		<a href="">파일추가</a>
+                   </td>
+            </tr>
         </tbody>
     </table>
 	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/modifyBoard?boardId=${boardMap.boardId}">수정</a>

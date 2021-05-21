@@ -19,6 +19,7 @@ $(document).ready(function(){
 </head>
 <body>
 	<h1>Home</h1>
+	<a href="${pageContext.request.contextPath}/admin/getBoardList">게시판</a>
 	<!-- 로그 오프 시... -->
 	<c:if test="${loginStaff == null}">
 		<form id="loginForm" action="${pageContext.request.contextPath}/login" method="post">

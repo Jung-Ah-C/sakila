@@ -1,5 +1,7 @@
 package com.gd.sakila.controller;
 
+import java.io.File;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,11 @@ public class HomeController {
 	public String home() {
 		// System.out.println("home...");
 		log.debug("test"); // 디버깅할 때 system.println.out() 대신 쓸 수 있음
-		return "home";
+		File file = new File("");
+		String path = file.getAbsolutePath(); // path -> 
+		log.debug(path);
+		
+		return "home"; // 로그인
 	}
 	
 	@GetMapping("/admin/logout")
