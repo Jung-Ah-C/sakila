@@ -31,32 +31,49 @@ public class BoardService {
 	@Autowired BoardfileMapper boardfileMapper;
 	@Autowired CommentMapper commentMapper;
 	
-	// modifyBoard 메소드
+	// 게시글 수정 액션
 	public int modifyBoard(Board board) {
-		log.debug("▶▶▶▶▶▶ modifyBoard() param : " + board.getBoardId());
+		log.debug("▶▶▶▶▶▶ modifyBoard() board : " + board.getBoardId());
 		return boardMapper.updateBoard(board);
 	}
 	
-	// removeBoard 메소드
+	// 게시글 삭제 액션
 	public int removeBoard(Board board) {
-		log.debug("▶▶▶▶▶▶ removeBoard() param : " + board.toString()); // 디버깅 (배열을 출력하기 위해서 toString 메소드 사용)
+		log.debug("▶▶▶▶▶▶ removeBoard() board : " + board.toString()); // 디버깅 (배열을 출력하기 위해서 toString 메소드 사용)
 		
-		// 2) 게시글 삭제 (FK board_id 설정하지 않거나, FK delete no action으로 설정)
+		// 1) 게시글 삭제 (FK board_id 설정하지 않거나, FK delete no action으로 설정)
 		int boardRow = boardMapper.deleteBoard(board);
+		log.debug("▶▶▶▶▶▶ removeBoard() boardRow" + boardRow);
 		if(boardRow == 0) { // 삭제가 완료가 안되면 0을 리턴
 			return 0;
 		}
 		
-		// 1) 댓글 삭제
+		// 2) 댓글 삭제
 		int commentRow = commentMapper.deleteCommentByBoardId(board.getBoardId());
 		log.debug("▶▶▶▶▶▶ removeBoard() commentRow : " + commentRow);
 		
-		log.debug("▶▶▶▶▶▶ removeBoard() boardRow : " + boardRow);
-		return boardRow; // 댓글삭제 완료 된 후에 게시글삭제가 실행되기 때문에 리턴값은 boardRow만 확인해도 됨
+		// 3) 물리적 파일 삭제 (/resource/안의 파일)
+		List<Boardfile> boardfileList = boardfileMapper.selectBoardfileByBoardId(board.getBoardId());
+		if(boardfileList != null) {
+			for(Boardfile f : boardfileList) {
+				File temp = new File(""); // 프로젝트 폴더에 빈 파일이 만들어진다
+				String path = temp.getAbsolutePath(); // 프로젝트 폴더
+				File file = new File(path+"\\src\\main\\webapp\\resource\\"+f.getBoardfileName());
+				file.delete();
+			}
+		}
+		
+		// 4) 파일 테이블 행 삭제
+		int boardfileRow = boardfileMapper.deleteBoardfileByBoardId(board.getBoardId());
+		log.debug("▶▶▶▶▶▶ removeBoard() boardfileRow : " + boardfileRow);
+		
+		return boardRow;
 	}
 	
-	// addBoard 메소드
+	// 게시글 추가 액션
 	public int addBoard(BoardForm boardForm) {
+		log.debug("addBoard()의 boardForm : " + boardForm);
+		
 		// 넘겨 받은 BoardForm 타입을 Board로 변환
 		// 1)
 		Board board = boardForm.getBoard(); // boardId값이 null인 상태
@@ -73,11 +90,11 @@ public class BoardService {
 				boardfile.setBoardId(board.getBoardId()); // auto increment로 입력된 값
 				// test.txt -> newname.txt
 				String originalFilename = f.getOriginalFilename();
-				int p = originalFilename.lastIndexOf("."); // 마지막에 있는 파일 확장자 명을 찾기 위해서 
-				String ext = originalFilename.substring(p).toLowerCase(); // .txt
-				String prename = UUID.randomUUID().toString().replace("-", ""); // 무작위의 문자열을 만드는 라이브러리
+				int p = originalFilename.lastIndexOf("."); // 파일명에서 파일 확장자 명을 찾기 위해서 .을 기준으로 뒷부분을 모두 복사
+				String ext = originalFilename.substring(p).toLowerCase(); // 확장자명 중에서 대문자인 경우도 다 소문자로 통일함
+				String prename = UUID.randomUUID().toString().replace("-", ""); // 무작위의 문자열을 만드는 라이브러리, -을 없애줌
 				
-				String filename = prename+ext;
+				String filename = prename+ext; // UUID의 무작위 이름과 확장자명을 합쳐서 저장
 				boardfile.setBoardfileName(filename); // 중복으로 인한 덮어쓰기 이슈가 발생함
 				boardfile.setBoardfileSize(f.getSize());
 				boardfile.setBoardfiletype(f.getContentType());
@@ -87,22 +104,20 @@ public class BoardService {
 				boardfileMapper.insertBoardfile(boardfile);
 				
 				// 2-2)
-				// 파일을 저장
+				// 파일을 저장 (물리적)
 				try {
 					File temp = new File(""); // 프로젝트 폴더에 빈 파일이 만들어진다
-					String path = temp.getAbsolutePath();
-					f.transferTo(new File(path+"\\srcmain\\webapp\\upload\\"+filename)); // 빈 파일에 f안에 들어있는 파일을 복사함
+					String path = temp.getAbsolutePath(); // 프로젝트 폴더
+					f.transferTo(new File(path+"\\src\\main\\webapp\\resource\\"+filename)); // 빈 파일에 f안에 들어있는 파일을 복사함
 				} catch (Exception e) {
 					throw new RuntimeException(); // 복사하다가 예외가 발생하면 예외처리
 				}
 			}
 		}
-		
-		
 		return boardMapper.addBoard(board);
 	}
 	
-	// getBoardOne, 1) 상세보기 + 2) 댓글목록, 수정 폼
+	// 게시글 상세 액션 (getBoardOne), 1) 상세보기 + 2) 댓글목록, 수정 폼
 	public Map<String, Object> getBoardOne (int boardId) {
 		// 1) 상세보기
 		Map<String, Object> boardMap = boardMapper.selectBoardOne(boardId);
@@ -123,7 +138,7 @@ public class BoardService {
 		return map;
 	}
 	
-	// getBoardList 메소드
+	// 게시글 목록 액션
 	public Map<String, Object> getBoardList(int currentPage, int rowPerPage, String searchWord) {
 		// 1. 변수 가공
 		int boardTotal = boardMapper.selectBoardTotal(searchWord); // searchWord 필요

@@ -19,7 +19,8 @@ $(document).ready(function(){
 </head>
 <body>
 	<h1>Home</h1>
-	<a href="${pageContext.request.contextPath}/admin/getBoardList">게시판</a>
+	<a href="${pageContext.request.contextPath}/admin/getBoardList">게시판</a> <!-- 빠른 테스트를 위해서 메뉴 꺼내놓음 -->
+	<a href="${pageContext.request.contextPath}/admin/getStaffList">직원목록</a> <!-- 빠른 테스트를 위해서 메뉴 꺼내놓음 -->
 	<!-- 로그 오프 시... -->
 	<c:if test="${loginStaff == null}">
 		<form id="loginForm" action="${pageContext.request.contextPath}/login" method="post">
@@ -36,6 +37,7 @@ $(document).ready(function(){
 	<!-- 로그 온 시... -->
 	<c:if test="${loginStaff != null}">
 		<a href="${pageContext.request.contextPath}/admin/getBoardList">게시판</a>
+		<a href="${pageContext.request.contextPath}/admin/getStaffList">직원목록</a>
 		<a href="${pageContext.request.contextPath}/admin/logout">로그아웃</a>
 	</c:if>
 </body>

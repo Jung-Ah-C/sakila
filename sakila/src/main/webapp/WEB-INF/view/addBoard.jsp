@@ -60,13 +60,13 @@
             }
         });
         
-        // #inputFile input type="file" 추가
+        // #inputFile input type="file" 마지막에 추가
         $('#addFileBtn').click(function(){
            console.log('#addFileBtn click!');
            $('#inputFile').append('<input type="file" name="boardfile" class="boardfile">');
         })
         
-        // #inputFile input type="file" 삭제
+        // #inputFile input type="file" 마지막 태그를 삭제
         $('#delFileBtn').click(function(){
            console.log('#delFileBtn click!');
            $('#inputFile').children().last().remove();

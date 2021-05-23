@@ -12,4 +12,38 @@
 		WHERE email = #{email} <!-- getEmail() -->
 		AND password = PASSWORD(#{password}) <!-- getPassword() -->
 	</select>
+	
+	<select id="getStaffList"
+			parameterType="com.gd.sakila.vo.Page"
+			resultType="com.gd.sakila.vo.StaffList"> <!-- 검색 기능을 위해서 param Page 추가 -->
+		SELECT
+			ID ID,
+			name name,
+			SID SID
+		FROM 
+			staff_list
+		<where> <!-- 쿼리에서의 where 태그를 대신함 -->
+			<if test="searchWord != null">
+				name LIKE CONCAT('%',#{searchWord},'%')
+			</if>
+		</where>
+		ORDER BY ID ASC
+	</select>
+	
+	<select id="getStaffOne"
+			parameterType="int"
+			resultType="com.gd.sakila.vo.StaffList">
+		SELECT
+			ID ID,
+			name name,
+			address address,
+			'zip code' zipCode,
+			phone phone,
+			city city,
+			country country,
+			SID SID
+		FROM 
+			staff_list
+		WHERE ID = #{staffId}
+	</select>
 </mapper>

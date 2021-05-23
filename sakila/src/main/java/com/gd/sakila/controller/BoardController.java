@@ -71,7 +71,7 @@ public class BoardController {
 	@PostMapping("/addBoard") // 뷰에서 입력한 값을 처리함
 	public String addBoard(BoardForm boardForm) { // board와 관련된 값을 한꺼번에 묶어서 받아옴, 커맨드 객체, 배포 쪽에서 Board클래스 대신 BoardForm을 사용하기 때문에 매개변수 변경
 		log.debug("▶▶▶▶▶▶▶ addBoard()의 boardForm : " + boardForm); // view에서 입력한 값이 넘어오는지 디버깅
-		// boardService.addBoard(board);
+		boardService.addBoard(boardForm); // param Board -> BoardForm으로 변경함
 		return "redirect:/admin/getBoardList"; // 입력 후에 getBoardList로 리다이렉트
 	}
 	
