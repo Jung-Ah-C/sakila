@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.FilmMapper">
+	<!-- 영화 재고 확인 -->
 	<!-- Map : filmId(in), storeId(in), filmCount(out) -->
 	<select id="selectFilmInStock" 
 			parameterType="java.util.Map"
@@ -14,5 +15,66 @@
 				#{filmCount, mode=OUT, jdbcType=DECIMAL, javaType=Integer} <!-- mybatis procedure 호출 시 out -->
 			)
 		}
+	</select>
+	
+	<!-- 영화 목록 --> <!-- 테이블 film, category, film_category, film_actor, actor JOIN 필요 -->
+	<select id="selectFilmList"
+			parameterType="com.gd.sakila.vo.Page"
+			resultType="com.gd.sakila.vo.Film">
+		SELECT
+			f.flim_id flimId,
+			f.title title,
+			fc.category_id categoryId,
+			c.name categoryName,
+			fa.actor_id actorId,
+			CONCAT(a.first_name, _utf8mb4' ', a.last_name) actorName,
+		FROM
+			film f LEFT JOIN film_category fc
+		ON f.flim_id = fc.film_id
+		LEFT JOIN category c
+		ON fc.category_id = c.category_id
+		LEFT JOIN film_actor fa
+		ON fa.film_id = f.film_id
+		LEFT JOIN actor a
+		ON a.actor_id = fa.actor_id
+		<where> <!-- 쿼리에서의 where 태그를 대신함 -->
+			<if test="searchWord != null">
+				title LIKE CONCAT('%',#{searchWord},'%') OR actors LIKE CONCAT('%',#{searchWord},'%')
+			</if>
+		</where>
+		ORDER BY FID DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<!-- 페이징을 위한 쿼리 -->
+	<select id="selectFilmTotal" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) FROM film
+		<where>
+			<if test="searchWord != null">
+				title LIKE CONCAT('%',#{searchWord},'%') OR actors LIKE CONCAT('%',#{searchWord},'%')
+			</if>
+		</where>
+	</select>
+	
+	<!-- 영화 목록 상세보기 (수정 필요함) -->
+	<select id="selectFilmOne" parameterType="Integer" resultType="java.util.Map">
+		SELECT
+			f.film_id filmId,
+			f.title title,
+			f.description description,
+			f.release_year releaseYear,
+			f.language_id languageId,
+			f.original_language_id originalLanguageId,
+			f.rental_duration rentalDuration,
+			f.length length,
+			f.replacement_cost replacementCost,
+			f.rating rating,
+			f.special_features specialFeatures,
+			f.last_update lastUpdate
+			fs.p_film_count filmCount
+		FROM 
+			film f INNER JOIN film_in_stock fs
+		ON f.film_id = fs.film_id
+		WHERE film_id = #{filmId}
 	</select>
 </mapper>
