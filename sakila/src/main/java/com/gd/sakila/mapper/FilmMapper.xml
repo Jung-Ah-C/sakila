@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gd.sakila.mapper.FilmMapper">
+	<!-- Map : filmId(in), storeId(in), filmCount(out) -->
+	<select id="selectFilmInStock" 
+			parameterType="java.util.Map"
+			resultType="int" 
+			statementType="CALLABLE"> <!-- List<>의 제너릭 타입인 int를 resultType에 적어줌, select는 무조건 List로 출력-->
+			<!-- mybatis에서 procedure나 function을 사용할 때, 일반적으로 sql에서 db 조회 시에 PreparedStatement 대신에 Callable을 사용함 -->
+		{
+			call film_in_stock(
+				#{filmId},
+				#{storeId},
+				#{filmCount, mode=OUT, jdbcType=DECIMAL, javaType=Integer} <!-- mybatis procedure 호출 시 out -->
+			)
+		}
+	</select>
+</mapper>
