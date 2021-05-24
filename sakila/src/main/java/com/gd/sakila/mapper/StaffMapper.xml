@@ -19,6 +19,11 @@
 		SELECT
 			ID ID,
 			name name,
+			address address,
+			'zip code' zipCode,
+			phone phone,
+			city city,
+			country country,
 			SID SID
 		FROM 
 			staff_list
@@ -28,22 +33,5 @@
 			</if>
 		</where>
 		ORDER BY ID ASC
-	</select>
-	
-	<select id="getStaffOne"
-			parameterType="int"
-			resultType="com.gd.sakila.vo.StaffList">
-		SELECT
-			ID ID,
-			name name,
-			address address,
-			'zip code' zipCode,
-			phone phone,
-			city city,
-			country country,
-			SID SID
-		FROM 
-			staff_list
-		WHERE ID = #{staffId}
 	</select>
 </mapper>

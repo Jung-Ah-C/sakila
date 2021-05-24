@@ -22,6 +22,11 @@
             <tr>
                 <th>ID</th>
                 <th>name</th>
+                <th>address</th>
+                <th>zip code</th>
+                <th>phone</th>
+                <th>city</th>
+                <th>country</th>
                 <th>SID(Store ID)</th>
             </tr>
         </thead>
@@ -29,7 +34,12 @@
             <c:forEach var="s" items="${staffList}">
                 <tr>
                 	<td>${s.ID}</td>
-                    <td><a href="${pageContext.request.contextPath}/admin/getStaffOne?staffId=${s.ID}">${s.name}</a></td>
+                    <td>${s.name}</td>
+                    <td>${s.address}</td>
+                    <td>${s.zipCode}</td>
+                    <td>${s.phone}</td>
+                    <td>${s.city}</td>
+                    <td>${s.country}</td>
                     <td>${s.SID}</td>
                 </tr>
             </c:forEach>

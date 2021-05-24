@@ -17,5 +17,4 @@ import com.gd.sakila.vo.StaffList;
 public interface StaffMapper {
 	Staff selectStaffByLogin(Staff staff);
 	List<StaffList> getStaffList(Page page);
-	List<StaffList> getStaffOne(int staffId);
 }

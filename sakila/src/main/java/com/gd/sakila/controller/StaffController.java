@@ -35,19 +35,4 @@ public class StaffController {
 		
 		return "getStaffList";
 	}
-	
-	// staff 상세보기 맵핑
-	@GetMapping("/getStaffOne")
-	public String getStaffOne(Model model, @RequestParam(value="staffId", required = true) int staffId) {
-		// param 디버깅
-		log.debug("getStaffOne()의 param staffId : " + staffId);
-		
-		// 서비스 호출
-		List<StaffList> staffOne = staffService.getStaffOne(staffId);
-		log.debug("getStaffOne()의 staffOne : " + staffOne);
-		
-		model.addAttribute("staffOne", staffOne);
-		
-		return "getStaffOne";
-	}
 }

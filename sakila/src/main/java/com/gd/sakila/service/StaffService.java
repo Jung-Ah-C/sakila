@@ -41,15 +41,4 @@ public class StaffService {
 		
 		return staffList;
 	}
-	
-	// staff 상세보기 메서드
-	public List<StaffList> getStaffOne(int staffId) {
-		log.debug("getStaffOne()의 param staffId : " + staffId);
-		
-		// DAO 호출
-		List<StaffList> staffOne = staffMapper.getStaffOne(staffId);
-		log.debug("getStaffOne()의 staffOne : " + staffOne);
-		
-		return staffOne;
-	}
 }
