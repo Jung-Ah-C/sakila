@@ -12,5 +12,5 @@ import com.gd.sakila.vo.Page;
 public interface FilmMapper {
 	List<Integer> selectFilmInStock(Map<String, Object> map);
 	List<Map<String, Object>> selectFilmList(Map<String, Object> map);
-	// int selectFilmTotal(String searchWord);
+	int selectFilmTotal(Map<String, Object> map);
 }
