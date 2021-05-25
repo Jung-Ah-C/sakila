@@ -21,28 +21,21 @@ public class FilmController {
 	
 	// 영화 목록 맵핑
 	@GetMapping("/getFilmList")
-	public String getBoardList(Model model, 
-			@RequestParam(value="currentPage", defaultValue = "1") int currentPage, 
-			@RequestParam(value="rowPerPage", defaultValue = "10") int rowPerPage,
-			@RequestParam(value="searchWord", required = false) String searchWord) {
+	public String getFilmList(Model model, 
+								@RequestParam(name = "categoryName", required = false) String categoryName) {
 
-		log.debug(currentPage + "<-- getFilmList()의 currentPage");
-		log.debug(rowPerPage + "<-- getFilmList()의 rowPerPage");
-		log.debug(searchWord + "<-- getFilmList()의 searchWord");
+		log.debug("☆★☆★☆★☆★ FilmController. getFilmList()의 categoryName : " + categoryName);
 		
-		Map<String, Object> map = filmService.getFilmList(currentPage, rowPerPage, searchWord);
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("searchWord", searchWord);
-		model.addAttribute("lastPage", map.get("lastPage"));
+		// 카테고리를 선택하지 않고 검색했을 때의 버그 수정
+		if(categoryName != null && categoryName.equals("")) {
+			categoryName = null;
+		}
+		
+		Map<String, Object> map = filmService.getFilmList(categoryName);
 		model.addAttribute("filmList", map.get("filmList"));
+		model.addAttribute("categoryNameList", map.get("categoryNameList"));
+		model.addAttribute("categoryName", categoryName);
 		
 		return "getFilmList";
-	}
-	
-	// 영화 상세보기 맵핑
-	@GetMapping("/getFilmOne")
-	public String getFilmOne() {
-		filmService.getFilmOne(1, 1);
-		return "getFilmOne";
 	}
 }

@@ -17,6 +17,6 @@ public class SakilaScheduler {
 	@Scheduled(cron = "0 0 0 1 * *") // 매달 1일 0시 0분에 스케쥴링이 되어 있는 것, 순서대로 자리는 -> 초 분 시 월 년 요일
 	public void modifyCustomerActive() {
 		customerService.modifyCustomerActiveByScheduler();
-		log.debug("▶▶▶▶▶▶▶ modifyCustomerActive() 스케쥴러 실행 완료");
+		log.debug("▶▶▶▶▶▶▶ SakilaScheduler.modifyCustomerActive() 스케쥴러 실행 완료");
 	}
 }

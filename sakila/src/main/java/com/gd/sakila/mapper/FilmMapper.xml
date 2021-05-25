@@ -17,46 +17,38 @@
 		}
 	</select>
 	
-	<!-- 영화 목록 --> <!-- 테이블 film, category, film_category, film_actor, actor JOIN 필요 -->
+	<!-- 영화 목록 -->
 	<select id="selectFilmList"
-			parameterType="com.gd.sakila.vo.Page"
-			resultType="com.gd.sakila.vo.Film">
-		SELECT
-			f.flim_id flimId,
-			f.title title,
-			fc.category_id categoryId,
-			c.name categoryName,
-			fa.actor_id actorId,
-			CONCAT(a.first_name, _utf8mb4' ', a.last_name) actorName,
-		FROM
-			film f LEFT JOIN film_category fc
-		ON f.flim_id = fc.film_id
-		LEFT JOIN category c
-		ON fc.category_id = c.category_id
-		LEFT JOIN film_actor fa
-		ON fa.film_id = f.film_id
-		LEFT JOIN actor a
-		ON a.actor_id = fa.actor_id
-		<where> <!-- 쿼리에서의 where 태그를 대신함 -->
-			<if test="searchWord != null">
-				title LIKE CONCAT('%',#{searchWord},'%') OR actors LIKE CONCAT('%',#{searchWord},'%')
+			parameterType="java.util.Map"
+			resultType="java.util.Map">
+		SELECT 
+			FID,
+			title,
+			category,
+			price,
+			rating
+		FROM film_list
+		
+		<where>
+			<if test="categoryName != null"> <!-- test안은 자바코드로 작성, ${} 붙일 필요 없음 -->
+				AND category = #{categoryName}
 			</if>
 		</where>
-		ORDER BY FID DESC
-		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
 	<!-- 페이징을 위한 쿼리 -->
+	<!--  
 	<select id="selectFilmTotal" parameterType="String" resultType="Integer">
-		SELECT COUNT(*) FROM film
+		SELECT COUNT(*) FROM film_list
 		<where>
 			<if test="searchWord != null">
 				title LIKE CONCAT('%',#{searchWord},'%') OR actors LIKE CONCAT('%',#{searchWord},'%')
 			</if>
 		</where>
 	</select>
+	-->
 	
-	<!-- 영화 목록 상세보기 (수정 필요함) -->
+	<!-- 영화 상세보기 (수정 필요함) -->
 	<select id="selectFilmOne" parameterType="Integer" resultType="java.util.Map">
 		SELECT
 			f.film_id filmId,
