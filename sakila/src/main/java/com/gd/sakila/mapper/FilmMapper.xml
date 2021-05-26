@@ -22,7 +22,7 @@
 			parameterType="java.util.Map"
 			resultType="java.util.Map">
 		SELECT 
-			FID,
+			FID FID,
 			title title,
 			category category,
 			price price,
@@ -30,19 +30,19 @@
 			actors actors
 		FROM film_list
 		<where>
-			<if test="category != null"> <!-- test안은 자바코드로 작성, ${} 붙일 필요 없음 -->
+			<if test="category != null and category != ''"> <!-- test안은 자바코드로 작성, ${} 붙일 필요 없음 -->
 				AND category = #{category}
 			</if>
-			<if test="price != null"> 
+			<if test="price != null and price != ''"> 
 				AND price = #{price}
 			</if>
-			<if test="rating != null"> 
+			<if test="rating != null and rating != ''"> 
 				AND rating = #{rating}
 			</if>
-			<if test="title != null"> 
+			<if test="title != null and title != ''"> 
 				AND title LIKE CONCAT('%', #{title}, '%')
 			</if>
-			<if test="actors != null"> 
+			<if test="actors != null and actors != ''"> 
 				AND actors LIKE CONCAT('%', #{actors}, '%')
 			</if>
 		</where>
@@ -54,19 +54,19 @@
 	<select id="selectFilmTotal" parameterType="java.util.Map" resultType="Integer">
 		SELECT COUNT(*) FROM film_list
 		<where>
-			<if test="category != null"> <!-- test안은 자바코드로 작성, ${} 붙일 필요 없음 -->
+			<if test="category != null and category != ''" > <!-- test안은 자바코드로 작성, ${} 붙일 필요 없음 -->
 				AND category = #{category}
 			</if>
-			<if test="price != null"> 
+			<if test="price != null and price != ''">  <!-- 선택하지 않았을 때의 버그 수정 -->
 				AND price = #{price}
 			</if>
-			<if test="rating != null"> 
+			<if test="rating != null and rating != ''"> 
 				AND rating = #{rating}
 			</if>
-			<if test="title != null"> 
+			<if test="title != null and title != ''"> 
 				AND title LIKE CONCAT('%', #{title}, '%')
 			</if>
-			<if test="actors != null"> 
+			<if test="actors != null and actors != ''"> 
 				AND actors LIKE CONCAT('%', #{actors}, '%')
 			</if>
 		</where>

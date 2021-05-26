@@ -51,6 +51,7 @@ public class FilmService {
 		page.setBeginRow((currentPage-1)*rowPerPage);
 		page.setRowPerPage(rowPerPage);
 		
+		// 페이징과 관련된 변수를 pageMap에 담아줌
 		Map<String,Object> pageMap = new HashMap<>();
 		pageMap.put("page", page);
 		pageMap.put("category", category);
@@ -63,9 +64,6 @@ public class FilmService {
 		int filmTotal = filmMapper.selectFilmTotal(pageMap);
 		log.debug("☆★☆★☆★☆★ FilmService.getFilmList()의 filmTotal : " + filmTotal);
 		int lastPage = (int)Math.ceil((double)filmTotal/ rowPerPage);
-		if(filmTotal % rowPerPage != 0) {
-			lastPage++;
-		}
 		log.debug("☆★☆★☆★☆★ FilmService.getFilmList()의 lastPage : " + lastPage);
 		List<Map<String, Object>> filmList = filmMapper.selectFilmList(pageMap); // 페이징 변수까지 담아서 filmList 정의 및 mapper 호출
 		log.debug("☆★☆★☆★☆★ FilmService.getFilmList()의 filmList : " + filmList);
@@ -74,6 +72,7 @@ public class FilmService {
 		Map<String, Object> returnMap = new HashMap<>();
 		returnMap.put("filmList", filmList);
 		returnMap.put("categoryNameList", categoryNameList);
+		returnMap.put("page", page); // beginRow, rowPerPage
 		returnMap.put("lastPage", lastPage);
 		returnMap.put("category", category);
 		returnMap.put("price", price);

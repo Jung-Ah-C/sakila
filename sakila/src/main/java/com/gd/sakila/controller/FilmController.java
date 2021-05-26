@@ -50,29 +50,8 @@ public class FilmController {
 		paramMap.put("title", title);
 		paramMap.put("actors", actors);
 		
-		// 아무것도 선택하지 않고 검색했을 때의 버그 수정
-		if(category != null && category.equals("")) {
-			category = null;
-		}
-		
-		if(price != null && price==0) {
-			price = null;
-		}
-		
-		if(rating != null && rating.equals("")) {
-			rating = null;
-		}
-		
-		if(title != null && title.equals("")) {
-			title = null;
-		}
-		
-		if(actors != null && actors.equals("")) {
-			actors = null;
-		}
-		
 		// filmService 호출해서 filmMap 값에 담아줌
-		Map<String, Object> filmMap = filmService.getFilmList(paramMap);
+		Map<String, Object> filmMap = filmService.getFilmList(paramMap); // 서비스에서 결과물로 return returnMap; 그 결과물을 filmMap에 담아줌
 		
 		// 디버깅
 		log.debug("☆★☆★☆★☆★ FilmController. getFilmList()의 filmMap.lastPage : " + filmMap.get("lastPage"));
@@ -80,10 +59,10 @@ public class FilmController {
 		
 		model.addAttribute("filmList", filmMap.get("filmList"));
 		model.addAttribute("categoryNameList", filmMap.get("categoryNameList"));
+		model.addAttribute("lastPage", filmMap.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("category", category);
 		model.addAttribute("price", price);
-		model.addAttribute("lastPage", filmMap.get("lastPage"));
 		model.addAttribute("rating", rating);
 		model.addAttribute("title", title);
 		model.addAttribute("actors", actors);
