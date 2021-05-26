@@ -20,24 +20,72 @@
      <table class="table">
          <tbody>
              <tr>
-                <td>board_id :</td>
-                <td>${boardMap.boardId}</td>
+                <td>filmID :</td>
+                <td>${filmOne.filmId}</td>
                </tr>
             <tr>
-				<td>board_title :</td>
-				<td>${boardMap.boardTitle}</td>
+				<td>title :</td>
+				<td>${filmOne.title}</td>
             </tr>
             <tr>
-				<td>board_content :</td>
-				<td>${boardMap.boardContent}</td>
+				<td>description :</td>
+				<td>${filmOne.description}</td>
             </tr>
             <tr>
-				<td>username :</td>
-				<td>${boardMap.username}</td>
+				<td>releaseYear :</td>
+				<td>${filmOne.releaseYear}</td>
             </tr>
             <tr>
-				<td>insert_date :</td>
-				<td>${boardMap.insertDate}</td>
+				<td>actorID :</td>
+				<td>${filmOne.actorId}</td>
+            </tr>
+            <tr>
+				<td>actorName :</td>
+				<td>${filmOne.actorName}</td>
+            </tr>
+            <tr>
+				<td>languageID :</td>
+				<td>${filmOne.languageId}</td>
+            </tr>
+            <tr>
+				<td>originalLanguageID :</td>
+				<td>${filmOne.originalLanguageId}</td>
+            </tr>
+            <tr>
+				<td>rentalDuration :</td>
+				<td>${filmOne.rentalDuration}</td>
+            </tr>
+            <tr>
+				<td>rentalRate :</td>
+				<td>${filmOne.rentalRate}</td>
+            </tr>
+            <tr>
+				<td>length :</td>
+				<td>${filmOne.length}</td>
+            </tr>
+            <tr>
+				<td>replacementCost :</td>
+				<td>${filmOne.replacementCost}</td>
+            </tr>
+            <tr>
+				<td>rating :</td>
+				<td>${filmOne.rating}</td>
+            </tr>
+            <tr>
+				<td>specialFeatures :</td>
+				<td>${filmOne.specialFeatures}</td>
+            </tr>
+            <tr>
+				<td>lastUpdate :</td>
+				<td>${filmOne.lastUpdate}</td>
+            </tr>
+            <tr>
+				<td>store1Stock :</td>
+				<td>${store1Stock}</td>
+            </tr>
+            <tr>
+				<td>store2Stock :</td>
+				<td>${store2Stock}</td>
             </tr>
         </tbody>
     </table>

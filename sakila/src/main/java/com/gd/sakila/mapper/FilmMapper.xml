@@ -72,25 +72,28 @@
 		</where>
 	</select>
 	
-	<!-- 영화 상세보기 (수정 필요함) -->
+	<!-- 영화 상세보기 -->
 	<select id="selectFilmOne" parameterType="Integer" resultType="java.util.Map">
 		SELECT
 			f.film_id filmId,
 			f.title title,
 			f.description description,
 			f.release_year releaseYear,
+			fa.actor_id actorId,
+			GROUP_CONCAT(a.first_name, ' ', a.last_name) actorName,
 			f.language_id languageId,
 			f.original_language_id originalLanguageId,
 			f.rental_duration rentalDuration,
+			f.rental_rate rentalRate,
 			f.length length,
 			f.replacement_cost replacementCost,
 			f.rating rating,
 			f.special_features specialFeatures,
 			f.last_update lastUpdate
-			fs.p_film_count filmCount
 		FROM 
-			film f INNER JOIN film_in_stock fs
-		ON f.film_id = fs.film_id
-		WHERE film_id = #{filmId}
+			film f 
+		LEFT JOIN film_actor fa ON f.film_id = fa.film_id
+		LEFT JOIN actor a ON fa.actor_id = a.actor_id
+		WHERE f.film_id = #{filmId}
 	</select>
 </mapper>

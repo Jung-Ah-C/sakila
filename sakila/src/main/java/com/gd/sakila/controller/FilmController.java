@@ -69,4 +69,20 @@ public class FilmController {
 		
 		return "getFilmList";
 	}
+	
+	// 영화 상세보기 맵핑
+	@GetMapping("/getFilmOne")
+	public String getFilmOne(Model model, @RequestParam(value="filmId", required = true) int filmId) {
+		// 디버깅
+		log.debug("☆★☆★☆★☆★ FilmController. getFilmOne()의 filmId : " + filmId);
+		
+		Map<String, Object> filmOneMap = filmService.getFilmOne(filmId);
+		log.debug("☆★☆★☆★☆★ FilmController. getFilmOne()의 filmOneMap : " + filmOneMap);
+		
+		model.addAttribute("store1Stock", filmOneMap.get("store1Stock"));
+		model.addAttribute("store2Stock", filmOneMap.get("store2Stock"));
+		model.addAttribute("filmOne", filmOneMap.get("filmOne"));
+		
+		return "getFilmOne";
+	}
 }

@@ -139,7 +139,6 @@
 				<th>category</th>
 				<th>price</th>
 				<th>rating</th>
-				<th>actors</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -150,7 +149,6 @@
 					<td>${m.category}</td>
 					<td>${m.price}</td>
 					<td>${m.rating}</td>
-					<td>${m.actors}</td>
 				</tr>
 			</c:forEach>
 		</tbody>

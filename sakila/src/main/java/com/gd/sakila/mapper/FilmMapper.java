@@ -13,4 +13,5 @@ public interface FilmMapper {
 	List<Integer> selectFilmInStock(Map<String, Object> map);
 	List<Map<String, Object>> selectFilmList(Map<String, Object> map);
 	int selectFilmTotal(Map<String, Object> map);
+	Map<String, Object> selectFilmOne(int filmId);
 }

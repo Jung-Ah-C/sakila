@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gd.sakila.mapper.CategoryMapper;
 import com.gd.sakila.mapper.FilmMapper;
-import com.gd.sakila.vo.FilmList;
 import com.gd.sakila.vo.Page;
 
 import lombok.extern.slf4j.Slf4j;
@@ -80,6 +79,47 @@ public class FilmService {
 		returnMap.put("title", title);
 		returnMap.put("actors", actors);
 
+		return returnMap;
+	}
+	
+	// 영화 상세보기 액션
+	public Map<String, Object> getFilmOne(int filmId) {
+		// 디버깅
+		log.debug("☆★☆★☆★☆★ FilmService.getFilmOne()의 filmId : " + filmId);
+		
+		// mapper 호출 (filmOn)
+		Map<String, Object> filmOne = filmMapper.selectFilmOne(filmId);
+		log.debug("☆★☆★☆★☆★ FilmService.getFilmOne()의 filmOne : " + filmOne);
+		
+		// mapper 호출 (stock)
+		// store1
+		Map<String, Object> store1Map = new HashMap<>();
+		store1Map.put("filmId", filmId);
+		store1Map.put("storeId", 1);
+		
+		int store1Count = 0;
+		store1Map.put("stock", store1Count);
+		List<Integer> store1Stock = filmMapper.selectFilmInStock(store1Map);
+		log.debug("☆★☆★☆★☆★ FilmService.getFilmOne()의 store1Map : " + store1Map);
+		log.debug("☆★☆★☆★☆★ FilmService.getFilmOne()의 store1Stock : " + store1Stock);
+		
+		// store2
+		Map<String, Object> store2Map = new HashMap<>();
+		store2Map.put("filmId", filmId);
+		store2Map.put("storeId", 2);
+		
+		int store2Count = 0;
+		store2Map.put("stock", store2Count);
+		List<Integer> store2Stock = filmMapper.selectFilmInStock(store2Map);
+		log.debug("☆★☆★☆★☆★ FilmService.getFilmOne()의 store2Map : " + store2Map);
+		log.debug("☆★☆★☆★☆★ FilmService.getFilmOne()의 store2Stock : " + store2Stock);
+		
+		
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("store1Stock", store1Map.get("store1Count"));
+		returnMap.put("store2Stock", store2Map.get("store2Count"));
+		returnMap.put("filmOne", filmOne);
+		
 		return returnMap;
 	}
 }
