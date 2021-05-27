@@ -40,7 +40,7 @@
 				<td>${filmOne.actorId}</td>
             </tr>
             <tr>
-				<td>actorName :</td>
+				<td>actors : <a href="${pageContext.request.contextPath}/admin/getFilmActorListByFilm?filmId=${filmOne.filmId}"><button type="button">출연배우 수정</button></a></td>
 				<td>${filmOne.actorName}</td>
             </tr>
             <tr>

@@ -96,4 +96,37 @@
 		LEFT JOIN actor a ON fa.actor_id = a.actor_id
 		WHERE f.film_id = #{filmId}
 	</select>
+	
+	<!-- 영화 상세보기에서 영화배우 선택 -->
+	<select id="selectFilmActorListByFilm"
+			parameterType="int"
+			resultType="java.util.Map">
+		SELECT
+			a.actor_id actorId,
+			CONCAT(first_name, ' ', last_name) name,
+			film_id filmId
+		FROM actor a LEFT JOIN (SELECT * FROM film_actor WHERE film_id = #{filmId}) t
+		ON a.actor_id = t.actor_id
+		ORDER BY first_name ASC
+	</select>
+	
+	<!-- 영화 상세보기에서 영화배우 수정 (getFilmActorListByFilm), 다 지우고 새로 다시 입력함 -->
+	<delete id="removeFilmActorListByFilm"
+			parameterType="int">
+		DELETE
+		FROM film_actor
+		WHERE film_id = #{filmId}
+	</delete>
+	
+	<!-- 영화 상세보기에서 영화배우 새로 입력 -->
+	<insert id="insertFilmActorListByFilm"
+			parameterType="int">
+		INSERT INTO film_actor(
+			actor_id, 
+			film_id
+		) VALUES (
+			#{actorId},
+			#{filmId}
+		)
+	</insert>
 </mapper>

@@ -21,6 +21,32 @@ public class FilmService {
 	@Autowired FilmMapper filmMapper;
 	@Autowired CategoryMapper categoryMapper;
 	
+	// 영화 상세보기에서 영화 배우 목록 삭제 및 추가
+	public void modifyFilmActorListByFilm(Map<String, Object> paramMap) {
+		log.debug("☆★☆★☆★☆★ FilmService.modifyFilmActorListByFilm()의 paramMap : " + paramMap);
+		// 배우 목록 삭제
+		int filmId = (int)paramMap.get("filmId");
+		int removeRow = filmMapper.removeFilmActorListByFilm(filmId);
+		log.debug("☆★☆★☆★☆★ FilmService.modifyFilmActorListByFilm()의 removeRow : " + removeRow);
+		
+		// 배우 목록 추가
+		if(paramMap.get("actorId") != null) {
+			int[] actorId = (int[]) paramMap.get("actorId");
+
+			for (int i : actorId) {
+				log.debug("☆★☆★☆★☆★ FilmService.modifyFilmActorListByFilm() 반복문의 actorId : " + i);
+				int insertRow = filmMapper.insertFilmActorListByFilm(i,filmId);
+				log.debug("☆★☆★☆★☆★ FilmService.modifyFilmActorListByFilm()의 insertRow : " + insertRow);
+			}
+		}
+	}
+	
+	// 영화 상세보기 영화 배우 목록 출력
+	public List<Map<String, Object>> getFilmActorListByFilm(int filmId) {
+		log.debug("☆★☆★☆★☆★ FilmService.getFilmActorListByFilm()의 filmId : " + filmId);
+		return filmMapper.selectFilmActorListByFilm(filmId);
+	}
+	
 	// 영화 목록 액션
 	public Map<String, Object> getFilmList(Map<String, Object> paramMap) {
 		// 디버깅
@@ -87,7 +113,7 @@ public class FilmService {
 		// 디버깅
 		log.debug("☆★☆★☆★☆★ FilmService.getFilmOne()의 filmId : " + filmId);
 		
-		// mapper 호출 (filmOn)
+		// mapper 호출 (filmOne)
 		Map<String, Object> filmOne = filmMapper.selectFilmOne(filmId);
 		log.debug("☆★☆★☆★☆★ FilmService.getFilmOne()의 filmOne : " + filmOne);
 		
@@ -98,7 +124,7 @@ public class FilmService {
 		store1Map.put("storeId", 1);
 		
 		int store1Count = 0;
-		store1Map.put("stock", store1Count);
+		store1Map.put("store1Count", store1Count);
 		List<Integer> store1Stock = filmMapper.selectFilmInStock(store1Map);
 		log.debug("☆★☆★☆★☆★ FilmService.getFilmOne()의 store1Map : " + store1Map);
 		log.debug("☆★☆★☆★☆★ FilmService.getFilmOne()의 store1Stock : " + store1Stock);
@@ -109,7 +135,7 @@ public class FilmService {
 		store2Map.put("storeId", 2);
 		
 		int store2Count = 0;
-		store2Map.put("stock", store2Count);
+		store2Map.put("store2Count", store2Count);
 		List<Integer> store2Stock = filmMapper.selectFilmInStock(store2Map);
 		log.debug("☆★☆★☆★☆★ FilmService.getFilmOne()의 store2Map : " + store2Map);
 		log.debug("☆★☆★☆★☆★ FilmService.getFilmOne()의 store2Stock : " + store2Stock);

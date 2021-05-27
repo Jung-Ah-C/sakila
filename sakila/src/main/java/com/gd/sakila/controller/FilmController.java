@@ -1,12 +1,14 @@
 package com.gd.sakila.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -19,6 +21,37 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin")
 public class FilmController {
 	@Autowired FilmService filmService;
+	
+	@GetMapping("/getFilmActorListByFilm")
+	public String getFilmActorListByFilm(Model model, @RequestParam(value = "filmId", required = true) int filmId) {
+		List<Map<String, Object>> list = filmService.getFilmActorListByFilm(filmId);
+		log.debug("☆★☆★☆★☆★ FilmController.getFilmActorListByFilm의 list size() : " + list.size());
+		
+		model.addAttribute("filmActorList", list);
+		model.addAttribute("filmId", filmId);
+		
+		return "getFilmActorListByFilm";
+	}
+	
+	@PostMapping("/modifyFilmActor")
+	public String modifyFilmActor(Model model,
+								  @RequestParam(value = "filmId", required = true) int filmId,
+								  @RequestParam(value = "ck") int[] ck) {
+		log.debug("☆★☆★☆★☆★ FilmController.modifyFilmActor의 filmId : " + filmId);
+		log.debug("☆★☆★☆★☆★ FilmController.modifyFilmActor의 ck length : " + ck.length);
+		
+		// 파라미터 값 가공
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("filmId", filmId);
+		paramMap.put("actorId", ck); // 배열
+		
+		// 영화배우 목록 전체 삭제 및 새롭게 추가 기능
+		if(ck != null) {
+			filmService.modifyFilmActorListByFilm(paramMap);
+		}
+		
+		return "redirect:/admin/getFilmOne?filmId="+filmId;
+	}
 	
 	// 영화 목록 맵핑
 	@GetMapping("/getFilmList")
