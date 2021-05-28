@@ -10,45 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gd.sakila.mapper.CategoryMapper;
 import com.gd.sakila.mapper.FilmMapper;
-import com.gd.sakila.vo.Category;
-import com.gd.sakila.vo.Film;
-import com.gd.sakila.vo.FilmForm;
 import com.gd.sakila.vo.Page;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j // 디버깅
-@Service // 서비스의 객체를 만들어줌
-@Transactional // spring에는 트랜잭션 기능이 있음. 어떤 메서드를 실행하다가 오류가 발생하면, 그 서비스 롤백함(취소)
+@Slf4j
+@Service
+@Transactional
 public class FilmService {
 	@Autowired FilmMapper filmMapper;
 	@Autowired CategoryMapper categoryMapper;
-	
-	/*
-	 * param :film입력폼
-	 * return : 입력된 filmId값
-	 */
-	
-	// CategoryService.class로 이동해야 함
-	public List<Category> getCategoryList() {
-		return categoryMapper.selectCategoryList();
-	}
-	
-	// 영화 추가
-	public int addFilm(FilmForm filmForm) {
-		Film film = filmForm.getFilm(); // filmForm에 있는 값을 다시 가공
-		filmMapper.insertFilm(film); // filmId가 생성된 후, film.setFilmId() 호출
-		
-		// film_category에 영화 추가를 하기 위해서 film_id와 category_id 변수 가공
-		Map<String, Object> map = new HashMap<>();
-		map.put("categoryId", filmForm.getCategory().getCategoryId());
-		map.put("filmId", film.getFilmId());
-		
-		// mapper 호출
-		filmMapper.insertFilmCategory(map);
-		
-		return film.getFilmId();
-	}
 	
 	// 영화 상세보기에서 영화 배우 목록 삭제 및 추가
 	public void modifyFilmActorListByFilm(Map<String, Object> paramMap) {
@@ -97,7 +68,7 @@ public class FilmService {
 		String actors = (String)paramMap.get("actors");
 		
 		// 카테고리 목록을 가져오기 위해서 mapper 호출
-		List<Category> categoryNameList = categoryMapper.selectCategoryList();
+		List<String> categoryNameList = categoryMapper.selectCategoryNameList();
 		log.debug("☆★☆★☆★☆★ FilmService.getFilmList()의 categoryNameList : " + categoryNameList);
 		
 		// 페이징
@@ -137,7 +108,7 @@ public class FilmService {
 		return returnMap;
 	}
 	
-	// 영화 상세보기 액션 (재고 출력 버그 있음)
+	// 영화 상세보기 액션
 	public Map<String, Object> getFilmOne(int filmId) {
 		// 디버깅
 		log.debug("☆★☆★☆★☆★ FilmService.getFilmOne()의 filmId : " + filmId);
