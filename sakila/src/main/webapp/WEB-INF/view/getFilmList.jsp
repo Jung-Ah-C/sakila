@@ -25,6 +25,7 @@
 <body>
 <div class="container">
 	<h1><a href="${pageContext.request.contextPath}/admin/getFilmList">FilmList</a></h1>
+	<a href="${pageContext.request.contextPath}/admin/addFilm"><button type="button">영화 추가</button></a>
 	<div>
 		<!-- 검색 내용 폼 -->
 		<!-- 
@@ -42,14 +43,14 @@
 			Category : 
 			<select name="category">
 				<option value="">카테고리 선택</option>
-				<c:forEach var="name" items="${categoryNameList}">
+				<c:forEach var="c" items="${categoryNameList}">
 					<!-- 카테고리 선택했을 때 -->
-					<c:if test="${name == category}">
-						<option value="${name}" selected="selected">${name}</option>
+					<c:if test="${c.name == category}">
+						<option value="${name}" selected="selected">${c.name}</option>
 					</c:if>
 					<!-- 카테고리 선택하지 않았을 때 -->
-					<c:if test="${name != category}">
-						<option value="${name}">${name}</option>
+					<c:if test="${c.name != category}">
+						<option value="${c.name}">${c.name}</option>
 					</c:if>
 				</c:forEach>
 			</select>

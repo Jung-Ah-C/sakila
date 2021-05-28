@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.gd.sakila.vo.Film;
+
 @Mapper
 public interface FilmMapper {
 	List<Integer> selectFilmInStock(Map<String, Object> map);
@@ -14,4 +16,7 @@ public interface FilmMapper {
 	List<Map<String,Object>> selectFilmActorListByFilm(int filmId);
 	int removeFilmActorListByFilm(int filmId);
 	int insertFilmActorListByFilm(int actorId, int filmId);
+	
+	int insertFilm(Film film);
+	int insertFilmCategory(Map<String, Object> map);
 }
