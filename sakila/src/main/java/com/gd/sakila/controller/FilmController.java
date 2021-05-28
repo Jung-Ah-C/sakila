@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.sakila.service.FilmService;
+import com.gd.sakila.service.LanguageService;
+import com.gd.sakila.vo.Category;
+import com.gd.sakila.vo.FilmForm;
+import com.gd.sakila.vo.Language;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,6 +25,29 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin")
 public class FilmController {
 	@Autowired FilmService filmService;
+	@Autowired LanguageService languageService;
+	
+	// 영화 추가 맵핑
+	@GetMapping("/addFilm")
+	public String addFilm(Model model) {
+		// category list
+		List<Category> categoryList = filmService.getCategoryList(); // CategoryService에서 받자!
+		log.debug("☆★☆★☆★☆★ FilmController.addFilm의 categoryList size() : " + categoryList.size());
+		// language list
+		List<Language> languageList = languageService.getLanguageList();
+		log.debug("☆★☆★☆★☆★ FilmController.addFilm의 languageList size() : " + languageList.size());
+		
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("languageList", languageList);
+		
+		return "addFilm";
+	}
+	
+	@PostMapping("/addFilm") // 기본(값)타입 매개변수의 이름과 name이 같으면 맵핑
+	public String addFilm(FilmForm filmForm) { // 참조타입은 필드명과 input name이 같으면 맵핑, 형변환도 알아서 됨 cf) 커맨드 타입
+		int filmId = filmService.addFilm(filmForm);
+		return "redirect:/admin/getFilmOne?filmId="+filmId;
+	}
 	
 	@GetMapping("/getFilmActorListByFilm")
 	public String getFilmActorListByFilm(Model model, @RequestParam(value = "filmId", required = true) int filmId) {
