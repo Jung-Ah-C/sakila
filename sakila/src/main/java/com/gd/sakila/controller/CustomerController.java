@@ -52,7 +52,10 @@ public class CustomerController {
 		paramMap.put("lastPage", lastPage);
 		
 		// 서비스 호출
+		// 고객 목록 출력 서비스
 		List<CustomerList> customerList = customerService.getCustomerList(paramMap);
+		// 블랙리스트 고객 목록 출력 서비스
+		List<Map<String, Object>> blackList = customerService.getBlackCustomerList();
 		
 		// model에 담음
 		model.addAttribute("customerList", customerList);
@@ -61,6 +64,7 @@ public class CustomerController {
 		model.addAttribute("beginRow", beginRow);
 		model.addAttribute("lastPage", lastPage);
 		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("blackList", blackList);
 		
 		return "getCustomerList";
 	}

@@ -16,6 +16,26 @@
 </head>
 <body>
 <div class="container">
+    <h1><a href="${pageContext.request.contextPath}/admin/getCustomerList">Black List</a></h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>name</th>
+                <th>overdue duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach var="b" items="${blackList}">
+                <tr>
+                	<td>${b.ID}</td>
+                    <td>${b.name}</td>
+                    <td>${b.overdue}</td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+    
     <h1><a href="${pageContext.request.contextPath}/admin/getCustomerList">CustomerList</a></h1>
     <table class="table table-striped">
         <thead>

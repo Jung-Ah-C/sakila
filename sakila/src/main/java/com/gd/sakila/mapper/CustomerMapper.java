@@ -12,4 +12,5 @@ public interface CustomerMapper {
 	int updateCustomerActiveByScheduler();
 	List<CustomerList> selectCustomerList(Map<String, Object> map);
 	int selectCustomerTotal(String searchWord);
+	List<Map<String, Object>> selectBlackCustomerList();
 }

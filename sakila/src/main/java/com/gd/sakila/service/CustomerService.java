@@ -33,4 +33,9 @@ public class CustomerService {
 	public int selectCustomerTotal(String searchWord) {
 		return customerMapper.selectCustomerTotal(searchWord);
 	}
+	
+	// 블랙리스트 고객 목록
+	public List<Map<String, Object>> getBlackCustomerList() {
+		return customerMapper.selectBlackCustomerList();
+	}
 }
