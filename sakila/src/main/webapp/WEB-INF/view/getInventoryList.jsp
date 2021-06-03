@@ -17,7 +17,34 @@
 <body>
 <div class="container">
     <h1><a href="${pageContext.request.contextPath}/admin/getInventoryList">InventoryList</a></h1>
-    <!-- 드롭다운으로 storeId 선택 가능하게 하기 -->
+    
+    <div align="right">
+	    <form action="${pageContext.request.contextPath}/admin/getInventoryList" method="get">
+	        <!-- 드롭다운으로 storeId 선택 가능하게 하기 -->
+	        Store :
+		    <select name="storeId">
+	            <option value="">선택</option>
+	               <c:if test="${storeId == 1}">
+	                   <option value="1" selected="selected">store 1</option>
+	                </c:if>
+	                <c:if test="${storeId != 1}">
+	                   <option value="1">store 1</option>
+	                </c:if>
+	                <c:if test="${storeId == 2}">
+	                   <option value="2" selected="selected">store 2</option>
+	                </c:if>
+	                <c:if test="${storeId != 2}">
+	                   <option value="2">store 2</option>
+	                </c:if>
+			</select>
+	        
+	        <!-- 검색어 입력창 -->
+	        <label for="searchWord">검색어(영화 제목) :</label> 
+	        <input name="searchWord" type="text">
+	        <button type="submit">검색</button>
+	    </form>
+	</div>
+    
     <table class="table table-striped">
         <thead>
             <tr>
@@ -41,20 +68,13 @@
         </tbody>
     </table>
     
-    <!-- 검색어 입력창 -->
-    <form action="${pageContext.request.contextPath}/admin/getInventoryList" method="get">
-        <label for="searchWord">검색어(영화 제목) :</label> 
-        <input name="searchWord" type="text">
-        <button type="submit">검색</button>
-    </form>
-    
     <!-- 페이징 -->
     <ul class="pager">
         <c:if test="${currentPage > 1}">
-            <li class="previous"><a href="${pageContext.request.contextPath}/admin/getInventoryList?currentPage=${currentPage-1}&searchWord=${searchWord}">이전</a></li>
+            <li class="previous"><a href="${pageContext.request.contextPath}/admin/getInventoryList?currentPage=${currentPage-1}&searchWord=${searchWord}&storeId=${storeId}">이전</a></li>
         </c:if>
         <c:if test="${currentPage < lastPage}">
-            <li class="next"><a href="${pageContext.request.contextPath}/admin/getInventoryList?currentPage=${currentPage+1}&searchWord=${searchWord}">다음</a></li>
+            <li class="next"><a href="${pageContext.request.contextPath}/admin/getInventoryList?currentPage=${currentPage+1}&searchWord=${searchWord}&storeId=${storeId}">다음</a></li>
         </c:if>
     </ul>
 </div>

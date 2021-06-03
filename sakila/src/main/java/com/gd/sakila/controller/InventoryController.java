@@ -34,6 +34,11 @@ public class InventoryController {
 		log.debug("ㅇㅇㅇㅇㅇ InventoryController.getInventoryList의 rowPerPage : " + rowPerPage);
 		log.debug("ㅇㅇㅇㅇㅇ InventoryController.getInventoryList의 searchWord : " + searchWord);
 		
+		// storeId 전처리
+		if(storeId != null && storeId == 0) {
+			storeId = null;
+		}
+		
 		// 페이징 매개변수 가공
 		int beginRow = (currentPage - 1) * rowPerPage;
 		log.debug("ㅇㅇㅇㅇㅇ InventoryController.getInventoryList의 beginRow : " + beginRow);

@@ -20,9 +20,7 @@
    
    <!-- 재고 목록 페이징을 위한 전체 데이터 개수 -->
    <select id="selectInventoryTotal" parameterType="map" resultType="int">
-   		SELECT i.store_id storeId, f.title title, COUNT(*) AS totalInventory,
-			SUM(NOT inventory_in_stock(i.inventory_id)) AS rental, 
-            SUM(inventory_in_stock(i.inventory_id)) AS stock
+   		SELECT COUNT(DISTINCT(i.film_id)) AS totalInventory
       	FROM film f, inventory i
       	WHERE f.film_id = i.film_id 
         	<if test="storeId != null">
