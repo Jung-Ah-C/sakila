@@ -26,6 +26,11 @@ public class SalesController {
 		// 매개변수 디버깅
 		log.debug("ㅇㅇㅇㅇㅇㅇㅇ SalesController.getSalesList의 storeId : " + storeId);
 		
+		// 매개변수 전처리
+		if(storeId != null && storeId == 0) {
+			storeId = null;
+		}
+ 		
 		// 서비스 호출
 		List<Map<String, Object>> bestSellerList = salesService.getBestSellerTop10();
 		List<Map<String, Object>> categorySalesList = salesService.getSalesByCategoryList();

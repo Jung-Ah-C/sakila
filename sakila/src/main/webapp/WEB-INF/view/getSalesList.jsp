@@ -26,6 +26,7 @@ $(document).ready(function() {
 <div class="container">
     <h1><a href="${pageContext.request.contextPath}/admin/getSalesList">SalesList</a></h1>
     <div>
+	    <h2>베스트셀러 (Top 10)</h2>
 	    <table class="table table-striped">
 	        <thead>
 	            <tr>
@@ -48,53 +49,74 @@ $(document).ready(function() {
 	    </table>
     </div>
     
-	<h2>월별 매출 리스트</h2>
-	<!-- 매장별 조회 드롭다운 -->
-	<form id="IDForm" action="${pageContext.request.contextPath}/admin/getSalesList" method="get">
-		Store:
-		<select name="storeId">
-			<option value="0">선택</option>
-			<c:if test="${storeId == 1}">
-				<option value="1" selected="selected">1호점</option>
-			</c:if>
-			<c:if test="${storeId != 1}">
-				<option value="1">1호점</option>
-			</c:if>
-			<c:if test="${storeId == 2}">
-				<option value="2" selected="selected">2호점</option>
-			</c:if>
-			<c:if test="${storeId != 2}">
-				<option value="2">2호점</option>
-			</c:if>
-		</select>
-		<button id="btn" type="button">조회</button>
-	</form>
-   
-	<!-- 월별 매출액 리스트 -->
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>storeId</th>
-				<th>store</th>
-				<th>manager</th>
-				<th>YEAR</th>
-				<th>MONTH</th>
-				<th>total Sales</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="m" items="${monthlySalesList}">
+    <div>
+		<h2>월별 매출 리스트</h2>
+		<!-- 매장별 조회 드롭다운 -->
+		<form id="IDForm" action="${pageContext.request.contextPath}/admin/getSalesList" method="get">
+			Store:
+			<select name="storeId">
+				<option value="0">선택</option>
+				<c:if test="${storeId == 1}">
+					<option value="1" selected="selected">1호점</option>
+				</c:if>
+				<c:if test="${storeId != 1}">
+					<option value="1">1호점</option>
+				</c:if>
+				<c:if test="${storeId == 2}">
+					<option value="2" selected="selected">2호점</option>
+				</c:if>
+				<c:if test="${storeId != 2}">
+					<option value="2">2호점</option>
+				</c:if>
+			</select>
+			<button id="btn" type="button">조회</button>
+		</form>
+	   
+		<!-- 월별 매출액 리스트 -->
+		<table class="table table-striped">
+			<thead>
 				<tr>
-					<td>${m.storeId}</td>
-					<td>${m.store}</td>
-					<td>${m.manager}</td>
-					<td>${m.YEAR}</td>
-					<td>${m.MONTH}</td>
-					<td>${m.totalSales}</td>
+					<th>storeId</th>
+					<th>store</th>
+					<th>manager</th>
+					<th>YEAR</th>
+					<th>MONTH</th>
+					<th>total Sales</th>
 				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				<c:forEach var="m" items="${monthlySalesList}">
+					<tr>
+						<td>${m.storeId}</td>
+						<td>${m.store}</td>
+						<td>${m.manager}</td>
+						<td>${m.YEAR}</td>
+						<td>${m.MONTH}</td>
+						<td>${m.totalSales}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		
+		<!-- 카테고리별 매출 -->
+		<h2>카테고리별 매출 리스트</h2>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>categoryName</th>
+					<th>total Sales</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="c" items="${categorySalesList}">
+					<tr>
+						<td>${c.category}</td>
+						<td>${c.totalSales}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
 </div>
 </body>
 </html>
