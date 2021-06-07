@@ -55,7 +55,7 @@
             <c:forEach var="c" items="${customerList}">
                 <tr>
                 	<td>${c.ID}</td>
-                    <td>${c.name}</td>
+                    <td><a href="${pageContext.request.contextPath}/admin/getCustomerOne?customerId=${c.ID}">${c.name}</a></td>
                     <td>${c.address}</td>
                     <td>${c.zipCode}</td>
                     <td>${c.phone}</td>

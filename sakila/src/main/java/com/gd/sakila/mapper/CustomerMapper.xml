@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.CustomerMapper">
+	<!-- 고객 상세보기 --> <!-- 고객 정보와 전체 rental 비용만 나오게 함, 대여리스트와 연체 강조는 아직 구현 안함 -->
+	<select id="selectCustomerOne"
+			parameterType="Integer"
+			resultType="map">
+	SELECT
+		c.customer_id customerId,
+		c.store_id storeId,
+		c.first_name firstName,
+		c.last_name lastName,
+		c.email email,
+		c.active active,
+		SUM(p.amount) AS totalPayment
+	FROM 
+		customer AS c
+	INNER JOIN payment AS p ON c.customer_id = p.customer_id
+	WHERE c.customer_id = ${customerId}
+	</select>
+	
 	<!-- 블랙리스트 고객 목록 -->
 	<select id="selectBlackCustomerList"
 			resultType="map">
@@ -36,7 +54,6 @@
 		</where>
 		ORDER BY ID ASC
 		LIMIT #{beginRow}, #{rowPerPage}
-		<!-- 페이징, 검색 기능 추가 필요함 -->
 	</select>
 	
 	<!-- 고객 데이터 개수 세기 (페이징에 필요함) -->

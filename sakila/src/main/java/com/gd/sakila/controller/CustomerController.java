@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomerController {
 	@Autowired CustomerService customerService;
 	
+	// 고객 목록 맵핑
 	@GetMapping("/getCustomerList")
 	public String getCustomerList(Model model,
 	         @RequestParam(value="currentPage", defaultValue = "1") int currentPage,
@@ -67,5 +68,26 @@ public class CustomerController {
 		model.addAttribute("blackList", blackList);
 		
 		return "getCustomerList";
+	}
+	
+	// 고객 상세보기 맵핑
+	@GetMapping("/getCustomerOne")
+	public String getCustomerOne(Model model, @RequestParam(value = "customerId", required = true) Integer customerId) {
+		// 매개변수 디버깅
+		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerController.getCustomerOne의 customerId : " + customerId);
+		
+		// 전처리
+		if(customerId != null && customerId == 0) {
+			customerId = null;
+		}
+		
+		// 서비스 호출
+		List<Map<String, Object>> customerOne = customerService.getCustomerOne(customerId);
+		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerController.getCustomerOne의 customerOne : " + customerOne);
+		
+		// 모델에 담기
+		model.addAttribute("customerOne", customerOne);
+		
+		return "getCustomerOne";
 	}
 }

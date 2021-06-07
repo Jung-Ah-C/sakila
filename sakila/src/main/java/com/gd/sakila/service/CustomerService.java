@@ -38,4 +38,10 @@ public class CustomerService {
 	public List<Map<String, Object>> getBlackCustomerList() {
 		return customerMapper.selectBlackCustomerList();
 	}
+	
+	// 고객 상세보기 액션
+	public List<Map<String, Object>> getCustomerOne(Integer customerId) {
+		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerService.getCustomerOne의 customerId : " + customerId);
+		return customerMapper.selectCustomerOne(customerId);
+	}
 }
