@@ -76,17 +76,23 @@ public class CustomerController {
 		// 매개변수 디버깅
 		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerController.getCustomerOne의 customerId : " + customerId);
 		
-		// 전처리
+		// 매개변수 전처리
 		if(customerId != null && customerId == 0) {
 			customerId = null;
 		}
 		
 		// 서비스 호출
-		List<Map<String, Object>> customerOne = customerService.getCustomerOne(customerId);
+		// 고객 상세정보 메서드
+		Map<String, Object> customerOne = customerService.getCustomerOne(customerId);
 		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerController.getCustomerOne의 customerOne : " + customerOne);
 		
+		// 고객 대여리스트 메서드
+		List<Map<String, Object>> rentalList = customerService.getCustomerRentalList(customerId);
+		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerController.getCustomerOne의 rentalList : " + rentalList);
+		
 		// 모델에 담기
-		model.addAttribute("customerOne", customerOne);
+		model.addAttribute("customerOne", customerOne); 
+		model.addAttribute("rentalList", rentalList);
 		
 		return "getCustomerOne";
 	}

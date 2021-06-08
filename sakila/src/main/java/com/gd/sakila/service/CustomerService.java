@@ -34,14 +34,20 @@ public class CustomerService {
 		return customerMapper.selectCustomerTotal(searchWord);
 	}
 	
-	// 블랙리스트 고객 목록
+	// 블랙리스트 고객 목록 액션
 	public List<Map<String, Object>> getBlackCustomerList() {
 		return customerMapper.selectBlackCustomerList();
 	}
 	
 	// 고객 상세보기 액션
-	public List<Map<String, Object>> getCustomerOne(Integer customerId) {
+	public Map<String, Object> getCustomerOne(Integer customerId) {
 		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerService.getCustomerOne의 customerId : " + customerId);
 		return customerMapper.selectCustomerOne(customerId);
+	}
+	
+	// 고객 상세보기의 대여리스트 액션
+	public List<Map<String, Object>> getCustomerRentalList(Integer customerId) {
+		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerService.getCustomerRentalList의 customerId : " + customerId);
+		return customerMapper.selectRentalList(customerId);
 	}
 }

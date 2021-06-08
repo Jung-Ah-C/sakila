@@ -29,7 +29,7 @@
             <c:forEach var="b" items="${blackList}">
                 <tr>
                 	<td>${b.ID}</td>
-                    <td>${b.name}</td>
+                    <td><a href="${pageContext.request.contextPath}/admin/getCustomerOne?customerId=${b.ID}">${b.name}</a></td>
                     <td>${b.overdue}</td>
                 </tr>
             </c:forEach>

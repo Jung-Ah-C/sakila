@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.CustomerMapper">
-	<!-- 고객 상세보기 --> <!-- 고객 정보와 전체 rental 비용만 나오게 함, 대여리스트와 연체 강조는 아직 구현 안함 -->
+	<!-- 고객 대여리스트 -->
+	<select id="selectRentalList"
+			parameterType="Integer"
+			resultType="map">
+	SELECT
+		f.film_id filmId,
+		f.title title,
+		r.rental_id rentalId,
+		r.rental_date rentalDate,
+		r.return_date returnDate,
+		i.store_id storeId
+	FROM
+		rental AS r
+	INNER JOIN inventory AS i ON r.inventory_id = i.inventory_id
+	INNER JOIN film AS f ON i.film_id = f.film_id
+	WHERE r.customer_id = ${customerId}
+	ORDER BY r.rental_date DESC
+	</select>
+	
+	<!-- 고객 상세보기 + 전체 rental 비용 -->
 	<select id="selectCustomerOne"
 			parameterType="Integer"
 			resultType="map">

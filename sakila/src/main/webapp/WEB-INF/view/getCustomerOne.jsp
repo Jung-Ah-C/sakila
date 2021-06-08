@@ -17,37 +17,66 @@
 <body>
 <div class="container">
     <h1>CustomerOne</h1>
-     <table class="table">
+    <!-- 고객 상세정보 테이블 -->
+    <table class="table">
          <tbody>
              <tr>
-                <td>customerID :</td>
+                <th>customerID :</th>
                 <td>${customerOne.customerId}</td>
                </tr>
             <tr>
-				<td>firstName :</td>
+				<th>firstName :</th>
 				<td>${customerOne.firstName}</td>
             </tr>
             <tr>
-				<td>lastName :</td>
+				<th>lastName :</th>
 				<td>${customerOne.lastName}</td>
             </tr>
             <tr>
-				<td>email :</td>
+				<th>email :</th>
 				<td>${customerOne.email}</td>
             </tr>
             <tr>
-				<td>totalPayment :</td>
-				<td>${customerOne.totalPayment}</td>
+				<th>totalPayment :</th>
+				<td>$${customerOne.totalPayment}</td>
             </tr>
             <tr>
-				<td>storeID :</td>
+				<th>storeID :</th>
 				<td>${customerOne.storeId}</td>
             </tr>
             <tr>
-				<td>active :</td>
+				<th>active :</th>
 				<td>${customerOne.active}</td>
             </tr>
         </tbody>
+    </table>
+    
+    <!-- 고객 대여리스트 테이블 -->
+    <h2>RentalList</h2>
+    <table class="table">
+    	<thead>
+    		<tr>
+    			<th>filmID</th>
+    			<th>title</th>
+    			<th>rentalID</th>
+    			<th>rentalDate</th>
+    			<th>returnDate</th>
+    			<th>storeID</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    		<c:forEach var="r" items="${rentalList}">
+	    		<tr>	
+	    			<td>${r.filmId}</td>
+	    			<td><a href="${pageContext.request.contextPath}/admin/getFilmOne?filmId=${r.filmId}">${r.title}</a></td>
+	    			<td>${r.rentalId}</td>
+	    			<td>${r.rentalDate}</td>
+	    			<td>${r.returnDate}</td>
+	    			<td>${r.storeId}</td>
+	    		</tr>
+    		</c:forEach>
+	    	
+    	</tbody>
     </table>
 	<a class="btn btn-default" href="">수정</a>
 	<a class="btn btn-default" href="">삭제</a>
