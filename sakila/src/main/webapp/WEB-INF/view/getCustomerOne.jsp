@@ -75,9 +75,18 @@
 	    			<td>${r.storeId}</td>
 	    		</tr>
     		</c:forEach>
-	    	
     	</tbody>
     </table>
+    
+    <!-- 고객 대여리스트 페이징 -->
+    <ul class="pager">
+    	<c:if test="${currentPage > 1}">
+    		<li class="previous"><a href="${pageContext.request.contextPath}/admin/getCustomerOne?customerId=${customerOne.customerId}&currentPage=${currentPage-1}">이전</a></li>
+    	</c:if>
+    	<c:if test="${currentPage > lastPage}">
+    		<li class="next"><a href="${pageContext.request.contextPath}/admin/getCustomerOne?customerId=${customerOne.customerId}&currentPage=${currentPage+1}">다음</a></li>
+    	</c:if>
+    </ul>
 	<a class="btn btn-default" href="">수정</a>
 	<a class="btn btn-default" href="">삭제</a>
 	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getCustomerList">고객목록</a>

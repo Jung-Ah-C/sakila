@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.CustomerMapper">
-	<!-- 고객 대여리스트 -->
+	<!-- 고객 상세보기 대여리스트 데이터 개수 세기 (페이징에 필요함) -->
+	<select id="selectCustomerRentalTotal" 
+			parameterType="String"
+			resultType="Integer">
+	SELECT COUNT(*) cnt
+	FROM rental
+	WHERE customer_id = ${customerId}
+	</select>
+	
+	<!-- 고객 상세보기의 대여리스트 -->
 	<select id="selectRentalList"
 			parameterType="Integer"
 			resultType="map">
@@ -18,6 +27,7 @@
 	INNER JOIN film AS f ON i.film_id = f.film_id
 	WHERE r.customer_id = ${customerId}
 	ORDER BY r.rental_date DESC
+	LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
 	<!-- 고객 상세보기 + 전체 rental 비용 -->
@@ -66,7 +76,7 @@
 			notes,
 			SID
 		FROM customer_list
-		<where> <!-- 쿼리에서의 where 태그를 대신함 -->
+		<where>
 			<if test="searchWord != null">
 				name LIKE CONCAT('%',#{searchWord},'%')
 			</if>

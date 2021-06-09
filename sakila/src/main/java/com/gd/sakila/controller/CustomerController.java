@@ -72,14 +72,22 @@ public class CustomerController {
 	
 	// 고객 상세보기 맵핑
 	@GetMapping("/getCustomerOne")
-	public String getCustomerOne(Model model, @RequestParam(value = "customerId", required = true) Integer customerId) {
+	public String getCustomerOne(Model model, 
+									@RequestParam(value = "customerId", required = true) Integer customerId,
+									@RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
+									@RequestParam(value = "rowPerPage", defaultValue = "10") int rowPerPage) {
 		// 매개변수 디버깅
 		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerController.getCustomerOne의 customerId : " + customerId);
 		
-		// 매개변수 전처리
+		// 매개변수 전처리 및 가공
 		if(customerId != null && customerId == 0) {
 			customerId = null;
 		}
+		
+		// 페이징 변수 가공
+		int rentalTotal = customerService.selectCustomerRentalTotal();
+		int beginRow = (currentPage -1) * rowPerPage;
+		int lastPage = (int)Math.ceil((double)rentalTotal / rowPerPage);
 		
 		// 서비스 호출
 		// 고객 상세정보 메서드
@@ -93,6 +101,11 @@ public class CustomerController {
 		// 모델에 담기
 		model.addAttribute("customerOne", customerOne); 
 		model.addAttribute("rentalList", rentalList);
+		// 상세보기의 대여리스트에서 사용할 페이징 변수들
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("rowPerPage", rowPerPage);
+		model.addAttribute("beginRow", beginRow);
+		model.addAttribute("lastPage", lastPage);
 		
 		return "getCustomerOne";
 	}

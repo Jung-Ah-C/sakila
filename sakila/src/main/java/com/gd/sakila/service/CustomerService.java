@@ -50,4 +50,9 @@ public class CustomerService {
 		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerService.getCustomerRentalList의 customerId : " + customerId);
 		return customerMapper.selectRentalList(customerId);
 	}
+	
+	// 고객 상세보기의 대여리스트 데이터 개수 (CustomerRentalTotal)
+	public int selectCustomerRentalTotal() {
+		return customerMapper.selectCustomerRentalTotal();
+	}
 }
