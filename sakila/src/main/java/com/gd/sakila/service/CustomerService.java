@@ -46,13 +46,14 @@ public class CustomerService {
 	}
 	
 	// 고객 상세보기의 대여리스트 액션
-	public List<Map<String, Object>> getCustomerRentalList(Integer customerId) {
-		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerService.getCustomerRentalList의 customerId : " + customerId);
-		return customerMapper.selectRentalList(customerId);
+	public List<Map<String, Object>> getCustomerRentalList(Map<String, Object> map) {
+		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerService.getCustomerRentalList의 map.size() : " + map.size());
+		return customerMapper.selectRentalList(map);
 	}
 	
 	// 고객 상세보기의 대여리스트 데이터 개수 (CustomerRentalTotal)
-	public int selectCustomerRentalTotal() {
-		return customerMapper.selectCustomerRentalTotal();
+	public int getCustomerRentalTotal(Integer customerId) {
+		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerService.getCustomerRentalTotal의 customerId : " + customerId);
+		return customerMapper.selectCustomerRentalTotal(customerId);
 	}
 }

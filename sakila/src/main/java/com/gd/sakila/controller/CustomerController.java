@@ -78,6 +78,8 @@ public class CustomerController {
 									@RequestParam(value = "rowPerPage", defaultValue = "10") int rowPerPage) {
 		// 매개변수 디버깅
 		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerController.getCustomerOne의 customerId : " + customerId);
+		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerController.getCustomerOne의 currentPage : " + currentPage);
+		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerController.getCustomerOne의 rowPerPage : " + rowPerPage);
 		
 		// 매개변수 전처리 및 가공
 		if(customerId != null && customerId == 0) {
@@ -85,9 +87,12 @@ public class CustomerController {
 		}
 		
 		// 페이징 변수 가공
-		int rentalTotal = customerService.selectCustomerRentalTotal();
-		int beginRow = (currentPage -1) * rowPerPage;
+		int rentalTotal = customerService.getCustomerRentalTotal(customerId);
+		int beginRow = (currentPage - 1) * rowPerPage;
 		int lastPage = (int)Math.ceil((double)rentalTotal / rowPerPage);
+		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerController.getCustomerOne의 rentalTotal : " + rentalTotal);
+		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerController.getCustomerOne의 beginRow : " + beginRow);
+		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerController.getCustomerOne의 lastPage : " + lastPage);
 		
 		// 서비스 호출
 		// 고객 상세정보 메서드
@@ -95,13 +100,20 @@ public class CustomerController {
 		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerController.getCustomerOne의 customerOne : " + customerOne);
 		
 		// 고객 대여리스트 메서드
-		List<Map<String, Object>> rentalList = customerService.getCustomerRentalList(customerId);
-		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerController.getCustomerOne의 rentalList : " + rentalList);
+		// 메서드에 넣을 매개변수 가공
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("customerId", customerId);
+		paramMap.put("beginRow", beginRow);
+		paramMap.put("rowPerPage", rowPerPage);
+		
+		List<Map<String, Object>> rentalList = customerService.getCustomerRentalList(paramMap);
+		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerController.getCustomerOne의 rentalList.size() : " + rentalList.size());
+		
+		log.debug("ㅇㅇㅇㅇㅇㅇㅇ CustomerController.getCustomerOne의 rentalList : " + rentalList.toString());
 		
 		// 모델에 담기
-		model.addAttribute("customerOne", customerOne); 
+		model.addAttribute("customerOne", customerOne);
 		model.addAttribute("rentalList", rentalList);
-		// 상세보기의 대여리스트에서 사용할 페이징 변수들
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("rowPerPage", rowPerPage);
 		model.addAttribute("beginRow", beginRow);

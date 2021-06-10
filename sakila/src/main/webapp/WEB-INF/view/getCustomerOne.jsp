@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,24 +57,31 @@
     <table class="table">
     	<thead>
     		<tr>
+    			<th>rentalID</th>
+    			<th>storeID</th>
     			<th>filmID</th>
     			<th>title</th>
-    			<th>rentalID</th>
+    			<th>rentalDuration</th>
     			<th>rentalDate</th>
     			<th>returnDate</th>
-    			<th>storeID</th>
+    			<th>overdue</th>
     		</tr>
     	</thead>
     	<tbody>
     		<c:forEach var="r" items="${rentalList}">
-	    		<tr>	
+    			<tr>
+	    			<td>${r.rentalId}</td>	
+	    			<td>${r.storeId}</td>
 	    			<td>${r.filmId}</td>
 	    			<td><a href="${pageContext.request.contextPath}/admin/getFilmOne?filmId=${r.filmId}">${r.title}</a></td>
-	    			<td>${r.rentalId}</td>
-	    			<td>${r.rentalDate}</td>
-	    			<td>${r.returnDate}</td>
-	    			<td>${r.storeId}</td>
-	    		</tr>
+	    			<td>${r.rentalDuration}</td>
+	    			<td><fmt:formatDate value="${r.rentalDate}" pattern="yyyy-MM-dd"/></td>
+	    			<td><fmt:formatDate value="${r.returnDate}" pattern="yyyy-MM-dd"/></td>
+	    			<td>
+	    				<c:if test="${r.returnDate == null}">${r.overdue}</c:if>
+	    				<c:if test="${r.returnDate != null}"></c:if>
+	    			</td>
+		    	</tr>
     		</c:forEach>
     	</tbody>
     </table>
@@ -83,12 +91,10 @@
     	<c:if test="${currentPage > 1}">
     		<li class="previous"><a href="${pageContext.request.contextPath}/admin/getCustomerOne?customerId=${customerOne.customerId}&currentPage=${currentPage-1}">이전</a></li>
     	</c:if>
-    	<c:if test="${currentPage > lastPage}">
+    	<c:if test="${currentPage < lastPage}">
     		<li class="next"><a href="${pageContext.request.contextPath}/admin/getCustomerOne?customerId=${customerOne.customerId}&currentPage=${currentPage+1}">다음</a></li>
     	</c:if>
     </ul>
-	<a class="btn btn-default" href="">수정</a>
-	<a class="btn btn-default" href="">삭제</a>
 	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getCustomerList">고객목록</a>
 </div>
 </body>
