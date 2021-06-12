@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.AddressMapper">
+	<insert id="addCustomerAddress"
+			parameterType="com.gd.sakila.vo.Address">
+		<selectKey resultType="int" keyProperty="addressId" order="AFTER"> <!-- order의 after는 아래에 있는 쿼리가 실행되고 나서 selectkey가 발동하도록 함 -->
+			SELECT LAST_INSERT_ID() <!-- 여기서 ID는 primary key를 의미하고, 제일 마지막에 있는 값을 가져옴, 그 값을 boardId에 채워줌 -->
+		</selectKey>
+		INSERT INTO address (
+			address,
+			address2,
+			district,
+			city_id,
+			postal_code,
+			phone,
+		) VALUES (
+			${address},
+			${address2},
+			${district},
+			${cityId},
+			${postalCode},
+			${phone}			
+		)
+	</insert>
+	
 	<select id="selectCountry"
 			resultType="com.gd.sakila.vo.Country">
 		SELECT

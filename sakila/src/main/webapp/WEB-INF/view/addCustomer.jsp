@@ -93,12 +93,12 @@
 	       });
     });
 </script>
-<title>addClient</title>
+<title>addCustomer</title>
 </head>
 <body>
     <div class="container">
-        <h1>Add Client</h1>
-        <form id="addForm" action="${pageContext.request.contextPath}/admin/addClient" method="post">
+        <h1>Add Customer</h1>
+        <form id="addForm" action="${pageContext.request.contextPath}/admin/addCustomer" method="post">
             <!-- storeId -->
             <div class="form-group">
                 <label for="storeId">storeID :</label> 
@@ -121,11 +121,11 @@
                     class="form-control" name="email" id="email" type="text" />
             </div>
             
-            <!-- address -->
+            <!-- address --> <!-- addressId는 서비스단에서 직접 넣어주기 -->
             <div class="form-group">
                 <label for="address">Address :</label>
                	<select name="country" id="country"></select>
-               	<select name="city" id="city"></select>
+               	<select name="cityId" id="city"></select>
                	<input class="form-control" name="address" id="address" type="text" />
                	<input class="form-control" name="address2" id="address2" type="text" />
                	<input class="form-control" name="district" id="district" type="text" />
@@ -135,7 +135,7 @@
             <div>
                 <input class="btn btn-default" id="btn" type="button" value="고객추가" /> 
                 <input class="btn btn-default" type="reset" value="초기화" /> 
-                <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getClientList">고객목록</a>
+                <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getCustomerList">고객목록</a>
             </div>
         </form>
     </div>

@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gd.sakila.mapper.AddressMapper;
 import com.gd.sakila.mapper.CustomerMapper;
+import com.gd.sakila.vo.Address;
+import com.gd.sakila.vo.Customer;
+import com.gd.sakila.vo.CustomerAdd;
 import com.gd.sakila.vo.CustomerList;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +21,28 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class CustomerService {
 	@Autowired CustomerMapper customerMapper;
+	@Autowired AddressMapper addressMapper;
+	
+	// 고객 추가 액션
+	public void addCustomer(CustomerAdd customerAdd) {
+		log.debug("▶▶▶▶▶▶▶ CustomerService.addCustomer의 customerAdd : " + customerAdd);
+		
+		// 고객의 주소 추가
+		Address address = customerAdd.getAddress();
+		log.debug("▶▶▶▶▶▶▶ CustomerService.addCustomer의 address : " + address);
+		addressMapper.addCustomerAddress(address);
+		
+		// 고객 추가
+		int addressId = customerAdd.getAddress().getAddressId();
+		log.debug("▶▶▶▶▶▶▶ CustomerService.addCustomer의 addressId : " + addressId);
+		
+		Customer customer = customerAdd.getCustomer();
+		customer.setAddressId(addressId);
+		log.debug("▶▶▶▶▶▶▶ CustomerService.addCustomer의 customer : " + customer);
+		
+		customerMapper.addCustomer(customer);
+	}
+	
 	// 휴면 고객 처리 액션
 	public void modifyCustomerActiveByScheduler() {
 		log.debug("▶▶▶▶▶▶▶ modifyCustomerActiveByScheduler() 실행");
