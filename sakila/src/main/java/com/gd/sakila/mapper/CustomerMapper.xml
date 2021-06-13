@@ -16,11 +16,11 @@
 			active,
 			create_date
 		) VALUES (
-			${storeId},
-			${firstName},
-			${lastName},
-			${email},
-			${addressId},
+			#{storeId},
+			#{firstName},
+			#{lastName},
+			#{email},
+			#{addressId},
 			1,
 			NOW()
 		) 
@@ -32,7 +32,7 @@
 			resultType="Integer">
 	SELECT COUNT(*) cnt
 	FROM rental
-	WHERE customer_id = ${customerId}
+	WHERE customer_id = #{customerId}
 	</select>
 	
 	<!-- 고객 상세보기의 대여리스트 -->
@@ -73,7 +73,7 @@
 	FROM 
 		customer AS c
 	INNER JOIN payment AS p ON c.customer_id = p.customer_id
-	WHERE c.customer_id = ${customerId}
+	WHERE c.customer_id = #{customerId}
 	</select>
 	
 	<!-- 블랙리스트 고객 목록 -->

@@ -52,6 +52,11 @@
         </tbody>
     </table>
     
+    <!-- 영화 대여 -->
+    
+    
+    <!-- 영화 반납 -->
+    
     <!-- 고객 대여리스트 테이블 -->
     <h2>RentalList</h2>
     <table class="table">
