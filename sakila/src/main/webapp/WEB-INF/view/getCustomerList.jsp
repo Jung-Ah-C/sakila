@@ -84,7 +84,7 @@
         </c:if>
     </ul>
     <div>
-        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addClient">고객 추가</a>
+        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addCustomer">고객 추가</a>
     </div>
 </div>
 </body>

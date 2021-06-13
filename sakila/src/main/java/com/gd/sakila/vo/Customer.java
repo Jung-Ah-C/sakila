@@ -11,6 +11,6 @@ public class Customer {
    private String email;
    private int addressId;
    private int active;
-   private int createDate;
-   private int lastUpdate;
+   private String createDate;
+   private String lastUpdate;
 }

@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.sakila.service.CustomerService;
+import com.gd.sakila.vo.CustomerAdd;
 import com.gd.sakila.vo.CustomerList;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +24,27 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomerController {
 	@Autowired CustomerService customerService;
 	
+	// 고객 추가 맵핑 -> 뷰로 이동
+	@GetMapping("/addCustomer")
+	public String addCustomer() {
+		return "addCustomer";
+	}
+	
+	// 뷰에서 입력한 내용 추가
+	@PostMapping("/addCustomer")
+	public String addCustomer(CustomerAdd customerAdd) {
+		log.debug("ㅇㅇㅇㅇㅇ CustomerController.addCustomer의 customerAdd : " + customerAdd.toString());
+		customerService.addCustomer(customerAdd);
+		
+		return "redirect:/admin/getCustomerList";
+	}
+	
 	// 고객 목록 맵핑
 	@GetMapping("/getCustomerList")
 	public String getCustomerList(Model model,
-	         @RequestParam(value="currentPage", defaultValue = "1") int currentPage,
-	         @RequestParam(value = "rowPerPage", defaultValue = "10") int rowPerPage,
-	         @RequestParam(value="searchWord", required = false) String searchWord) {
+	         						@RequestParam(value="currentPage", defaultValue = "1") int currentPage,
+	         						@RequestParam(value = "rowPerPage", defaultValue = "10") int rowPerPage,
+	         						@RequestParam(value="searchWord", required = false) String searchWord) {
 		// 디버깅
 		log.debug("ㅇㅇㅇㅇㅇ CustomerController.getCustomerList의 currentPage : " + currentPage);
 		log.debug("ㅇㅇㅇㅇㅇ CustomerController.getCustomerList의 rowPerPage : " + rowPerPage);

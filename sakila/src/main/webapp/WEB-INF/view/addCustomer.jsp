@@ -26,11 +26,11 @@
     crossorigin="anonymous"></script>
  
 <script>
-    $(document).ready(function() {
+    $(document).ready(function(){
     	console.log('country 목록');
     	$.ajax({
-    	   type:'get'
-    	   url:'/country'
+    	   type:'get',
+    	   url:'/admin/country',
     	   success: function(jsonData) {
     		   $('#country').empty();
     		   $(jsonData).each(function(index, item) {
@@ -44,8 +44,8 @@
        $('#country').change(function(){
     	   console.log('city 목록');
     	   $.ajax({
-    		   type:'get'
-    		   url:'/city'
+    		   type:'get',
+    		   url:'/admin/city',
     		   data:{countryId : $('#country').val()},
     		   success:function(jsonData) {
     			   $('#city').empty();
@@ -88,10 +88,10 @@
 				alert('phone을 선택하세요.');
 				$('#phone').focus();
 			} else {
-			     $('#addForm').submit();
+			    $('#addForm').submit();
 			}
-	       });
-    });
+	   });
+});
 </script>
 <title>addCustomer</title>
 </head>
@@ -102,7 +102,7 @@
             <!-- storeId -->
             <div class="form-group">
                 <label for="storeId">storeID :</label> 
-                <select name="storeId" id="storeId">
+                <select name="customer.storeId" id="storeId">
                 	<option value="">선택</option>
                 	<option value="1">1</option>
                 	<option value="2">2</option>
@@ -110,27 +110,34 @@
             </div>
             <div class="form-group">
                 <label for="firstName">firstName :</label> <input class="form-control"
-                    name="firstName" id="firstName" type="text" />
+                    name="customer.firstName" id="firstName" type="text" />
             </div>
             <div class="form-group">
-                <label for="lastName">lastName :</label> <input
-                    class="form-control" name="lastName" id="lastName" type="text" />
+                <label for="customer.lastName">lastName :</label> <input
+                    class="form-control" name="customer.lastName" id="lastName" type="text" />
             </div>
             <div class="form-group">
-                <label for="email">email :</label> <input
-                    class="form-control" name="email" id="email" type="text" />
+                <label for="customer.email">email :</label> <input
+                    class="form-control" name="customer.email" id="email" type="text" />
             </div>
             
             <!-- address --> <!-- addressId는 서비스단에서 직접 넣어주기 -->
             <div class="form-group">
-                <label for="address">Address :</label>
-               	<select name="country" id="country"></select>
-               	<select name="cityId" id="city"></select>
-               	<input class="form-control" name="address" id="address" type="text" />
-               	<input class="form-control" name="address2" id="address2" type="text" />
-               	<input class="form-control" name="district" id="district" type="text" />
-               	<input class="form-control" name="postalCode" id="postalCode" type="text" />
-               	<input class="form-control" name="phone" id="phone" type="text" />
+                <label for="country">country :</label>
+               		<select name="address.country" id="country"></select>
+               	<label for="city">city :</label>
+               		<select name="address.cityId" id="city"></select>
+               	<br>
+               	<label for="address">address :</label>	
+	               	<input class="form-control" name="address.address" id="address" type="text" />
+	            <label for="address2">address2 :</label>   	
+	               	<input class="form-control" name="address.address2" id="address2" type="text" />
+	            <label for="district">district :</label>   	
+	               	<input class="form-control" name="address.district" id="district" type="text" />
+	            <label for="postalCode">postalCode :</label>   	
+	               	<input class="form-control" name="address.postalCode" id="postalCode" type="text" />
+	            <label for="phone">phone :</label>   	
+	               	<input class="form-control" name="address.phone" id="phone" type="text" />
             </div>
             <div>
                 <input class="btn btn-default" id="btn" type="button" value="고객추가" /> 

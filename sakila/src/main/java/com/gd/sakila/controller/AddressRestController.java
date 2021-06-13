@@ -3,8 +3,10 @@ package com.gd.sakila.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gd.sakila.mapper.AddressMapper;
@@ -24,7 +26,8 @@ public class AddressRestController {
 	}
 	
 	@GetMapping("/city")
-	public List<City> getCityList(Integer countryId) {
+	public List<City> getCityList(
+			@RequestParam(value="countryId", required = true) Integer countryId) {
 		log.debug("ㅇㅇㅇㅇㅇㅇㅇ AddressRestController.getCityList의 countryId : " + countryId);
 		return addressMapper.selectCity(countryId);
 	}

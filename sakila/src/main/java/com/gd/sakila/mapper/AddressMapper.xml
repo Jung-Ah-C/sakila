@@ -7,19 +7,19 @@
 			SELECT LAST_INSERT_ID() <!-- 여기서 ID는 primary key를 의미하고, 제일 마지막에 있는 값을 가져옴, 그 값을 boardId에 채워줌 -->
 		</selectKey>
 		INSERT INTO address (
-			address,
+			`address`,
 			address2,
 			district,
 			city_id,
 			postal_code,
-			phone,
+			phone
 		) VALUES (
 			${address},
 			${address2},
 			${district},
 			${cityId},
 			${postalCode},
-			${phone}			
+			${phone}
 		)
 	</insert>
 	
