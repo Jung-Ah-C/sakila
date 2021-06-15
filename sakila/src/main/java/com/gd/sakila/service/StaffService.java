@@ -24,7 +24,6 @@ public class StaffService {
 	// staff 로그인 메서드
 	public Staff login(Staff staff) {
 		log.debug("login() param staff : " + staff);
-		
 		return staffMapper.selectStaffByLogin(staff); // null or staff객체
 	}
 	

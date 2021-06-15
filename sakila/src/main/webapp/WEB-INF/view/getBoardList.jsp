@@ -15,8 +15,11 @@
 
 </head>
 <body>
+<!-- mainMenu -->
+<jsp:include page="/WEB-INF/view/inc/mainMenu.jsp"></jsp:include>
+
 <div class="container">
-    <h1>getBoardList</h1>
+    <h1><a href="${pageContext.request.contextPath}/admin/getBoardList">BoardList</a></h1>
     <table class="table table-striped">
         <thead>
             <tr>

@@ -45,7 +45,6 @@ public class HomeController {
 		log.debug("▶▶▶▶▶ login() return loginStaff :"+loginStaff);
 		
 		if(loginStaff != null) { // 로그인 실패
-			
 			session.setAttribute("loginStaff", loginStaff); 
 		} 
 		return "redirect:/";

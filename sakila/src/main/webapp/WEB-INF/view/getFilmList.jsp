@@ -23,9 +23,11 @@
 </script>
 </head>
 <body>
+<!-- mainMenu -->
+<jsp:include page="/WEB-INF/view/inc/mainMenu.jsp"></jsp:include>
+
 <div class="container">
 	<h1><a href="${pageContext.request.contextPath}/admin/getFilmList">FilmList</a></h1>
-	<a href="${pageContext.request.contextPath}/admin/addFilm"><button type="button">영화 추가</button></a>
 	<div>
 		<!-- 검색 내용 폼 -->
 		<!-- 
@@ -164,6 +166,12 @@
             <li class="next"><a href="${pageContext.request.contextPath}/admin/getFilmList?currentPage=${currentPage+1}&category=${category}&price=${price}&rating=${rating}&title=${title}&actors=${actors}">다음</a></li>
         </c:if>
     </ul>
+    
+    <!-- 영화 추가 버튼 -->
+    <div>
+        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addFilm">영화 추가</a>
+    </div>
+    
 </div>
 </body>
 </html>

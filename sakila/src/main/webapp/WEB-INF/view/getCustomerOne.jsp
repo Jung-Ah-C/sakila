@@ -53,12 +53,20 @@
     </table>
     
     <!-- 영화 대여 -->
-    
-    
-    <!-- 영화 반납 -->
+    <h2>Rental</h2>
+    <table class="table">
+		<thead>
+			<tr>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+    </table>
     
     <!-- 고객 대여리스트 테이블 -->
-    <h2>RentalList</h2>
+    <h2>Rental History</h2>
     <table class="table">
     	<thead>
     		<tr>
