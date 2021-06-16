@@ -52,18 +52,36 @@
         </tbody>
     </table>
     
-    <!-- 영화 대여 -->
+    <!-- 영화 대여 테이블 -->
     <h2>Rental</h2>
-    <table class="table">
-		<thead>
-			<tr>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-			</tr>
-		</thead>
-    </table>
+    <form action="${pageContext.request.contextPath}/admin/addRental" method="post" id="rentalForm">
+    	<!-- staffID는 controller에서 처리하기! -->
+    	<input type="hidden" name="customerId" value="${customerOne.customerId}">
+    	<input type="hidden" name="staffId" value="">
+    	<table class="table" id="rentalTable">
+    		<thead>
+    			<tr>
+    				<th>filmID</th>
+    				<th>inventoryID</th>
+    				<th>rental</th>
+    			</tr>
+    		</thead>
+    		<tbody>
+    			<tr>
+    				<!-- select 값들을 처리하기 위해서 restController 사용 -->
+    				<td>
+    					<select name="filmId" id="filmId"></select>
+    				</td>
+    				<td>
+    					<select name="inventoryId" id="inventoryId"></select>
+    				</td>
+    				<td>
+    					<button id="rentalSubmitBtn">대여</button>
+    				</td>
+    			</tr>
+    		</tbody>
+    	</table>
+    </form>
     
     <!-- 고객 대여리스트 테이블 -->
     <h2>Rental History</h2>
@@ -78,6 +96,7 @@
     			<th>rentalDate</th>
     			<th>returnDate</th>
     			<th>overdue</th>
+    			<th>return</th>
     		</tr>
     	</thead>
     	<tbody>
@@ -92,6 +111,10 @@
 	    			<td><fmt:formatDate value="${r.returnDate}" pattern="yyyy-MM-dd"/></td>
 	    			<td>
 	    				<c:if test="${r.returnDate == null}">${r.overdue}</c:if>
+	    				<c:if test="${r.returnDate != null}"></c:if>
+	    			</td>
+	    			<td>
+	    				<c:if test="${r.returnDate == null}"><a href=""><button>반납</button></a></c:if>
 	    				<c:if test="${r.returnDate != null}"></c:if>
 	    			</td>
 		    	</tr>
