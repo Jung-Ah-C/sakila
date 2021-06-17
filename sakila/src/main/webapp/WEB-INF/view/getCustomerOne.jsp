@@ -14,6 +14,42 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	$.ajax({
+			type:'get',
+			url:'/filmTitle',
+			success: function(jsonData) {
+				$('#film').append('<option value="">==선택==</option>');
+				$(jsonData).each(function(index, item){
+					$('#film').append(
+						'<option value="'+item.filmId+'">'+item.title+'</option>'
+					);
+				});
+			}
+	});
+	
+	// film 선택이 완료된 후 inventory 리스트 보여주기
+	$('#film').change(function(){
+		console.log('inventory목록');
+		$('#inventory').empty();
+		$('#inventory').append('<option value="">선택</option>');
+		if($('#film').val() != '') { // film값이 선택되었다면
+			$.ajax({
+					type:'get',
+					url:'/inventory',
+					data:{filmId : $('#film').val()},
+					success: function(jsonData) {
+						$('#inventory').append(
+							'<option value="'+item+'"'+item+'</option>'
+						);
+					}
+			});
+		}
+	});
+});
+
+</script>
 </head>
 <body>
 <div class="container">
@@ -61,7 +97,7 @@
     	<table class="table" id="rentalTable">
     		<thead>
     			<tr>
-    				<th>filmID</th>
+    				<th>film</th>
     				<th>inventoryID</th>
     				<th>rental</th>
     			</tr>
@@ -70,7 +106,7 @@
     			<tr>
     				<!-- select 값들을 처리하기 위해서 restController 사용 -->
     				<td>
-    					<select name="filmId" id="filmId"></select>
+    					<select name="filmId" id="film"></select>
     				</td>
     				<td>
     					<select name="inventoryId" id="inventoryId"></select>

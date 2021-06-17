@@ -1,23 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.RentalMapper">
+	<!-- rental할 때, 선택한 영화 제목의 해당 inventoryId -->
+	<select id="selectInventoryForRental"
+			parameterType="java.util.Map"
+			resultType="Integer">
+		SELECT
+			inventory_id inventoryId
+		FROM 
+			inventory
+		WHERE
+			film_id = #{filmId} AND store_id = #{storeId}
+	</select>
+	
+	<!-- rental할 때, 영화 제목으로 선택할 수 있게 함 -> 전체 영화 제목 가져오기 -->
+	<select id="selectFilmTitle"
+			resultType="map">
+		SELECT
+			f.film_id filmId,
+			f.title title
+		FROM 
+			film f
+	</select>
+	
+	<!-- rental할 때, 정보를 rental 테이블에 추가 -->
 	<insert id="insertRental"
 			parameterType="map">
-	<selectKey keyProperty="rentalId" resultType="int" order="AFTER">
-			SELECT LAST_INSERT_ID()
-	</selectKey>
-	INSERT INTO rental (
-		rental_date,
-		inventory_id,
-		customer_id,
-		staff_id
-	) VALUES (
-		NOW(),
-		#{inventoryId},
-		#{customerId},
-		#{staffId}
-	)
+		<selectKey keyProperty="rentalId" resultType="int" order="AFTER">
+				SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO rental (
+			rental_date,
+			inventory_id,
+			customer_id,
+			staff_id
+		) VALUES (
+			NOW(),
+			#{inventoryId},
+			#{customerId},
+			#{staffId}
+		)
 	</insert>
 	
-	<!-- rental할 때, payment에 추가하는 쿼리 넣기 -->
+	<!-- rental할 때, payment에 추가하는 쿼리 -->
+	<insert id="insertRentalPayment"
+			parameterType="map">
+		INSERT INTO payment (
+			customer_id,
+			staff_id,
+			rental_id,
+			amount,
+			payment_date
+		) VALUES (
+			#{customerId},
+			#{staffId},
+			#{rentalId},
+			#{amount},
+			NOW()
+		)
+	</insert>
 </mapper>
