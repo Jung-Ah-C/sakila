@@ -7,8 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface RentalMapper {
-	void insertRental(Map<String, Object> map);
-	void insertRentalPayment(Map<String, Object> map);
+	int insertRental(Map<String, Object> map);
+	int insertRentalPayment(Map<String, Object> map);
 	List<Map<String, Object>> selectFilmTitle();
-	List<Integer> selectInventoryForRental(Map<String, Object> map);
+	List<Map<String, Object>>selectInventoryIdByFilmId(int filmId);
 }

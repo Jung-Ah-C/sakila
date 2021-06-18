@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.RentalMapper">
-	<!-- rental할 때, 선택한 영화 제목의 해당 inventoryId -->
-	<select id="selectInventoryForRental"
-			parameterType="java.util.Map"
-			resultType="Integer">
+	
+	<!-- rental할 때, 선택한 영화 제목의 해당 inventoryId 가져오기 -->
+	<!-- 전체 storeId와 함께 빌릴 수 있는 재고는 T로, 없는 재고는 F로 표시함 -->
+	<select id="selectInventoryIdByFilmId"
+			parameterType="int"
+			resultType="map">
 		SELECT
-			inventory_id inventoryId
-		FROM 
-			inventory
-		WHERE
-			film_id = #{filmId} AND store_id = #{storeId}
+			t.rental_date,
+			t.inventory_id inventoryId,
+			t.store_id storeId,
+			r.return_date returnDate,
+			CASE
+			WHEN r.return_date IS NULL AND t.rental_date IS NOT NULL THEN 'F'
+			ELSE 'T'
+			END rentable
+		FROM (SELECT 
+					max(r.rental_date) rental_date,
+					i.inventory_id inventory_id,
+					i.store_id
+				FROM 
+					inventory i 
+					LEFT JOIN rental r ON i.inventory_id = r.inventory_id
+				WHERE
+					i.film_id = #{filmId}
+				GROUP BY i.inventory_id) t
+		LEFT JOIN rental r ON t.rental_date = r.rental_date
+		GROUP BY t.inventory_id
 	</select>
 	
 	<!-- rental할 때, 영화 제목으로 선택할 수 있게 함 -> 전체 영화 제목 가져오기 -->
@@ -55,7 +72,12 @@
 			#{customerId},
 			#{staffId},
 			#{rentalId},
-			#{amount},
+			(SELECT
+				f.rental_rate
+			FROM 
+				film f
+			WHERE 
+				f.film_id = #{filmId}),
 			NOW()
 		)
 	</insert>

@@ -28,14 +28,12 @@ public class LoginFilter implements Filter {
 			session = ((HttpServletRequest)request).getSession();
 		}
 		
-		/*
 		if(session.getAttribute("loginStaff") == null) { // 로그인이 되어 있지 않다면
 			if(request instanceof HttpServletResponse) {
 				((HttpServletResponse)response).sendRedirect("/");
 			}
 			return;
 		}
-		*/
 		
 		// 요청 후
 		chain.doFilter(request, response);

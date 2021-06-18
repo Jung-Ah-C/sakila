@@ -15,6 +15,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+// RestApi 사용 (RestController)
 $(document).ready(function(){
 	$.ajax({
 			type:'get',
@@ -98,7 +99,7 @@ $(document).ready(function(){
     		<thead>
     			<tr>
     				<th>film</th>
-    				<th>inventoryID</th>
+    				<th>inventory</th>
     				<th>rental</th>
     			</tr>
     		</thead>
@@ -109,7 +110,7 @@ $(document).ready(function(){
     					<select name="filmId" id="film"></select>
     				</td>
     				<td>
-    					<select name="inventoryId" id="inventoryId"></select>
+    					<select name="inventoryId" id="inventory"></select>
     				</td>
     				<td>
     					<button id="rentalSubmitBtn">대여</button>
