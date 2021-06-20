@@ -26,12 +26,6 @@ public class RestApi { // select 값을 전달해주기 위해 restController가
 	@Autowired AddressMapper addressMapper;
 	@Autowired RentalMapper rentalMapper;
 	
-	// Rental 시 filmTitle 선택
-	@GetMapping("/filmTitle")
-	public List<Map<String, Object>> getFilmTitle() {
-		return rentalMapper.selectFilmTitle();
-	}
-	
 	// Rental에서 선택한 영화 제목의 inventoryId 목록
 	@GetMapping("/inventory")
 	public List<Integer> getFilmInventory(
@@ -56,6 +50,7 @@ public class RestApi { // select 값을 전달해주기 위해 restController가
 				rentableInventoryList.add((int)i.get("inventoryId"));
 			}
 		}
+		log.debug("ㅇㅇㅇㅇㅇㅇㅇ RestApi.getFilmInventory의 rentableInventoryList : " + rentableInventoryList.toString());
 		
 		return rentableInventoryList;
 	}

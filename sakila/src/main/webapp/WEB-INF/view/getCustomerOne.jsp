@@ -34,16 +34,18 @@ $(document).ready(function(){
 	$('#film').change(function(){
 		console.log('inventory목록');
 		$('#inventory').empty();
-		$('#inventory').append('<option value="">선택</option>');
+		$('#inventory').append('<option value="">==선택==</option>');
 		if($('#film').val() != '') { // film값이 선택되었다면
 			$.ajax({
 					type:'get',
 					url:'/inventory',
 					data:{filmId : $('#film').val()},
 					success: function(jsonData) {
-						$('#inventory').append(
-							'<option value="'+item+'"'+item+'</option>'
-						);
+						$(jsonData).each(function(index, item){
+							$('#inventory').append(
+									'<option value="'+item+'">'+item+'</option>'
+							);
+						});
 					}
 			});
 		}
