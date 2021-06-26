@@ -2,6 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.RentalMapper">
 	
+	<!-- 반납할 때 쓰는 쿼리들 -->
+	<!-- rental 테이블에 return_date 업데이트하기 -->
+	<update id="updateReturnDateByRentalId"
+			parameterType="map">
+		UPDATE rental 
+		SET return_date = NOW() 
+		WHERE rental_id = #{rentalId}
+	</update>
+	
+	<!-- payment 테이블 업데이트 하기, 연체료는 하루에 1달러라고 생각하고 overdue 값을 사용해서 payment 테이블의 amount 업데이트 함 -->
+	<update id="updatePaymentByRentalId"
+			parameterType="map">
+		UPDATE payment 
+		SET amount = ((SELECT amount FROM film WHERE film_id = #{filmId}) + #{overdue}) 
+		WHERE rental_id = #{rentalId} 
+	</update>
+	
+	<!-- 대여(rental)할 때 쓰는 쿼리들 -->
 	<!-- rental할 때, 선택한 영화 제목의 해당 inventoryId 가져오기 -->
 	<!-- 전체 storeId와 함께 빌릴 수 있는 재고는 T로, 없는 재고는 F로 표시함 -->
 	<select id="selectInventoryIdByFilmId"

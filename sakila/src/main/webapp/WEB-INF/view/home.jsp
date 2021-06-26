@@ -23,9 +23,9 @@ $(document).ready(function(){
 	<c:if test="${loginStaff == null}">
 		<form id="loginForm" action="${pageContext.request.contextPath}/login" method="post">
 			<div>email :</div>
-			<div><input type="text" id="email" name="email"></div>
+			<div><input type="text" id="email" name="email" value="guest@sakilastaff.com"></div>
 			<div>password :</div>
-			<div><input type="password" id="password" name="password"></div>
+			<div><input type="password" id="password" name="password" value="1234"></div>
 			<div>
 				<button id="btn" type="submit">로그인</button>
 			</div>

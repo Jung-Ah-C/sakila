@@ -11,4 +11,6 @@ public interface RentalMapper {
 	int insertRentalPayment(Map<String, Object> map);
 	List<Map<String, Object>> selectFilmTitle();
 	List<Map<String, Object>>selectInventoryIdByFilmId(int filmId);
+	int updateReturnDateByRentalId(Map<String, Object> map);
+	int updatePaymentByRentalId(Map<String, Object> map);
 }

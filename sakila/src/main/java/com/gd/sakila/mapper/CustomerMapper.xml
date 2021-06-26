@@ -48,7 +48,7 @@
 		f.rental_duration rentalDuration,
 		r.rental_date rentalDate,
 		r.return_date returnDate,
-		if(DATEDIFF(NOW(), r.rental_date)-CAST(f.rental_duration AS SIGNED)>0, DATEDIFF(NOW(), r.rental_date)-CAST(f.rental_duration AS SIGNED), 0) overdue <!-- CAST SIGNED -> 문자를 숫자로 변환함 (연산을 위해서 날짜를 숫자로 바꿈) -->
+		if(DATEDIFF(NOW(), r.rental_date)-CAST(f.rental_duration AS SIGNED)>0, DATEDIFF(NOW(), r.rental_date)-CAST(f.rental_duration AS SIGNED), 0) overdue <!-- CAST(해당 값) AS SIGNED -> 문자를 숫자로 변환함 (연산을 위해서 날짜(문자)를 숫자로 바꿈) -->
 	FROM
 		rental AS r
 	INNER JOIN inventory AS i ON r.inventory_id = i.inventory_id

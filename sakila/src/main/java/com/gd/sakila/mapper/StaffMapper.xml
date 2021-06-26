@@ -12,7 +12,7 @@
 			store_id storeId
 		FROM staff
 		WHERE email = #{email} <!-- getEmail() -->
-		AND password = #{password} <!-- getPassword() -->
+		AND password = password(#{password}) <!-- getPassword() -->
 	</select>
 	
 	<!-- 직원 목록 -->
