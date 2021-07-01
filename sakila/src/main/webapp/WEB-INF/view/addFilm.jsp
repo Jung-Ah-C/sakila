@@ -17,7 +17,7 @@
 </head>
 <body>
    <div class="container">
-      <h1>add Film</h1>
+      <h1>Add Film</h1>
       <form method="post" action="${pageContext.request.contextPath}/admin/addFilm">
          <table class="table table-hover">
             <tr>

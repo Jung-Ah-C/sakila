@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.InventoryMapper">
+	<!-- 재고 추가 -->
+	<insert id="">
+		INSERT INTO inventory
+	</insert>
+	
 	<!-- 재고 목록 -->
 	<select id="selectInventoryList" parameterType="map" resultType="map">
 		SELECT i.store_id storeId, f.title title, COUNT(*) AS totalInventory,

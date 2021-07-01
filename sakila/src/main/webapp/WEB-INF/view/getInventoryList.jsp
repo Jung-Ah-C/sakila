@@ -79,6 +79,12 @@
             <li class="next"><a href="${pageContext.request.contextPath}/admin/getInventoryList?currentPage=${currentPage+1}&searchWord=${searchWord}&storeId=${storeId}">다음</a></li>
         </c:if>
     </ul>
+    
+    <!-- 재고 추가 버튼 -->
+    <div>
+        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addInventory">재고 추가</a>
+    </div>
+    
 </div>
 </body>
 </html>
