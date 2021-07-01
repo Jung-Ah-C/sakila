@@ -22,6 +22,32 @@ import lombok.extern.slf4j.Slf4j;
 public class RentalController {
 	@Autowired RentalService rentalService;
 	
+	// 반납 버튼 클릭 시 view에서 data (서비스 호출에 필요한 매개변수들) 값 가져오고 service 실행
+	@PostMapping("/addReturn")
+	public String addReturn(@RequestParam(value="filmId", required = true) int filmId,
+							@RequestParam(value="rentalId", required = true) int rentalId,
+							@RequestParam(value="overdue", required = true) int overdue,
+							@RequestParam(value="customerId", required = true) int customerId) {
+		// 디버깅
+		log.debug("ㅇㅇㅇㅇㅇㅇㅇ RestApi.addReturn의 filmId : " + filmId);
+		log.debug("ㅇㅇㅇㅇㅇㅇㅇ RestApi.addReturn의 rentalId : " + rentalId);
+		log.debug("ㅇㅇㅇㅇㅇㅇㅇ RestApi.addReturn의 overdue : " + overdue);
+		log.debug("ㅇㅇㅇㅇㅇㅇㅇ RestApi.addReturn의 customerId : " + customerId);
+		
+		// 매개변수 가공
+		Map<String, Object> param = new HashMap<>();
+		param.put("filmId", filmId);
+		param.put("rentalId", rentalId);
+		param.put("overdue", overdue);
+		log.debug("ㅇㅇㅇㅇㅇㅇㅇ RestApi.addReturn의 param : " + param.toString()); // 디버깅
+		
+		// 서비스 호출
+		rentalService.addReturn(param);
+		
+		return "redirect:/admin/getCustomerOne?customerId="+customerId;
+	}
+		
+	
 	@PostMapping("/addRental")
 	public String addRental (@RequestParam(value="customerId", required = true) int customerId,
 							@RequestParam(value="filmId", required = true) int filmId,

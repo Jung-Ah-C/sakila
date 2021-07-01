@@ -51,26 +51,23 @@ $(document).ready(function(){
 		}
 	});
 	
-	// 반납 버튼 클릭 시 restAPI (restcontroller)로 파라미터 값 넘기기 (filmId, inventoryId, rentalId, overdue)
+	// 반납 버튼 클릭 시 controller로 파라미터 값 넘기기 (filmId, rentalId, overdue)
 	$('#returnBtn').click(function() { // UI 적용시에 .returnBtn (class타입)으로 수정하기
 		console.log('반납 실행');
 		$('#rentalHistory').empty(); // 반납 여러번 실행 시 이전의 값을 지우기 위해서
-		var data = {}
-		data["filmId"]=$('#filmId').text()
-		data["rentalId"]=$('#rentalId').text()
-		data["overdue"]=$('#overdue').text()
-		$.ajax({
-			type:'post',
-			url:'/return',
-			data:JSON.stringify(data),
-			success: function(data) {
-				console.log("return success!");
-				};
-			},
-			error: function(){
-                console.log("return error!");
-            });
-		});
+		
+		// 현재 버튼이 클릭된 Row 찾기(<tr>)
+		var btn = $(this);
+		var tr = btn.parent().parent(); // button -> td -> tr
+		var rentalId = tr.children().eq(0);
+		var filmId = tr.children().eq(2); // children() tr의 자식노드를 찾는 것, 즉 td
+		var overdue = tr.children().eq(7);
+		
+		$('#rentalHistory').append('<input type = "hidden" name ="rentalId" value ="'+rentalId.text()+'">');
+		$('#rentalHistory').append('<input type = "hidden" name ="filmId" value ="'+filmId.text()+'">');
+		$('#rentalHistory').append('<input type = "hidden" name ="overdue" value ="'+overdue.text()+'">');
+		
+	});
 });
 
 </script>
@@ -145,44 +142,47 @@ $(document).ready(function(){
     
     <!-- 고객 대여리스트 테이블 -->
     <h2>Rental History</h2>
-	<div id="rentalHistory">
-	    <table class="table">
-	    	<thead>
-	    		<tr>
-	    			<th>rentalID</th>
-	    			<th>storeID</th>
-	    			<th>filmID</th>
-	    			<th>title</th>
-	    			<th>rentalDuration</th>
-	    			<th>rentalDate</th>
-	    			<th>returnDate</th>
-	    			<th>overdue</th>
-	    			<th>return</th>
-	    		</tr>
-	    	</thead>
-	    	<tbody>
-	    		<c:forEach var="r" items="${rentalList}">
-	    			<tr>
-		    			<td id="rentalId">${r.rentalId}</td>	
-		    			<td>${r.storeId}</td>
-		    			<td id="filmId">${r.filmId}</td>
-		    			<td><a href="${pageContext.request.contextPath}/admin/getFilmOne?filmId=${r.filmId}">${r.title}</a></td>
-		    			<td>${r.rentalDuration}</td>
-		    			<td><fmt:formatDate value="${r.rentalDate}" pattern="yyyy-MM-dd"/></td>
-		    			<td><fmt:formatDate value="${r.returnDate}" pattern="yyyy-MM-dd"/></td>
-		    			<td id="overdue">
-		    				<c:if test="${r.returnDate == null}">${r.overdue}</c:if>
-		    				<c:if test="${r.returnDate != null}"></c:if>
-		    			</td>
-		    			<td>
-		    				<c:if test="${r.returnDate == null}"><button id="returnBtn">반납</button></c:if> <!-- ajax 이용해서 restController로 넘기기 -->
-		    				<c:if test="${r.returnDate != null}"></c:if>
-		    			</td>
-			    	</tr>
-	    		</c:forEach>
-	    	</tbody>
-	    </table>
-	</div>
+	<form action="${pageContext.request.contextPath}/admin/addReturn" method="post" id="returnForm">
+		<input type="hidden" name="customerId" value="${customerOne.customerId}">
+		<div id="rentalHistory">
+		    <table class="table">
+		    	<thead>
+		    		<tr>
+		    			<th>rentalID</th>
+		    			<th>storeID</th>
+		    			<th>filmID</th>
+		    			<th>title</th>
+		    			<th>rentalDuration</th>
+		    			<th>rentalDate</th>
+		    			<th>returnDate</th>
+		    			<th>overdue</th>
+		    			<th>return</th>
+		    		</tr>
+		    	</thead>
+		    	<tbody>
+		    		<c:forEach var="r" items="${rentalList}">
+		    			<tr>
+			    			<td>${r.rentalId}</td>	
+			    			<td>${r.storeId}</td>
+			    			<td>${r.filmId}</td>
+			    			<td><a href="${pageContext.request.contextPath}/admin/getFilmOne?filmId=${r.filmId}">${r.title}</a></td>
+			    			<td>${r.rentalDuration}</td>
+			    			<td><fmt:formatDate value="${r.rentalDate}" pattern="yyyy-MM-dd"/></td>
+			    			<td><fmt:formatDate value="${r.returnDate}" pattern="yyyy-MM-dd"/></td>
+			    			<td>
+			    				<c:if test="${r.returnDate == null}">${r.overdue}</c:if>
+			    				<c:if test="${r.returnDate != null}"></c:if>
+			    			</td>
+			    			<td>
+			    				<c:if test="${r.returnDate == null}"><button type ="button" id="returnBtn">반납</button></c:if>
+			    				<c:if test="${r.returnDate != null}"></c:if>
+			    			</td>
+				    	</tr>
+		    		</c:forEach>
+		    	</tbody>
+		    </table>
+		</div>
+	</form>
     
     <!-- 고객 대여리스트 페이징 -->
     <ul class="pager">

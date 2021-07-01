@@ -27,19 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 public class RestApi { // select 값을 전달해주기 위해 restController가 필요한 맵핑만 모아서 메소드화
 	@Autowired AddressMapper addressMapper;
 	@Autowired RentalMapper rentalMapper;
-	@Autowired RentalService rentalService;
-	
-	// 반납 버튼 클릭 시 view에서 data (서비스 호출에 필요한 매개변수들) 값 가져오고 service 실행
-	@PostMapping("/return")
-	public String addReturn(@RequestBody Map<String, Object> map) {
-		// 매개변수 디버깅
-		log.debug("ㅇㅇㅇㅇㅇㅇㅇ RestApi.addReturn의 map : " + map.toString());
-		
-		// 서비스 호출
-		rentalService.addReturn(map);
-		
-		return "getCustomerOne";
-	}
 	
 	// Rental에서 선택한 영화 제목의 inventoryId 목록
 	@GetMapping("/inventory")
