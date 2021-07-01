@@ -54,18 +54,23 @@ $(document).ready(function(){
 	// 반납 버튼 클릭 시 controller로 파라미터 값 넘기기 (filmId, rentalId, overdue)
 	$('#returnBtn').click(function() { // UI 적용시에 .returnBtn (class타입)으로 수정하기
 		console.log('반납 실행');
-		$('#rentalHistory').empty(); // 반납 여러번 실행 시 이전의 값을 지우기 위해서
+		$('#parameters').empty(); // 반납 여러번 실행 시 이전의 매개변수 값들을 지우기 위해서
 		
 		// 현재 버튼이 클릭된 Row 찾기(<tr>)
 		var btn = $(this);
 		var tr = btn.parent().parent(); // button -> td -> tr
-		var rentalId = tr.children().eq(0);
-		var filmId = tr.children().eq(2); // children() tr의 자식노드를 찾는 것, 즉 td
-		var overdue = tr.children().eq(7);
+		var rentalId = tr.children().eq(0).text();
+		var filmId = tr.children().eq(2).text(); // children() tr의 자식노드를 찾는 것, 즉 td
+		var overdue = tr.children().eq(7).text();
 		
-		$('#rentalHistory').append('<input type = "hidden" name ="rentalId" value ="'+rentalId.text()+'">');
-		$('#rentalHistory').append('<input type = "hidden" name ="filmId" value ="'+filmId.text()+'">');
-		$('#rentalHistory').append('<input type = "hidden" name ="overdue" value ="'+overdue.text()+'">');
+		// 값 디버깅
+		console.log(rentalId);
+		console.log(filmId);
+		console.log(overdue);
+		
+		$('#parameters').append('<input type = "hidden" name ="rentalId" value ="'+rentalId+'">');
+		$('#parameters').append('<input type = "hidden" name ="filmId" value ="'+filmId+'">');
+		$('#parameters').append('<input type = "hidden" name ="overdue" value ="'+overdue+'">');
 		
 	});
 });
@@ -142,9 +147,9 @@ $(document).ready(function(){
     
     <!-- 고객 대여리스트 테이블 -->
     <h2>Rental History</h2>
-	<form action="${pageContext.request.contextPath}/admin/addReturn" method="post" id="returnForm">
+	<form action="${pageContext.request.contextPath}/admin/addReturn" method="post">
 		<input type="hidden" name="customerId" value="${customerOne.customerId}">
-		<div id="rentalHistory">
+		<div id="parameters"></div>
 		    <table class="table">
 		    	<thead>
 		    		<tr>
@@ -174,14 +179,13 @@ $(document).ready(function(){
 			    				<c:if test="${r.returnDate != null}"></c:if>
 			    			</td>
 			    			<td>
-			    				<c:if test="${r.returnDate == null}"><button type ="button" id="returnBtn">반납</button></c:if>
+			    				<c:if test="${r.returnDate == null}"><button type ="submit" id="returnBtn">반납</button></c:if>
 			    				<c:if test="${r.returnDate != null}"></c:if>
 			    			</td>
 				    	</tr>
 		    		</c:forEach>
 		    	</tbody>
 		    </table>
-		</div>
 	</form>
     
     <!-- 고객 대여리스트 페이징 -->
