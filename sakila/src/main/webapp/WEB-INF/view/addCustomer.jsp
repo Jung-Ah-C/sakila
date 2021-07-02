@@ -28,11 +28,12 @@
 <script>
     $(document).ready(function(){
     	console.log('country 목록');
+    	$('#country').empty();
+    	$('#country').append('<option value="">===선택===</option>');
     	$.ajax({
     	   type:'get',
-    	   url:'/admin/country',
+    	   url:'/country',
     	   success: function(jsonData) {
-    		   $('#country').empty();
     		   $(jsonData).each(function(index, item) {
     			   $('#country').append( // country select 태그 안에 option 태그를 추가해줌
     					   '<option value="'+item.countryId+'">'+item.country+'</option>'
@@ -43,12 +44,13 @@
        
        $('#country').change(function(){
     	   console.log('city 목록');
+    	   $('#city').empty();
+    	   $('#city').append('<option value="">===선택===</option>');
     	   $.ajax({
     		   type:'get',
-    		   url:'/admin/city',
+    		   url:'/city',
     		   data:{countryId : $('#country').val()},
     		   success:function(jsonData) {
-    			   $('#city').empty();
     			   $(jsonData).each(function(index, item) {
     				  $('#city').append( // city select 태그 안에 option 태그를 추가해줌
     						'<option value="'+item.cityId+'">'+item.city+'</option>'
