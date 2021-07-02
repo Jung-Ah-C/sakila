@@ -10,4 +10,6 @@ public interface InventoryMapper {
 	List<Map<String, Object>> selectInventoryList(Map<String, Object> map);
 	int selectInventoryTotal(Map<String, Object> map);
 	int insertInventory(Map<String, Object> map);
+	List<Map<String, Object>> selectInventoryIdByFilmId(int filmId);
+	int deleteInventory(int inventoryId);
 }

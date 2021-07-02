@@ -22,6 +22,25 @@ import lombok.extern.slf4j.Slf4j;
 public class InventoryController {
 	@Autowired InventoryService inventoryService;
 	
+	// 재고 삭제 맵핑
+	@GetMapping("/removeInventory")
+	public String removeInventory() {
+		return "removeInventory";
+	}
+	
+	@PostMapping("/removeInventory")
+	public String removeInventory (@RequestParam(value="inventoryId", required = true) int inventoryId) {
+		// 매개변수 디버깅
+		log.debug("ㅇㅇㅇㅇㅇ InventoryController.removeInventory의 inventoryId : " + inventoryId);
+		
+		// 서비스 호출
+		int removeInventory = inventoryService.removeInventory(inventoryId);
+		log.debug("ㅇㅇㅇㅇㅇ InventoryController.removeInventory 완료여부 : " + removeInventory);
+		
+		return "redirect:/admin/getInventoryList";
+	}
+	
+	
 	// 재고 추가 맵핑
 	@GetMapping("/addInventory")
 	public String addInventory() {

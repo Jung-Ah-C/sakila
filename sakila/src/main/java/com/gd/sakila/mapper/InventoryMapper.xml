@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.InventoryMapper">
+	<!-- 재고 삭제 -->
+	<delete id="deleteInventory"
+			parameterType="int">
+		DELETE FROM inventory 
+		WHERE inventory_id = #{inventoryId}
+	</delete>
+	
+	<!-- film_id에 따라서 재고 id 가져오기 -> 재고 삭제 시 inventory_id 선택에 필요 -->
+	<select id="selectInventoryIdByFilmId"
+			parameterType="int"
+			resultType="map">
+		SELECT 
+			inventory_id inventoryId
+		FROM inventory 
+		WHERE film_id = #{filmId}
+	</select>
+	
 	<!-- 재고 추가 -->
 	<insert id="insertInventory" parameterType="map">
 		<selectKey keyProperty="inventoryId" resultType="int" order="AFTER">

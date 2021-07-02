@@ -80,9 +80,10 @@
         </c:if>
     </ul>
     
-    <!-- 재고 추가 버튼 -->
+    <!-- 재고 추가, 삭제 버튼 -->
     <div>
         <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addInventory">재고 추가</a>
+        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/removeInventory">재고 삭제</a>
     </div>
     
 </div>

@@ -17,9 +17,15 @@ import lombok.extern.slf4j.Slf4j;
 public class InventoryService {
 	@Autowired InventoryMapper inventoryMapper;
 	
+	// 재고 삭제 메서드
+	public int removeInventory(int inventoryId) {
+		log.debug("ㅇㅇㅇㅇㅇ InventoryService.removeInventory의 inventoryId : " + inventoryId);
+		return inventoryMapper.deleteInventory(inventoryId);
+	}
+	
 	// 재고 추가 메서드
 	public int addInventory(Map<String, Object> map) {
-		log.debug("ㅇㅇㅇㅇㅇ InventoryService.addInventory map : " + map.toString());
+		log.debug("ㅇㅇㅇㅇㅇ InventoryService.addInventory의 map : " + map.toString());
 		return inventoryMapper.insertInventory(map);
 	}
 	
