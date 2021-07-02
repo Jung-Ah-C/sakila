@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,6 +21,32 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin")
 public class InventoryController {
 	@Autowired InventoryService inventoryService;
+	
+	// 재고 추가 맵핑
+	@GetMapping("/addInventory")
+	public String addInventory() {
+		return "addInventory";
+	}
+	
+	@PostMapping("/addInventory")
+	public String addInventory (@RequestParam(value="filmId", required = true) int filmId,
+								@RequestParam(value="storeId", required = true) int storeId) {
+		// 매개변수 디버깅
+		log.debug("ㅇㅇㅇㅇㅇ InventoryController.addInventory의 filmId : " + filmId);
+		log.debug("ㅇㅇㅇㅇㅇ InventoryController.addInventory의 storeId : " + storeId);
+		
+		// 매개변수 가공
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("filmId", filmId);
+		paramMap.put("storeId", storeId);
+		log.debug("ㅇㅇㅇㅇㅇ InventoryController.addInventory의 paramMap : " + paramMap.toString());
+		
+		// 서비스 호출
+		int addInventory = inventoryService.addInventory(paramMap);
+		log.debug("ㅇㅇㅇㅇㅇ InventoryController.addInventory 완료여부 : " + addInventory);
+		
+		return "redirect:/admin/getInventoryList";
+	}
 	
 	// 재고 목록 맵핑
 	@GetMapping("/getInventoryList")

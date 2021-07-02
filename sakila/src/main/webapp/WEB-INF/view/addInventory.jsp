@@ -40,7 +40,7 @@ $(document).ready(function(){
          	<tr>
                <td>title</td>
                <td>
-               	<select name="filmId" id="film"></select>
+               	<select name="filmId" id="film" class="form-control"></select>
                </td>
             </tr>
             <tr>
@@ -48,8 +48,8 @@ $(document).ready(function(){
                <td>
                   <select name="storeId" id ="storeId" class="form-control">
                   	<option id="" value="">==선택==</option>
-                  	<option id="store1" value="1">store1</option>
-                  	<option id="store2" value="2">store2</option>
+                  	<option id="store1" value="1">1</option>
+                  	<option id="store2" value="2">2</option>
                   </select>
                </td>
             </tr>
