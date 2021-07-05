@@ -26,10 +26,10 @@ $(document).ready(function() {
 <!-- 차트 부분 -->
 <script>
 // setup 부분
-const DATA_COUNT = 7;
+const DATA_COUNT = 12;
 const NUMBER_CFG = {count: DATA_COUNT, min: 0, max: 15000};
 
-const labels = Utils.months({count: 7});
+const labels = Utils.months({count: 12});
 const data = {
   labels: labels,
   datasets: [
@@ -60,7 +60,7 @@ const config = {
       },
       title: {
         display: true,
-        text: 'Chart.js Bar Chart'
+        text: 'Monthly Sales Chart'
       }
     }
   },
