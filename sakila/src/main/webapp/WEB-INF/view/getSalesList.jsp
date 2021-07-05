@@ -13,6 +13,8 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- 차트 사용을 위한 API -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 $(document).ready(function() {
     $('#btn').click(function() {
@@ -21,6 +23,56 @@ $(document).ready(function() {
      });  
 });
 </script>
+<!-- 차트 부분 -->
+<script>
+// setup 부분
+const DATA_COUNT = 7;
+const NUMBER_CFG = {count: DATA_COUNT, min: 0, max: 15000};
+
+const labels = Utils.months({count: 7});
+const data = {
+  labels: labels,
+  datasets: [
+    {
+      label: 'Store 1',
+      data: Utils.numbers(NUMBER_CFG),
+      borderColor: Utils.CHART_COLORS.red,
+      backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
+    },
+    {
+      label: 'Store 2',
+      data: Utils.numbers(NUMBER_CFG),
+      borderColor: Utils.CHART_COLORS.blue,
+      backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
+    }
+  ]
+};
+
+// config 부분
+const config = {
+  type: 'bar',
+  data: data,
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Chart.js Bar Chart'
+      }
+    }
+  },
+};
+
+// === include 'setup' then 'config' above ===
+var myChart = new Chart(
+	document.getElementById('myChart'),
+	config
+);
+</script>
+
 </head>
 <body>
 <!-- mainMenu -->
@@ -29,7 +81,7 @@ $(document).ready(function() {
 <div class="container">
     <h1><a href="${pageContext.request.contextPath}/admin/getSalesList">SalesList</a></h1>
     <div>
-	    <h2>베스트셀러 (Top 10)</h2>
+	    <h2>Best Seller (Top 10)</h2>
 	    <table class="table table-striped">
 	        <thead>
 	            <tr>
@@ -43,7 +95,7 @@ $(document).ready(function() {
 	            <c:forEach var="b" items="${bestSellerList}">
 	                <tr>
 	                	<td>${b.filmId}</td>
-	                    <td>${b.title}</td>
+	                    <td><a href="${pageContext.request.contextPath}/admin/getFilmOne?filmId=${b.filmId}">${b.title}</a></td>
 	                    <td>${b.rentalRate}</td>
 	                    <td>${b.cnt}</td>
 	                </tr>
@@ -53,7 +105,12 @@ $(document).ready(function() {
     </div>
     
     <div>
-		<h2>월별 매출 리스트</h2>
+		<h2>Monthly Sales By Store</h2>
+		
+		<div>
+  			<canvas id="myChart"></canvas>
+		</div>
+		
 		<!-- 매장별 조회 드롭다운 -->
 		<form id="IDForm" action="${pageContext.request.contextPath}/admin/getSalesList" method="get">
 			Store:
@@ -102,7 +159,7 @@ $(document).ready(function() {
 		</table>
 		
 		<!-- 카테고리별 매출 -->
-		<h2>카테고리별 매출 리스트</h2>
+		<h2>Sales By Category</h2>
 		<table class="table table-striped">
 			<thead>
 				<tr>
