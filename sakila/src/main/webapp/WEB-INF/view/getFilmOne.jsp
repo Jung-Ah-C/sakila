@@ -19,10 +19,10 @@
     <h1>FilmOne</h1>
      <table class="table">
          <tbody>
-             <tr>
-                <td>filmID :</td>
-                <td>${filmOne.filmId}</td>
-               </tr>
+            <tr>
+	            <td>filmID :</td>
+	            <td>${filmOne.filmId}</td>
+            </tr>
             <tr>
 				<td>title :</td>
 				<td>${filmOne.title}</td>
@@ -89,8 +89,8 @@
             </tr>
         </tbody>
     </table>
-	<a class="btn btn-default" href="">수정</a>
-	<a class="btn btn-default" href="">삭제</a>
+	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/modifyFilm?filmId=${filmOne.filmId}">수정</a>
+	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/removeFilm?filmId=${filmOne.filmId}">삭제</a>
 	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getFilmList">영화목록</a>
 </div>
 </body>

@@ -1,7 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.FilmMapper">
-	<!-- film_list에 영화 추가 -->
+	<!-- 영화 카테고리 수정 -->
+	<update id="updateCategoryByFilmId" parameterType="map">
+		UPDATE film_category
+		SET category_id = #{categoryId}
+		WHERE film_id = #{filmId}
+	</update>
+	
+	<!-- 영화 수정 -->
+	<update id="updateFilm" parameterType="com.gd.sakila.vo.Film">
+		UPDATE film 
+		SET title = #{title},
+			description = #{description},
+			release_year = #{releaseYear},
+			language_id = #{languageId},
+			original_language_id = #{originalLanguageId},
+			rental_duration = #{rentalDuration},
+			rental_rate = #{rentalRate},
+			length = #{length},
+			replacement_cost = #{replacementCost},
+			rating = #{rating},
+			special_features = #{specialFeatures}
+		WHERE film_id = #{filmId}
+	</update>
+	
+	<!-- 영화 삭제 -->
+	<delete id="deleteFilm"
+			parameterType="int">
+		DELETE FROM film
+		<where>
+			film_id = #{filmId}
+		</where>  
+	</delete>
+	
+	<!-- film_categoryt에 영화 추가 -->
 	<insert id="insertFilmCategory"
 			parameterType="java.util.Map">
 		INSERT INTO film_category(
@@ -49,7 +82,7 @@
 	</insert>
 	<!-- insert 폼에서 받아온 정보들은 filmId를 제외하고 입력이 진행됨(매개변수에 filmId가 없기 때문에), selectKey를 통해서 select 된 key 값이 폼 입력이 진행되고 난 후에 filmId 자리에 입력되게 됨 -->
 	
-	<!-- 영화 재고 확인 -->
+	<!-- 영화 재고 확인 (프로시저 사용) -->
 	<!-- Map : filmId(in), storeId(in), filmCount(out) -->
 	<select id="selectFilmInStock" 
 			parameterType="java.util.Map"
@@ -126,7 +159,7 @@
 			f.film_id filmId,
 			f.title title,
 			f.description description,
-			f.release_year releaseYear,
+			YEAR(f.release_year) releaseYear,
 			fa.actor_id actorId,
 			GROUP_CONCAT(a.first_name, ' ', a.last_name) actorName,
 			f.language_id languageId,

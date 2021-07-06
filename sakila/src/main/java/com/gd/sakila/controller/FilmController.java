@@ -27,6 +27,51 @@ public class FilmController {
 	@Autowired FilmService filmService;
 	@Autowired LanguageService languageService;
 	
+	// 영화 삭제 맵핑
+	@GetMapping("/removeFilm")
+	public String removeFilm(@RequestParam(value="filmId", required = true) int filmId) {
+		// 매개변수 디버깅
+		log.debug("☆★☆★☆★☆★ FilmController.removeFilm의 filmId : " + filmId);
+		
+		// 서비스 호출
+		filmService.removeFilm(filmId);
+		
+		return "getFilmList";
+	}
+	
+	// 영화 수정 맵핑
+	@GetMapping("/modifyFilm")
+	public String modifyFilm(Model model, @RequestParam(value="filmId", required = true) int filmId) {
+		// 서비스 호출
+		// category list
+		List<Category> categoryList = filmService.getCategoryList(); // CategoryService에서 가져옴
+		log.debug("☆★☆★☆★☆★ FilmController.modifyFilm의 categoryList toString() : " + categoryList.toString());
+		
+		// language list
+		List<Language> languageList = languageService.getLanguageList();
+		log.debug("☆★☆★☆★☆★ FilmController.modifyFilm의 languageList toString() : " + languageList.toString());
+		
+		// 영화 상세 정보
+		Map<String, Object> filmOneMap = filmService.getFilmOne(filmId);
+		log.debug("☆★☆★☆★☆★ FilmController.modifyFilm의 filmOneMap : " + filmOneMap);
+		
+		// model에 넘길 값들 담기
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("languageList", languageList);
+		model.addAttribute("store1Stock", filmOneMap.get("store1Stock"));
+		model.addAttribute("store2Stock", filmOneMap.get("store2Stock"));
+		model.addAttribute("filmOne", filmOneMap.get("filmOne"));
+		
+		return "modifyFilm";
+	}
+	
+	@PostMapping("/modifyFilm") // 기본(값)타입 매개변수의 이름과 name이 같으면 맵핑
+	public String modifyFilm(FilmForm filmForm) { // 참조타입은 필드명과 input name이 같으면 맵핑, 형변환도 알아서 됨 cf) 커맨드 타입
+		// 서비스 호출하면서 filmId 리턴값으로 받음 -> redirect할 때 필요함
+		int filmId = filmService.modifyFilm(filmForm);
+		return "redirect:/admin/getFilmOne?filmId="+filmId;
+	}
+	
 	// 영화 추가 맵핑
 	@GetMapping("/addFilm")
 	public String addFilm(Model model) {
@@ -49,6 +94,7 @@ public class FilmController {
 		return "redirect:/admin/getFilmOne?filmId="+filmId;
 	}
 	
+	// 영화 배우 수정 맵핑
 	@GetMapping("/getFilmActorListByFilm")
 	public String getFilmActorListByFilm(Model model, @RequestParam(value = "filmId", required = true) int filmId) {
 		List<Map<String, Object>> list = filmService.getFilmActorListByFilm(filmId);
@@ -89,7 +135,7 @@ public class FilmController {
 								@RequestParam(name = "price", required = false) Double price, // 기본타입에 null이 들어갈 수 없어서, double 대신 Double로 설정
 								@RequestParam(name = "rating", required = false) String rating,
 								@RequestParam(name = "title", required = false) String title,
-								@RequestParam(name = "actors", required = false) String actors) { 
+								@RequestParam(name = "actors", required = false) String actors) {
 		
 		// 디버깅
 		log.debug("☆★☆★☆★☆★ FilmController. getFilmList()의 currentPage : " + currentPage);

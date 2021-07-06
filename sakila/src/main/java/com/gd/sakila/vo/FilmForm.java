@@ -11,6 +11,7 @@ public class FilmForm { // 폼의 정보들을 vo 타입으로 만들어줌 -> �
 	private String lastUpdate;
 	private List<String> specialFeatures;
 	
+	// specialFeatures checkbox로 선택하면, 값 가공해서 DB에 입력하기 위한 메소드
 	public void setSpecialFeatures(List<String> specialFeatures) {
 		if(specialFeatures != null) {
 			StringBuffer sb = new StringBuffer();

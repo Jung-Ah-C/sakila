@@ -29,7 +29,31 @@ public class FilmService {
 	 * return : 입력된 filmId값
 	 */
 	
-	// CategoryService.class로 이동해야 함
+	// 영화 삭제
+	public int removeFilm(int filmId) {
+		log.debug("☆★☆★☆★☆★ FilmService.removeFilm의 filmId : " + filmId);
+		return filmMapper.deleteFilm(filmId);
+	}
+	
+	// 영화 수정
+	public int modifyFilm(FilmForm filmForm) {
+		// 1. film 테이블의 영화 수정
+		Film film = filmForm.getFilm(); // filmForm에 있는 값을 다시 가공하고 film에 넣음
+		// mapper 호출
+		filmMapper.updateFilm(film); // filmId가 생성된 후, film.setFilmId() 호출
+		
+		// 2. film_category 테이블의 카테고리 수정
+		// film_category에 영화 추가를 하기 위해서 film_id와 category_id 변수 가공
+		Map<String, Object> map = new HashMap<>();
+		map.put("categoryId", filmForm.getCategory().getCategoryId());
+		map.put("filmId", film.getFilmId());
+		// mapper 호출
+		filmMapper.updateCategoryByFilmId(map);
+		
+		return film.getFilmId();
+	}
+	
+	// 영화 추가 및 수정에 사용할 영화 카테고리 목록
 	public List<Category> getCategoryList() {
 		return categoryMapper.selectCategoryList();
 	}
@@ -153,7 +177,7 @@ public class FilmService {
 		store1Map.put("storeId", 1);
 		
 		int store1Count = 0;
-		store1Map.put("store1Count", store1Count);
+		store1Map.put("filmCount", store1Count);
 		List<Integer> store1Stock = filmMapper.selectFilmInStock(store1Map);
 		log.debug("☆★☆★☆★☆★ FilmService.getFilmOne()의 store1Map : " + store1Map);
 		log.debug("☆★☆★☆★☆★ FilmService.getFilmOne()의 store1Stock : " + store1Stock);
@@ -164,15 +188,15 @@ public class FilmService {
 		store2Map.put("storeId", 2);
 		
 		int store2Count = 0;
-		store2Map.put("store2Count", store2Count);
+		store2Map.put("filmCount", store2Count);
 		List<Integer> store2Stock = filmMapper.selectFilmInStock(store2Map);
 		log.debug("☆★☆★☆★☆★ FilmService.getFilmOne()의 store2Map : " + store2Map);
 		log.debug("☆★☆★☆★☆★ FilmService.getFilmOne()의 store2Stock : " + store2Stock);
 		
 		
 		Map<String, Object> returnMap = new HashMap<>();
-		returnMap.put("store1Stock", store1Map.get("store1Count"));
-		returnMap.put("store2Stock", store2Map.get("store2Count"));
+		returnMap.put("store1Stock", store1Map.get("filmCount"));
+		returnMap.put("store2Stock", store2Map.get("filmCount"));
 		returnMap.put("filmOne", filmOne);
 		
 		return returnMap;
