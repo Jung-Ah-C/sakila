@@ -123,7 +123,10 @@
                </td>
             </tr>
          </table>
-         <button id="btn" class="btn btn-secondary">수정</button>
+		<div>
+			<input class="btn btn-default" id="btn" type="button" value="수정" /> 
+			<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getFilmList">영화목록</a>
+		</div>
       </form>
 </div>
 </body>

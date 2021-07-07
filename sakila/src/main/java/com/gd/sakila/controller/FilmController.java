@@ -34,9 +34,10 @@ public class FilmController {
 		log.debug("☆★☆★☆★☆★ FilmController.removeFilm의 filmId : " + filmId);
 		
 		// 서비스 호출
-		filmService.removeFilm(filmId);
+		int removeFilm = filmService.removeFilm(filmId);
+		log.debug("☆★☆★☆★☆★ FilmController.removeFilm의 removeFilm : " + removeFilm);
 		
-		return "getFilmList";
+		return "redirect:/admin/getFilmList";
 	}
 	
 	// 영화 수정 맵핑

@@ -23,18 +23,17 @@ import lombok.extern.slf4j.Slf4j;
 public class FilmService {
 	@Autowired FilmMapper filmMapper;
 	@Autowired CategoryMapper categoryMapper;
-	
-	/*
-	 * param :film입력폼
-	 * return : 입력된 filmId값
-	 */
-	
+
 	// 영화 삭제
 	public int removeFilm(int filmId) {
 		log.debug("☆★☆★☆★☆★ FilmService.removeFilm의 filmId : " + filmId);
 		return filmMapper.deleteFilm(filmId);
 	}
 	
+	/*
+	 * param :film입력폼
+	 * return : 입력된 filmId값
+	 */
 	// 영화 수정
 	public int modifyFilm(FilmForm filmForm) {
 		// 1. film 테이블의 영화 수정

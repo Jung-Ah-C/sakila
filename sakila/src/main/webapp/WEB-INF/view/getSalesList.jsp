@@ -25,52 +25,6 @@ $(document).ready(function() {
 </script>
 <!-- 차트 부분 -->
 <script>
-// setup 부분
-const DATA_COUNT = 12;
-const NUMBER_CFG = {count: DATA_COUNT, min: 0, max: 15000};
-
-const labels = Utils.months({count: 12});
-const data = {
-  labels: labels,
-  datasets: [
-    {
-      label: 'Store 1',
-      data: Utils.numbers(NUMBER_CFG),
-      borderColor: Utils.CHART_COLORS.red,
-      backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
-    },
-    {
-      label: 'Store 2',
-      data: Utils.numbers(NUMBER_CFG),
-      borderColor: Utils.CHART_COLORS.blue,
-      backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
-    }
-  ]
-};
-
-// config 부분
-const config = {
-  type: 'bar',
-  data: data,
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Monthly Sales Chart'
-      }
-    }
-  },
-};
-
-// === include 'setup' then 'config' above ===
-var myChart = new Chart(
-	document.getElementById('myChart'),
-	config
-);
 </script>
 
 </head>
@@ -106,11 +60,6 @@ var myChart = new Chart(
     
     <div>
 		<h2>Monthly Sales By Store</h2>
-		
-		<div>
-  			<canvas id="myChart"></canvas>
-		</div>
-		
 		<!-- 매장별 조회 드롭다운 -->
 		<form id="IDForm" action="${pageContext.request.contextPath}/admin/getSalesList" method="get">
 			Store:
