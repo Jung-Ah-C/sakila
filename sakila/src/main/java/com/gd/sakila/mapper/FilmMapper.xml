@@ -110,8 +110,8 @@
 			rating rating,
 			actors actors
 		FROM film_list
-		<where>
-			<if test="category != null and category != ''"> <!-- test안은 자바코드로 작성, ${} 붙일 필요 없음 -->
+		<!-- <where> ***UI 적용하면서 사용 안하는 쿼리 부분***
+			<if test="category != null and category != ''"> test안은 자바코드로 작성, ${} 붙일 필요 없음
 				AND category = #{category}
 			</if>
 			<if test="price != null and price != ''"> 
@@ -128,7 +128,7 @@
 			</if>
 		</where>
 		ORDER BY FID ASC
-		LIMIT #{page.beginRow}, #{page.rowPerPage}
+		LIMIT #{page.beginRow}, #{page.rowPerPage} -->
 	</select>
 	
 	<!-- 페이징을 위한 쿼리 -->

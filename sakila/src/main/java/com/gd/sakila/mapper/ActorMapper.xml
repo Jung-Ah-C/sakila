@@ -21,7 +21,7 @@
 			CONCAT(first_name, ' ', last_name) name,
 			film_info filmInfo
 		FROM actor_info
-		<where>
+		<!-- <where> ***UI 적용하면서 사용 안하는 쿼리 부분***
 			<if test="searchWord != null and searchWord != ''">
 				AND first_name LIKE CONCAT('%', #{searchWord}, '%')
 			</if>
@@ -30,7 +30,7 @@
 			</if>
 		</where>
 		ORDER BY actor_id ASC
-		LIMIT #{beginRow}, #{rowPerPage}
+		LIMIT #{beginRow}, #{rowPerPage} -->
 	</select>
 	
 	<!-- 페이징을 위한 데이터 개수 세는 쿼리 -->

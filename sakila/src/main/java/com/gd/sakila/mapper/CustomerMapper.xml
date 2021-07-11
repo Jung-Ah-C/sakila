@@ -104,13 +104,13 @@
 			notes,
 			SID
 		FROM customer_list
-		<where>
+		<!-- <where> ***UI 적용하면서 사용 안하는 쿼리 부분***
 			<if test="searchWord != null">
 				name LIKE CONCAT('%',#{searchWord},'%')
 			</if>
 		</where>
 		ORDER BY ID ASC
-		LIMIT #{beginRow}, #{rowPerPage}
+		LIMIT #{beginRow}, #{rowPerPage} -->
 	</select>
 	
 	<!-- 고객 데이터 개수 세기 (페이징에 필요함) -->

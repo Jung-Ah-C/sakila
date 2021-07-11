@@ -30,11 +30,11 @@
 			SID SID
 		FROM 
 			staff_list
-		<where> <!-- 쿼리에서의 where 태그를 대신함 -->
+		<!-- <where> ***UI 적용하면서 사용 안하는 쿼리 부분***
 			<if test="searchWord != null">
 				name LIKE CONCAT('%',#{searchWord},'%')
 			</if>
 		</where>
-		ORDER BY ID ASC
+		ORDER BY ID ASC -->
 	</select>
 </mapper>

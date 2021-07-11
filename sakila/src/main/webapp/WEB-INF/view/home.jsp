@@ -8,14 +8,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- Favicon icon -->
-<link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/images/favicon.png">
 <!-- Pignose Calender -->
-<link href="./plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
 <!-- Chartist -->
-<link rel="stylesheet" href="./plugins/chartist/css/chartist.min.css">
-<link rel="stylesheet" href="./plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/chartist/css/chartist.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
 <!-- Custom Stylesheet -->
-<link href="css/style.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
 <script>
 $(document).ready(function(){
 	console.log('ready...');
@@ -25,20 +25,44 @@ $(document).ready(function(){
 	});
 });
 </script>
+<style type="text/css">
+.login {
+	position: relative;
+    top: 150px;
+}
+</style>
 <title>home</title>
 </head>
 <body>
 	<!-- 로그아웃 시 or 로그인 되어 있지 않을 경우 -->
 	<c:if test="${loginStaff == null}">
-		<form id="loginForm" action="${pageContext.request.contextPath}/login" method="post">
-			<div>email :</div>
-			<div><input type="text" id="email" name="email" value="guest@sakilastaff.com"></div>
-			<div>password :</div>
-			<div><input type="password" id="password" name="password" value="1234"></div>
-			<div>
-				<button id="btn" type="submit">로그인</button>
-			</div>
-		</form>
+	<div class="login">    
+	    <div class="login-form-bg h-100">
+	        <div class="container h-100">
+	            <div class="row justify-content-center h-100">
+	                <div class="col-xl-6">
+	                    <div class="form-input-content">
+	                        <div class="card login-form mb-0">
+	                            <div class="card-body pt-5">
+	                                <a class="text-center" href="index.html"> <h4>Movie Rental Store</h4></a>
+	        
+	                                <form id="loginForm" action="${pageContext.request.contextPath}/login" method="post" class="mt-5 mb-5 login-input">
+	                                    <div class="form-group">
+	                                        <input type="email" class="form-control" id="email" name="email" value="guest@sakilastaff.com">
+	                                    </div>
+	                                    <div class="form-group">
+	                                        <input type="password" class="form-control" id="password" name="password" value="1234">
+	                                    </div>
+	                                    <button id="btn" class="btn login-form__btn submit w-100">Sign In</button>
+	                                </form>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+   		</div>
+   	</div>
 	</c:if>
 	
 	<!-- 로그인 시 -->
@@ -90,120 +114,9 @@ $(document).ready(function(){
 	                    <span class="toggle-icon"><i class="icon-menu"></i></span>
 	                </div>
 	            </div>
+	            
 	            <div class="header-right">
 	                <ul class="clearfix">
-	                    <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
-	                            <i class="mdi mdi-email-outline"></i>
-	                            <span class="badge badge-pill gradient-1">3</span>
-	                        </a>
-	                        <div class="drop-down animated fadeIn dropdown-menu">
-	                            <div class="dropdown-content-heading d-flex justify-content-between">
-	                                <span class="">3 New Messages</span>  
-	                                <a href="javascript:void()" class="d-inline-block">
-	                                    <span class="badge badge-pill gradient-1">3</span>
-	                                </a>
-	                            </div>
-	                            <div class="dropdown-content-body">
-	                                <ul>
-	                                    <li class="notification-unread">
-	                                        <a href="javascript:void()">
-	                                            <img class="float-left mr-3 avatar-img" src="images/avatar/1.jpg" alt="">
-	                                            <div class="notification-content">
-	                                                <div class="notification-heading">Saiful Islam</div>
-	                                                <div class="notification-timestamp">08 Hours ago</div>
-	                                                <div class="notification-text">Hi Teddy, Just wanted to let you ...</div>
-	                                            </div>
-	                                        </a>
-	                                    </li>
-	                                    <li class="notification-unread">
-	                                        <a href="javascript:void()">
-	                                            <img class="float-left mr-3 avatar-img" src="images/avatar/2.jpg" alt="">
-	                                            <div class="notification-content">
-	                                                <div class="notification-heading">Adam Smith</div>
-	                                                <div class="notification-timestamp">08 Hours ago</div>
-	                                                <div class="notification-text">Can you do me a favour?</div>
-	                                            </div>
-	                                        </a>
-	                                    </li>
-	                                    <li>
-	                                        <a href="javascript:void()">
-	                                            <img class="float-left mr-3 avatar-img" src="images/avatar/3.jpg" alt="">
-	                                            <div class="notification-content">
-	                                                <div class="notification-heading">Barak Obama</div>
-	                                                <div class="notification-timestamp">08 Hours ago</div>
-	                                                <div class="notification-text">Hi Teddy, Just wanted to let you ...</div>
-	                                            </div>
-	                                        </a>
-	                                    </li>
-	                                    <li>
-	                                        <a href="javascript:void()">
-	                                            <img class="float-left mr-3 avatar-img" src="images/avatar/4.jpg" alt="">
-	                                            <div class="notification-content">
-	                                                <div class="notification-heading">Hilari Clinton</div>
-	                                                <div class="notification-timestamp">08 Hours ago</div>
-	                                                <div class="notification-text">Hello</div>
-	                                            </div>
-	                                        </a>
-	                                    </li>
-	                                </ul>
-	                                
-	                            </div>
-	                        </div>
-	                    </li>
-	                    <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
-	                            <i class="mdi mdi-bell-outline"></i>
-	                            <span class="badge badge-pill gradient-2">3</span>
-	                        </a>
-	                        <div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
-	                            <div class="dropdown-content-heading d-flex justify-content-between">
-	                                <span class="">2 New Notifications</span>  
-	                                <a href="javascript:void()" class="d-inline-block">
-	                                    <span class="badge badge-pill gradient-2">5</span>
-	                                </a>
-	                            </div>
-	                            <div class="dropdown-content-body">
-	                                <ul>
-	                                    <li>
-	                                        <a href="javascript:void()">
-	                                            <span class="mr-3 avatar-icon bg-success-lighten-2"><i class="icon-present"></i></span>
-	                                            <div class="notification-content">
-	                                                <h6 class="notification-heading">Events near you</h6>
-	                                                <span class="notification-text">Within next 5 days</span> 
-	                                            </div>
-	                                        </a>
-	                                    </li>
-	                                    <li>
-	                                        <a href="javascript:void()">
-	                                            <span class="mr-3 avatar-icon bg-danger-lighten-2"><i class="icon-present"></i></span>
-	                                            <div class="notification-content">
-	                                                <h6 class="notification-heading">Event Started</h6>
-	                                                <span class="notification-text">One hour ago</span> 
-	                                            </div>
-	                                        </a>
-	                                    </li>
-	                                    <li>
-	                                        <a href="javascript:void()">
-	                                            <span class="mr-3 avatar-icon bg-success-lighten-2"><i class="icon-present"></i></span>
-	                                            <div class="notification-content">
-	                                                <h6 class="notification-heading">Event Ended Successfully</h6>
-	                                                <span class="notification-text">One hour ago</span>
-	                                            </div>
-	                                        </a>
-	                                    </li>
-	                                    <li>
-	                                        <a href="javascript:void()">
-	                                            <span class="mr-3 avatar-icon bg-danger-lighten-2"><i class="icon-present"></i></span>
-	                                            <div class="notification-content">
-	                                                <h6 class="notification-heading">Events to Join</h6>
-	                                                <span class="notification-text">After two days</span> 
-	                                            </div>
-	                                        </a>
-	                                    </li>
-	                                </ul>
-	                                
-	                            </div>
-	                        </div>
-	                    </li>
 	                    <li class="icons dropdown">
 	                        <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
 	                            <span class="activity active"></span>
@@ -212,10 +125,6 @@ $(document).ready(function(){
 	                        <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
 	                            <div class="dropdown-content-body">
 	                                <ul>
-	                                    <li>
-	                                        <a href="app-profile.html"><i class="icon-user"></i> <span>Profile</span></a>
-	                                    </li>
-	                                    <hr class="my-2">
 	                                    <li><a href="${pageContext.request.contextPath}/admin/logout"><i class="icon-key"></i> <span>Logout</span></a></li>
 	                                </ul>
 	                            </div>
@@ -236,7 +145,7 @@ $(document).ready(function(){
 		<!-- salesList 매출 차트 넣을 예정 -->
 		<div class="content-body">
 		    <div class="container-fluid mt-3">
-		        <div>Hello, ${loginStaff.username}!</div>
+		        <h3>Hello, ${loginStaff.username}!</h3>
 		        <div class="row">
 		            <div class="col-lg-3 col-sm-6">
 		                <div class="card gradient-1">
@@ -782,52 +691,51 @@ $(document).ready(function(){
 		    <!-- #/ container -->
 		</div>
 		
-		<!--**********************************
-	        Footer start
-	    ***********************************-->
-	    <div class="footer">
-	        <div class="copyright">
-	            <p>Copyright &copy; Developed by <a href="https://https://jung-ah-c.github.io/">JungAh Choi</a> 2021</p>
-	            <p>Copyright &copy; Designed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2021</p>
-	        </div>
-	    </div>
-	    <!--**********************************
-	        Footer end
-	    ***********************************-->
+
 	    
 	    </div>
 	    <!--**********************************
 	        Main wrapper end
 	    ***********************************-->
+	    
+	    <div class="footer">
+	       <div class="copyright">
+	           <p>Copyright &copy; Developed by <a href="https://https://jung-ah-c.github.io/">JungAh Choi</a> 2021</p>
+	           <p>Copyright &copy; Designed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2021</p>
+	       </div>
+	    </div>
+	    
 	</c:if>
+    
+    
 	
 <!--**********************************
        Scripts
    	***********************************-->
-<script src="plugins/common/common.min.js"></script>
-<script src="js/custom.min.js"></script>
-<script src="js/settings.js"></script>
-<script src="js/gleek.js"></script>
-<script src="js/styleSwitcher.js"></script>
+<script src="${pageContext.request.contextPath}/plugins/common/common.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/custom.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/settings.js"></script>
+<script src="${pageContext.request.contextPath}/js/gleek.js"></script>
+<script src="${pageContext.request.contextPath}/js/styleSwitcher.js"></script>
 
 <!-- Chartjs -->
-<script src="./plugins/chart.js/Chart.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/plugins/chart.js/Chart.bundle.min.js"></script>
 <!-- Circle progress -->
-<script src="./plugins/circle-progress/circle-progress.min.js"></script>
+<script src="${pageContext.request.contextPath}/plugins/circle-progress/circle-progress.min.js"></script>
 <!-- Datamap -->
-<script src="./plugins/d3v3/index.js"></script>
-<script src="./plugins/topojson/topojson.min.js"></script>
-<script src="./plugins/datamaps/datamaps.world.min.js"></script>
+<script src="${pageContext.request.contextPath}/plugins/d3v3/index.js"></script>
+<script src="${pageContext.request.contextPath}/plugins/topojson/topojson.min.js"></script>
+<script src="${pageContext.request.contextPath}/plugins/datamaps/datamaps.world.min.js"></script>
 <!-- Morrisjs -->
-<script src="./plugins/raphael/raphael.min.js"></script>
-<script src="./plugins/morris/morris.min.js"></script>
+<script src="${pageContext.request.contextPath}/plugins/raphael/raphael.min.js"></script>
+<script src="${pageContext.request.contextPath}/plugins/morris/morris.min.js"></script>
 <!-- Pignose Calender -->
-<script src="./plugins/moment/moment.min.js"></script>
-<script src="./plugins/pg-calendar/js/pignose.calendar.min.js"></script>
+<script src="${pageContext.request.contextPath}/plugins/moment/moment.min.js"></script>
+<script src="${pageContext.request.contextPath}/plugins/pg-calendar/js/pignose.calendar.min.js"></script>
 <!-- ChartistJS -->
-<script src="./plugins/chartist/js/chartist.min.js"></script>
-<script src="./plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+<script src="${pageContext.request.contextPath}/plugins/chartist/js/chartist.min.js"></script>
+<script src="${pageContext.request.contextPath}/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
 
-<script src="./js/dashboard/dashboard-1.js"></script>
+<script src="${pageContext.request.contextPath}/js/dashboard/dashboard-1.js"></script>
 </body>
 </html>

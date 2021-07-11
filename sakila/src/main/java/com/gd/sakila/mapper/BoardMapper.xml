@@ -8,13 +8,13 @@
 			insert_date insertDate
 		FROM 
 			board
-		<where> <!-- 쿼리에서의 where 태그를 대신함 -->
+		<!-- <where> ***UI 적용하면서 사용 안하는 쿼리 부분***
 			<if test="searchWord != null">
 				board_title LIKE CONCAT('%',#{searchWord},'%')
 			</if>
 		</where>
 		ORDER BY insert_date DESC
-		LIMIT #{beginRow}, #{rowPerPage}
+		LIMIT #{beginRow}, #{rowPerPage} -->
 	</select>
 	
 	<select id="selectBoardTotal" resultType="Integer" parameterType="String">

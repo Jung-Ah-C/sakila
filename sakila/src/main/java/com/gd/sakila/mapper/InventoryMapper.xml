@@ -38,15 +38,15 @@
 			SUM(NOT inventory_in_stock(i.inventory_id)) AS rental, 
             SUM(inventory_in_stock(i.inventory_id)) AS stock
       	FROM film f, inventory i
-      	WHERE f.film_id = i.film_id 
-        	<if test="storeId != null">
+      	 WHERE f.film_id = i.film_id
+        <!--<if test="storeId != null">  ***UI 적용하면서 사용 안하는 쿼리 부분***
             	AND i.store_id = #{storeId}
         	</if>
         	<if test="searchWord != null">
         		AND title LIKE CONCAT('%',#{searchWord},'%')
         	</if>
+     	LIMIT #{beginRow}, #{rowPerPage} -->
      	GROUP BY i.film_id, i.store_id
-     	LIMIT #{beginRow}, #{rowPerPage}
    </select>
    
    <!-- 재고 목록 페이징을 위한 전체 데이터 개수 -->
