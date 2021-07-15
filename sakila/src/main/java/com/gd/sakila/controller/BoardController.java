@@ -2,6 +2,8 @@ package com.gd.sakila.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.gd.sakila.service.BoardService;
 import com.gd.sakila.vo.Board;
 import com.gd.sakila.vo.BoardForm;
+import com.gd.sakila.vo.Staff;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -64,7 +67,18 @@ public class BoardController {
 	
 	// addBoard
 	@GetMapping("/addBoard") // addBoard로 요청이 들어오면 뷰로 보냄
-	public String addBoard() {
+	public String addBoard(HttpSession session, Model model) {
+		// 매개변수 가공
+		// 세션에 있는 staff 정보 가져오기
+		Staff loginStaff = (Staff)session.getAttribute("loginStaff");
+		int staffId = loginStaff.getStaffId();
+		
+		// 매개변수 가공 디버깅
+		log.debug("▶▶▶▶▶▶▶ addBoard()의 loginStaff : " + loginStaff.toString());
+		log.debug("▶▶▶▶▶▶▶ addBoard()의 staffId : " + staffId);
+		
+		model.addAttribute("staffId", staffId);
+		
 		return "addBoard";
 	}
 	

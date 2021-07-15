@@ -71,7 +71,7 @@ public class BoardService {
 	}
 	
 	// 게시글 추가 액션
-	public int addBoard(BoardForm boardForm) {
+	public void addBoard(BoardForm boardForm) {
 		log.debug("addBoard()의 boardForm : " + boardForm);
 		
 		// 넘겨 받은 BoardForm 타입을 Board로 변환
@@ -80,7 +80,7 @@ public class BoardService {
 		log.debug("addBoard()의 board : " + board);
 		boardMapper.addBoard(board); // 입력 시 만들어진 key값을 리턴받아야 한다. -> mybatis에 리턴값을 설정할 수 없기 때문에 리턴값을 받을 수 없다.
 		// 매개 변수 board의 boardId 값을 변경해준다.
-		log.debug("addBoard()의 board : " + board.getBoardId()); // auto increment로 입력된 값
+		log.debug("addBoard()의 boardId : " + board.getBoardId()); // auto increment로 입력된 값
 		
 		// 2)
 		List<MultipartFile> list = boardForm.getBoardfile();
@@ -114,7 +114,6 @@ public class BoardService {
 				}
 			}
 		}
-		return boardMapper.addBoard(board);
 	}
 	
 	// 게시글 상세 액션 (getBoardOne), 1) 상세보기 + 2) 댓글목록, 수정 폼
