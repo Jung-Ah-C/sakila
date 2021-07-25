@@ -53,12 +53,6 @@
                     </li>
                     
                     <li>
-                        <a href="${pageContext.request.contextPath}/admin/getSalesList" aria-expanded="false">
-                            <i class="icon-graph menu-icon"></i><span class="nav-text">SalesList</span>
-                        </a>
-                    </li>
-                   
-                    <li>
                         <a href="${pageContext.request.contextPath}/admin/logout" aria-expanded="false">
                             <i class="icon-logout menu-icon"></i><span class="nav-text">Logout</span>
                         </a>

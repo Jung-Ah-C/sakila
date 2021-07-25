@@ -9,5 +9,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface SalesMapper {
 	List<Map<String, Object>> selectBestSellerTop10();
 	List<Map<String, Object>> selectSalesByCategoryList();
-	List<Map<String, Object>> selectmonthlySalesList(Integer storeId);
+	List<Map<String, Object>> selectmonthlySalesList();
 }

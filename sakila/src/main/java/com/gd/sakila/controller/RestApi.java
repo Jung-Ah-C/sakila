@@ -74,16 +74,4 @@ public class RestApi { // select 값을 전달해주기 위해 restController가
 	public List<Map<String, Object>> getFilmTitleList() {
 		return rentalMapper.selectFilmTitle();
 	}
-	
-	@GetMapping("/country")
-	public List<Country> getCountryList() {
-		return addressMapper.selectCountry();
-	}
-	
-	@GetMapping("/city")
-	public List<City> getCityList(
-			@RequestParam(value="countryId", required = true) Integer countryId) {
-		log.debug("ㅇㅇㅇㅇㅇㅇㅇ RestApi.getCityList의 countryId : " + countryId);
-		return addressMapper.selectCity(countryId);
-	}
 }

@@ -20,7 +20,7 @@ $(document).ready(function() {
     $('#btn').click(function() {
        console.log('btn click...');
         $('#IDForm').submit();   
-     });  
+     });
 });
 </script>
 <!-- 차트 부분 -->
